@@ -3,6 +3,7 @@ import { Avatar, Flex, Text, Box, Image } from "@chakra-ui/react";
 import chatIcon from "../../../assets/icons/chatIcon.svg";
 import like from "../../../assets/icons/like.svg";
 import dislike from "../../../assets/icons/dislike.svg";
+import { marked } from 'marked';
 
 interface Message {
   from: string;
@@ -116,7 +117,7 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                   >
                     AI
                   </Text>
-                  <Text>{item.text}</Text>
+                  <Text><div style={{textTransform: "capitalize"}} dangerouslySetInnerHTML={{__html: marked.parse(item.text) }} /></Text>
                   <Box display="flex" flexWrap="wrap">
                     <Flex my="0.75rem" direction="row">
                       <Text
