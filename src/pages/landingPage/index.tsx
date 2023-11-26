@@ -57,11 +57,11 @@ const WelcomePage = () => {
             direction={{ base: "column", md: "row" }}
           >
             <Box
-            mx="auto"
+              mx="auto"
               width={{ base: "90%", md: "33.4rem" }}
               height={{ base: "10rem", md: "19.8rem" }}
               mt={{ base: "0rem", md: "10rem" }}
-              ml={{base:"",md:"5rem"}}
+              ml={{ base: "", md: "5rem" }}
             >
               <Heading
                 textColor="#ffff"
@@ -86,7 +86,7 @@ const WelcomePage = () => {
               </Text>
 
               <Button
-                mt={{base:"1rem",md:"2.19rem"}}
+                mt={{ base: "1rem", md: "2.19rem" }}
                 width="fit-content"
                 px="1.5rem"
                 bg="#3E97FF"
@@ -101,7 +101,7 @@ const WelcomePage = () => {
             <Spacer />
 
             <Box
-            mb={{base:"1rem", md:"0"}}
+              mb={{ base: "1rem", md: "0" }}
               mx={{ base: "auto", md: "" }}
               width={{ base: "19rem", md: "50.199rem" }}
               height={{ base: "15rem", md: "35rem" }}
@@ -115,65 +115,75 @@ const WelcomePage = () => {
       <Box
         width="100%"
         mx={{ base: "auto", md: "0" }}
-        height={{ base: "56rem", md: "34rem" }}
+        // height={{ base: "56rem", md: "34rem" }}
+        py={"8rem"}
         bg="#EEF6FF"
-      >
-        <Box maxWidth={{ base: "90%", md: "90rem" }} mx="auto" width="100%">
-          <Box mx="auto" maxWidth="76rem" maxHeight="22.1rem" py="6.25rem">
-            <Box mb="3.75rem" mx="auto" maxWidth="29.9375rem" height="100%">
-              <Heading
-                textColor="#181C32"
-                fontSize={{ base: "1.5rem", md: "3.125rem" }}
-                maxWidth="33.375rem"
-                fontFamily="Inter"
-                fontWeight="600"
-                textAlign="center"
-              >
-                How SymptomSense Works
-              </Heading>
-            </Box>
-
-            <Flex
-              width={{ base: "90%", md: "76rem" }}
-              direction={{ base: "column", md: "row" }}
-              gap="1.5rem"
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+>
+        <Box maxW={"90rem"}
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+        >
+          <Box height="100%" maxWidth={"52%"}>
+            <Heading
+              textColor="#181C32"
+              fontSize={{ base: "1.5rem", md: "3.125rem" }}
+              fontFamily="Inter"
+              fontWeight="600"
+              textAlign="center"
             >
-              {worksData.map((work) => (
-                <Box width="100%" maxW="24.4rem" maxH="12.6rem">
-                  <Box
-                    mx="auto"
-                    textAlign="center"
-                    mb="0.81rem"
-                    bg="white"
-                    borderRadius="50%"
-                    width="2.0625rem"
-                    height="2.0625rem"
-                  >
-                    {work.no}
-                  </Box>
-
-                  <Heading
-                    textAlign="center"
-                    textColor="#181C32"
-                    fontSize="1.25rem"
-                    fontWeight="600"
-                    mb="0.81rem"
-                  >
-                    {work.header}
-                  </Heading>
-
-                  <Text
-                    textAlign="center"
-                    textColor="#0A0E24"
-                    fontSize="1.125rem"
-                    fontWeight="400"
-                  >
-                    {work.note}
-                  </Text>
-                </Box>
-              ))}
-            </Flex>
+              How SymptomSense Works
+            </Heading>
           </Box>
+
+          <Flex
+            // width={{ base: "90%", md: "76rem" }}
+            direction={{ base: "column", md: "row" }}
+            mt={"4.5rem"}
+            gap={"1.5rem"}
+          >
+            {worksData.map((work) => (
+              <Box width="100%" maxW="25rem" maxH="12.6rem">
+                <Box
+                  mx="auto"
+                  textAlign="center"
+                  mb="0.81rem"
+                  bg="white"
+                  borderRadius="50%"
+                  width="2.0625rem"
+                  height="2.0625rem"
+                  color={"#006CEA"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                >
+                  {work.no}
+                </Box>
+
+                <Heading
+                  textAlign="center"
+                  textColor="#181C32"
+                  fontSize="1.25rem"
+                  fontWeight="600"
+                  mb="0.81rem"
+                >
+                  {work.header}
+                </Heading>
+
+                <Text
+                  textAlign="center"
+                  textColor="#0A0E24"
+                  fontSize="1.125rem"
+                  fontWeight="400"
+                >
+                  {work.note}
+                </Text>
+              </Box>
+            ))}
+          </Flex>
         </Box>
       </Box>
 
@@ -195,7 +205,7 @@ const WelcomePage = () => {
             display="flex"
             justifyContent="center"
           >
-            <Image src="part2" />
+            <Image src={part2} />
             <Box mx={{ base: "auto", md: "0" }}>
               <Heading
                 textColor="#ffff"
@@ -213,15 +223,15 @@ const WelcomePage = () => {
                 <Button
                   mx="auto"
                   mt="1.88rem"
-                  width="7.06rem"
-                  px="1.5rem"
-                  bg="#3E97FF"
-                  borderRadius="0.38rem"
+                  _hover={{
+                    bg: "brand.active",
+                    boxShadow: "none",
+                  }}
                 >
                   Try Now
                 </Button>
-                <Image src="part1" />
-                <Image src="part3" />
+                <Image src={part1} />
+                <Image src={part3} />
               </Box>
             </Box>
           </Box>
@@ -236,7 +246,7 @@ const WelcomePage = () => {
             maxWidth={{ base: "90%", md: "76rem" }}
             maxHeight="22.1rem"
           >
-            <Flex direction={{ base: "column", md: "row" }} width="100%">
+            <Flex direction={{ base: "column", md: "row" }} alignItems={"center"} width="100%">
               <Box display="flex" alignItems="center" gap="6px">
                 <Box width="2rem" aspectRatio="1/1">
                   <Image
@@ -259,7 +269,7 @@ const WelcomePage = () => {
               <Spacer />
 
               <Link to="/">
-                <Text mr="2.6rem">How to Works</Text>
+                <Text mr="2.6rem">How it Works</Text>
               </Link>
 
               <Link to="/">

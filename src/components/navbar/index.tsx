@@ -25,11 +25,12 @@ const Navbar: React.FC = () => {
           width="90%"
           maxWidth="90rem"
           mx="auto"
-          height="4rem"
+          // height="4rem"
+          paddingY={"1.5rem"}
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-        
+
         >
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
@@ -48,67 +49,60 @@ const Navbar: React.FC = () => {
               Sense
             </Text>
           </Box>
-          <Box float="right"  display={{base:"block", md:"none"}}>
+          <Box display={{ base: "flex", md: "none" }}>
             <Box onClick={() => setMobileState(!mobileState)} >
-             {mobileState ? <CloseIcon/> : <HamburgerIcon /> } 
-              </Box>
-           
+              {mobileState ? <CloseIcon /> : <HamburgerIcon />}
+            </Box>
+
           </Box>
 
-          <Box mt="0.5rem" display={{base:"none", md:"block"}}>
-            <Box width="12.3rem" height="3rem" display="flex" flexWrap="wrap">
-              <Button
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Log in
-              </Button>
+          <Box display={{ base: "none", md: "flex" }} gap={3}>
+            <Button
+              onClick={() => {
+                navigate("/login");
+              }}
+              variant={"secondary"}
+            >
+              Log in
+            </Button>
 
-              <Spacer />
-
-              <Button
-                onClick={() => {
-                  navigate("/signup");
-                }}
-                width="7.06rem"
-                px="1.5rem"
-                bg="#3E97FF"
-                borderRadius="0.38rem"
-              >
-                Try Now
-              </Button>
-            </Box>
+            <Button
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Try Now
+            </Button>
           </Box>
         </Box>
       </Box>
-      <Box width="90%" mx="auto" height="4rem"></Box>
+      <Box width="90%" mx="auto" height="5.5rem"></Box>
       {
         mobileState ?
-        <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap">
-              <Button
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Log in
-              </Button>
+          <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap">
+            <Button
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Log in
+            </Button>
 
-              <Spacer />
+            <Spacer />
 
-              <Button
-                onClick={() => {
-                  navigate("/signup");
-                }}
-                width="7.06rem"
-                px="1.5rem"
-                bg="#3E97FF"
-                borderRadius="0.38rem"
-              >
-                Try Now
-              </Button>
-            </Box>
-        :""
+            <Button
+              onClick={() => {
+                navigate("/signup");
+              }}
+              width="7.06rem"
+              px="1.5rem"
+              bg="#3E97FF"
+              borderRadius="0.38rem"
+            >
+              Try Now
+            </Button>
+          </Box>
+          : ""
       }
     </>
   );

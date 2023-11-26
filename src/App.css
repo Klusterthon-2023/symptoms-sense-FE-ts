@@ -15,23 +15,23 @@
 
 @font-face {
   font-family: 'GT-Eesti';
-  src: url(./font/GT-Eesti-Text-Bold-Trial.otf);
+  src: url(./assets/font/GT-Eesti-Text-Bold-Trial.otf);
 }
 
 
 @font-face {
   font-family: 'GT-Eesti-Light';
-  src: url(./font/GT-Eesti-Display-Light-Trial.otf);
+  src: url(./assets/font/GT-Eesti-Display-Light-Trial.otf);
 }
 
 @font-face {
   font-family: 'GT-Eesti-Medium';
-  src: url(./font/GT-Eesti-Display-Medium-Trial.otf);
+  src: url(./assets/font/GT-Eesti-Display-Medium-Trial.otf);
 }
 
 @font-face {
   font-family: 'GT-Eesti-thin';
-  src: url(./font/GT-Eesti-Display-Thin-Trial.otf);
+  src: url(./assets/font/GT-Eesti-Display-Thin-Trial.otf);
 }
 
 .App-header {
