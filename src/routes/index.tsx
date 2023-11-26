@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/landingPage";
 import Signup from "../pages/signup";
 import Login from "../pages/login"
+// import DashboardInstance from "../pages/Dashboard/components/home"
 
 const Router: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const Router: React.FC = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path="/dashboard/home" element={<DashboardInstance />} /> */}
       </Routes>
     </>
   );

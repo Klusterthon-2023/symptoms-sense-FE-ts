@@ -10,6 +10,9 @@ import {
 } from "@chakra-ui/react";
 import Header from "../../components/navbar";
 import { Link, useNavigate } from "react-router-dom";
+import part1 from "../../assets/icons/part1.svg";
+import part2 from "../../assets/icons/part2.svg";
+import part3 from "../../assets/icons/part3.svg";
 
 const WelcomePage = () => {
   const navigate = useNavigate();
@@ -192,6 +195,7 @@ const WelcomePage = () => {
             display="flex"
             justifyContent="center"
           >
+            <Image src="part2" />
             <Box mx={{ base: "auto", md: "0" }}>
               <Heading
                 textColor="#ffff"
@@ -204,7 +208,7 @@ const WelcomePage = () => {
               >
                 Share your Symptoms your with us, and then we take it from there
               </Heading>
-
+              
               <Box display="flex" justifyContent="center" width="100%">
                 <Button
                   mx="auto"
@@ -216,6 +220,8 @@ const WelcomePage = () => {
                 >
                   Try Now
                 </Button>
+                <Image src="part1" />
+                <Image src="part3" />
               </Box>
             </Box>
           </Box>

@@ -9,8 +9,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 import Mic from "../../../assets/icons/microphone-2.svg";
-import useStopwatch from '../components/stopwatch';
-import record from '../../../assets/icons/Misc icon.svg'
+import useStopwatch from "../components/stopwatch";
+import record from "../../../assets/icons/Misc icon.svg";
 
 const SpeechRecognition =
   (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -36,8 +36,6 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
   const [note, setNote] = useState<string | null>(null);
   const [savedNotes, setSavedNotes] = useState<string[]>([]);
   const { time, isRunning, start, stop, reset, formattedTime } = useStopwatch();
-
-
 
   useEffect(() => {
     handleListen();
@@ -76,21 +74,18 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
   const handleSaveNote = () => {
     if (note) {
       setSavedNotes([...savedNotes, note]);
-      setInputMessage(note)
+      setInputMessage(note);
       setNote("");
     }
   };
   return (
-    <Box w="100%" mt="5">
-      <Flex float="right" border="1px solid #E1E3EA"  direction="row" w="100%" mt="2">
+    <>
+      <Box border="1px solid #E1E3EA" height="3.5rem" mb="0rem">
         <InputGroup>
           {voiceState ? (
             <Flex direction="row" width="100%" height="2.75rem">
               <Box float="right">
-              <Input
-                value={note ?? ''}
-/>
-                
+                <Input value={note ?? ""} />
               </Box>
               <Box width="20rem" height="2.75rem">
                 {isListening ? <span>🎙️</span> : <span>🛑🎙️</span>}
@@ -103,13 +98,13 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                   Start/Stop
                 </button>
               </Box>
-              
             </Flex>
           ) : (
             <Input
               placeholder="Type your message"
               resize="none"
               border="none"
+              height="2.75rem"
               borderRadius="none"
               _focus={{
                 border: "1px solid black",
@@ -125,42 +120,134 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
           )}
 
           <InputRightElement>
+            {voiceState ? (
+              <Flex
+                alignItems="center"
+                mt="1rem"
+                p="1rem"
+                border="1px solid #E1E3EA"
+                mr="12rem"
+                width="20rem"
+                height="2.75rem"
+              >
+                <Box
+                  onClick={() => {
+                    handleSaveNote();
+                    setVoiceState(false);
+                    stop()
+                  }}
+                >
+                  <Image src={record} />
+                </Box>
 
-          { voiceState ? (<Flex alignItems="center" border="1px solid #E1E3EA" mr="5rem" width="20rem" height="2.75rem">
-            <Image src={record}/>
+                <Box width="10rem"></Box>
 
-            <Box width="10rem">
-
-            </Box>
-
-            <Box>
-            {formattedTime}
-            </Box>
-
-
-          </Flex>) : <Image
-              onClick={() => {
-                setVoiceState(true)
-                setIsListening((prevState) => !prevState)
-               start()
-
-              }}
-              src={Mic}
-            />}
+                <Box>{formattedTime}</Box>
+              </Flex>
+            ) : (
+              <Image
+                onClick={() => {
+                  setVoiceState(true);
+                  setIsListening((prevState) => !prevState);
+                  start();
+                }}
+                src={Mic}
+              />
+            )}
           </InputRightElement>
         </InputGroup>
-      </Flex>
+      </Box>
       <Button
         borderRadius="0.5rem"
         float="right"
         mt="10px"
-        colorScheme="red"
+        bg="#3E97FF"
         disabled={inputMessage.trim().length <= 0}
         onClick={handleSendMessage}
       >
         Get Advice
       </Button>
-    </Box>
+    </>
+    //     <Box w="100%" mt="5">
+    //       <Flex float="right" bg="red" border="1px solid #E1E3EA" height="3.5rem" borderRadius="0.38rem" direction="row" w="100%" mt="2">
+    //         <InputGroup>
+    //           {voiceState ? (
+    //             <Flex direction="row" width="100%" height="2.75rem">
+    //               <Box float="right">
+    //               <Input
+    //                 value={note ?? ''}
+    // />
+
+    //               </Box>
+    //               <Box width="20rem" height="2.75rem">
+    //                 {isListening ? <span>🎙️</span> : <span>🛑🎙️</span>}
+    //                 <button onClick={handleSaveNote} disabled={!note}>
+    //                   Save Note
+    //                 </button>
+    //                 <button
+    //                   onClick={() => setIsListening((prevState) => !prevState)}
+    //                 >
+    //                   Start/Stop
+    //                 </button>
+    //               </Box>
+
+    //             </Flex>
+    //           ) : (
+    //             <Input
+    //               placeholder="Type your message"
+    //               resize="none"
+    //               border="none"
+    //               height="2.75rem"
+    //               borderRadius="none"
+    //               _focus={{
+    //                 border: "1px solid black",
+    //               }}
+    //               onKeyPress={(e) => {
+    //                 if (e.key === "Enter") {
+    //                   handleSendMessage();
+    //                 }
+    //               }}
+    //               value={inputMessage}
+    //               onChange={(e) => setInputMessage(e.target.value)}
+    //             />
+    //           )}
+
+    //           <InputRightElement>
+
+    //           { voiceState ? (<Flex alignItems="center" border="1px solid #E1E3EA" mr="5rem" width="20rem" height="2.75rem">
+    //             <Image src={record}/>
+
+    //             <Box width="10rem">
+
+    //             </Box>
+
+    //             <Box>
+    //             {formattedTime}
+    //             </Box>
+
+    //           </Flex>) : <Image
+    //               onClick={() => {
+    //                 setVoiceState(true)
+    //                 setIsListening((prevState) => !prevState)
+    //                start()
+
+    //               }}
+    //               src={Mic}
+    //             />}
+    //           </InputRightElement>
+    //         </InputGroup>
+    //       </Flex>
+    //       <Button
+    //         borderRadius="0.5rem"
+    //         float="right"
+    //         mt="10px"
+    //         colorScheme="#3E97FF"
+    //         disabled={inputMessage.trim().length <= 0}
+    //         onClick={handleSendMessage}
+    //       >
+    //         Get Advice
+    //       </Button>
+    //     </Box>
   );
 };
 

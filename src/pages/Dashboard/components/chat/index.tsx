@@ -19,9 +19,18 @@ interface Message {
   from: string;
   text: string;
 }
+interface ChildComponentProps {
+  parentState: boolean;
+  setChildState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const Chat: React.FC = () => {
+const Chat: React.FC<ChildComponentProps> = ({
+  parentState,
+  setChildState,
+}) => {
   const dispatch = useDispatch();
+  const [inputMessage, setInputMessage] = useState<string>("");
+  const [childState, setLocalChildState] = useState(false);
   const [newChatState, setNewChatState] = useState(true);
   const [sampleState, setSampleState] = useState("");
   const accessToken = useSelector(selectAccessToken);
@@ -33,35 +42,15 @@ const Chat: React.FC = () => {
     "Have you been running a fever",
     "Another piece of information",
     "Another piece of information",
-    // Add more items as needed
   ];
 
-  const chats = useSelector(selectChats);
-  const [messageText, setMessageText] = useState("");
-
-  const handleSentMessage = (chatId: string) => {
-    const timestamp = new Date().toISOString();
-    const message = { text: messageText, timestamp };
-    dispatch(addMessage({ id: chatId, message }));
-    setMessageText("");
-  };
-
-  const handleCreateChat = () => {
-    const id = generateUniqueId(); // You'll need to implement this function
-    dispatch(addChat({ id, messages: [] }));
-  };
-
-  const generateUniqueId = () => {
-    // You can implement your own unique ID generation logic here
-    // For simplicity, using a basic random string for illustration
-    return Math.random().toString(36).substring(7);
-  };
-
-  const [inputMessage, setInputMessage] = useState<string>("");
-  // const handleOldSendMessage = () => {
-  //   // Your handleSendMessage logic here
-  //   alert(sampleState);
-  // };
+  useEffect(() => {
+    setLocalChildState(parentState);
+    setNewChatState(false);
+    var uniqueId = generateUUID();
+    setIdent(uniqueId);
+    setMessages([]);
+  }, [parentState]);
 
   function generateUUID() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
@@ -74,12 +63,6 @@ const Chat: React.FC = () => {
     );
   }
 
-  // Example usage
-
-  // useEffect(() => {
-  //   var uniqueId = generateUUID();
-  //   console.log(uniqueId);
-  // }, [])
   useEffect(() => {
     if (newChatState === true) {
       var uniqueId = generateUUID();
@@ -106,7 +89,6 @@ const Chat: React.FC = () => {
       {
         headers: {
           Authorization: "Bearer " + accessToken,
-          // You can add other headers as needed
         },
       }
     );
@@ -168,15 +150,15 @@ const Chat: React.FC = () => {
                 Try an example
               </Text>
 
-              <Flex direction={{ base: "column", md: "row" }}>
+              <Flex mt="1.5rem" direction={{ base: "column", md: "row" }}>
                 <Box
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
-                  width="19.3rem"
+                  width="fit-content"
                   height="2.75rem"
                   bg="#F5F6FA"
-                  borderRadius="1.5rem"
+                  borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
                   onClick={() => {
@@ -191,10 +173,10 @@ const Chat: React.FC = () => {
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
-                  width="19.3rem"
+                  width="fit-content"
                   height="2.75rem"
                   bg="#F5F6FA"
-                  borderRadius="1.5rem"
+                  borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
                   onClick={() => {
@@ -204,15 +186,15 @@ const Chat: React.FC = () => {
                   <Text>My head hurt so much</Text>
                 </Box>
               </Flex>
-              <Flex mt="2rem" direction={{ base: "column", md: "row" }}>
+              <Flex my="2rem" direction={{ base: "column", md: "row" }}>
                 <Box
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
-                  width="19.3rem"
+                  width="fit-content"
                   height="2.75rem"
                   bg="#F5F6FA"
-                  borderRadius="1.5rem"
+                  borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
                 >
@@ -224,10 +206,10 @@ const Chat: React.FC = () => {
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
-                  width="19.3rem"
+                  width="fit-content"
                   height="2.75rem"
                   bg="#F5F6FA"
-                  borderRadius="1.5rem"
+                  borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
                 >
@@ -239,12 +221,13 @@ const Chat: React.FC = () => {
         ) : (
           <Messages messages={messages} />
         )}
-        <Divider />
-        <SubmitePage
-          inputMessage={inputMessage}
-          setInputMessage={setInputMessage}
-          handleSendMessage={handleSendMessage}
-        />
+        <Box>
+          <SubmitePage
+            inputMessage={inputMessage}
+            setInputMessage={setInputMessage}
+            handleSendMessage={handleSendMessage}
+          />
+        </Box>
       </Flex>
     </Flex>
   );

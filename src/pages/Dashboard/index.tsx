@@ -13,24 +13,17 @@ import {
 import Navbar from "../../components/navbar/dashboardNavbar";
 import pen from "../../assets/icons/pen.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
-import user from "../../assets/icons/user.svg";
 import ChatBox from "./components/chat";
-import PopMessage from "./components/modal";
 import { RootState } from "../../redux/store";
 import RoleBox from "./components/role";
 import { useLocation, useNavigate } from "react-router-dom";
-import { navigationData } from "./components/data/data";
-import ChatVoice from "./components/voice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectId } from "../../redux/userSlice";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { sendChat } from "../../api";
 import {
   selectAccessToken,
   selectIsAuthenticated,
 } from "../../redux/authSlice";
 import { logout } from "../../redux/authSlice";
-import { access } from "fs";
 
 interface role {
   text: string;
@@ -82,6 +75,8 @@ const datas = [
 
 const Dashboard = () => {
   const [mapHistory, setMapHistory] = useState<MapHistoryItem[]>([]);
+  const [childState, setChildState] = useState(true)
+  const [parentState, setParentState] = useState(true);
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
   const id = useSelector(selectId);
@@ -130,14 +125,11 @@ const Dashboard = () => {
     // handleHistory();
   }, []);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const [activeIndex, setActiveIndex] = useState<number>();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userName = useSelector((state: RootState) => state.user);
-  const theme = useTheme();
   const [changeBg, setChangeBg] = useState("");
 
   const toggleDrawer = () => {
@@ -177,7 +169,7 @@ const Dashboard = () => {
                   display="flex"
                   flexWrap="wrap"
                   onClick={() => {
-                    navigate("/dashboard");
+                    setParentState(!setParentState)
                   }}
                 >
                   <Box
@@ -269,7 +261,7 @@ const Dashboard = () => {
         </Box>
         <Spacer />
         <Box width="100%">
-          <ChatBox />
+          <ChatBox  parentState={parentState} setChildState={setParentState} />
         </Box>
       </Box>
     </Box>
