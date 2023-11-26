@@ -1,26 +1,29 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import Router from './routes';
+import store from './redux/store';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { selectUser } from './redux/authSlice';
 
-function App() {
+const App: React.FC = () => {
+ 
+  const queryClient = new QueryClient();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <ChakraProvider>
+        <BrowserRouter>
+        <Router />
+        <Toaster />
+        </BrowserRouter>
+      </ChakraProvider>
+    </Provider>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
