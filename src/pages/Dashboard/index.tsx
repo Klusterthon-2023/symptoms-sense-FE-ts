@@ -7,10 +7,6 @@ import {
   Image,
   Spacer,
   useDisclosure,
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
   Flex,
   Heading,
 } from "@chakra-ui/react";
@@ -167,7 +163,7 @@ const Dashboard = () => {
   return (
     <Box width="100%" height="100vh" overflow="hidden">
       <Navbar />
-      <Box width="100px" bg="red" height="0.25rem">  </Box>
+     
       <Box width="90%" mt="4rem" mx="auto" display="flex">
         <Box  borderRight="1px solid #f5f5f5" >
           <Box   display={{ base: "none", md: "block" }}>
