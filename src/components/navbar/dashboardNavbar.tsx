@@ -29,7 +29,7 @@ const Navbar: React.FC<ChildComponentProps> = ({isSideOpen, onSideToggle}) => {
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          paddingX={{ base: "1rem", sm: "2rem", md: "5rem", xl: "10rem" }}
+          px={{ base: "1rem", md: "2rem", "xl":"3rem" }}
         >
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">

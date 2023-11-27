@@ -77,14 +77,21 @@ const Navbar: React.FC = () => {
           </Box>
         </Box>
       </Box>
-      <Box width="90%" mx="auto" height={{ base: "5rem", sm: "5.5rem" }}></Box>
       {
         mobileState ?
-          <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap"  >
+          <Box mt="1rem"  width="12.3rem" padding={"0.15rem"} display="flex" flexDirection={"column"} float={"right"}  >
             <Button
               onClick={() => {
                 navigate("/login");
               }}
+              color={"brand.main"}
+              variant={"secondary"}
+              padding={0}
+              textAlign={"right"}
+              _hover={{
+                color:"brand.active"
+              }}
+              fontSize={"1.5rem"}
             >
               Log in
             </Button>
@@ -95,10 +102,14 @@ const Navbar: React.FC = () => {
               onClick={() => {
                 navigate("/signup");
               }}
-              width="7.06rem"
-              px="1.5rem"
-              bg="#3E97FF"
-              borderRadius="0.38rem"
+              color={"brand.main"}
+              variant={"secondary"}
+              padding={0}
+              textAlign={"right"}
+              _hover={{
+                color:"brand.active"
+              }}
+              fontSize={"1.5rem"}
             >
               Try Now
             </Button>

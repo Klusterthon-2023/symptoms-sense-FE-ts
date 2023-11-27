@@ -47,6 +47,7 @@ const WelcomePage = () => {
         backgroundRepeat="no-repeat"
         backgroundSize="cover"
         backgroundPosition="center"
+        mt={"5rem"}
       >
         <Box>
           <Flex

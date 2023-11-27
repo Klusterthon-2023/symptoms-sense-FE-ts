@@ -96,7 +96,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
             <Flex direction="row" height="2.75rem">
               <Box float="right">
                 <Input
-                  width="40rem"
+                  width="90rem"
                   value={note ?? ""}
                   onChange={(e) => {
                     setNote(e.target.value);
@@ -110,12 +110,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
             <Input
               placeholder="Type your message"
               resize="none"
-              border="none"
-              height="2.75rem"
-              borderRadius="none"
-              _focus={{
-                border: "1px solid black",
-              }}
+              height="3.5rem"
               onKeyPress={(e: any) => {
                 if (e.key === "Enter") {
                   handleSendMessage();
@@ -131,17 +126,19 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
               <Flex
                 alignItems="center"
                 mt="1rem"
-                p="1rem"
-                border="1px solid #E1E3EA"
-                mr="12rem"
-                width="20rem"
-                height="2.75rem"
+                // p="1rem"
+                // border="1px solid #E1E3EA"
+                // mr="12rem"
+                // width="20rem"
+                // height="3.5rem"
               >
                 <Box
                   onClick={() => {
                     handleSaveNote();
                     setVoiceState(false);
                   }}
+                  width="100%"
+                  height={"100%"}
                 >
                   <Image width="100%" height="100%" src={"https://baticali.sirv.com/Klusterthon2023/mic.svg"} />
                 </Box>

@@ -109,8 +109,8 @@ const Dashboard = () => {
     <Box width="100%" height="100vh" overflow="hidden">
       <Navbar onSideToggle={onToggle} isSideOpen={isOpen} />
 
-      <Box width="100%" mt={{base:"1.5rem", md:"4rem"}} mx="auto" display="flex" px={{ base: "1rem", md: "3rem" }}>
-        <Box borderRight="1px solid #f5f5f5" bg={"#fff"} display={{base:"none", md:"block"}} position={{base:"absolute", md:"relative"}} 
+      <Box width="100%" mt={{base:"1.5rem", md:"4rem"}} mx="auto" display="flex" px={{ base: "1rem", md: "2rem", "xl":"3rem" }}>
+        <Box borderRight="1px solid #E1E3EA" bg={"#fff"} display={{base:"none", md:"block"}} position={{base:"absolute", md:"relative"}} 
         bottom={0} maxH="94vh" >
           <Box>
             <Box width="14rem" pr="2rem" mt="2rem">

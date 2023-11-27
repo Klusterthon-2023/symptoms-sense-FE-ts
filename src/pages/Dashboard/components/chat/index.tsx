@@ -36,8 +36,7 @@ const Chat: React.FC<ChildComponentProps> = ({
     "I have been running a fever",
     "Feeling unusually tired or fatigued",
     "I have a persistent cough",
-  ];  
-
+  ]; 
 
   const [inputMessage, setInputMessage] = useState<string>("");
 
@@ -78,9 +77,9 @@ const Chat: React.FC<ChildComponentProps> = ({
   };
 
   useEffect(() => {
-    setIdent(childId);
 
-    if (childId!=="") {      
+    if (childId!=="") {  
+      setIdent(childId);    
       handleGetChatHistory();
     }
   }, [childId, ident, messages]);
@@ -155,6 +154,7 @@ const Chat: React.FC<ChildComponentProps> = ({
       ...old,
       { from: "computer", text: response.data.detail },
     ]);
+    console.log(ident)
   
     setLoading(false);    
     setNewChatState(false);
