@@ -5,7 +5,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import mode from "../../../src/assets/icons/night-day.svg";
 import communication from "../../../src/assets/icons/message-text-2.svg";
 import FeedbackModal from "./modal";
-
+import logo from "../../assets/icons/logo.svg";
 
 const Navbar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -13,11 +13,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <Box
-        position="fixed"
-        zIndex="1000"
-        width="100%"
-      >
+      <Box position="fixed" zIndex="1000" width="100%">
         <FeedbackModal isOpen={isOpen} onClose={onClose} />
         <Box
           borderBottom="1px solid #E1E3EA"
@@ -31,18 +27,16 @@ const Navbar: React.FC = () => {
         >
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
-              <Image
-                src={"https://baticali.sirv.com/Klusterthon2023/logo.png"}
-
-                width="100%"
-                height="auto"
-                loading="lazy"
-              />
+              <Image src={logo} width="100%" height="auto" loading="lazy" />
             </Box>
             <Text fontWeight={600} fontSize="1.25rem">
               Symptom
             </Text>
-            <Text fontFamily={`'GT-Eesti-Light', sans-serif`} fontWeight={300} fontSize="1.25rem">
+            <Text
+              fontFamily={`'GT-Eesti-Light', sans-serif`}
+              fontWeight={300}
+              fontSize="1.25rem"
+            >
               Sense
             </Text>
           </Box>
