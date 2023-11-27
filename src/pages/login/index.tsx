@@ -27,6 +27,7 @@ interface FormValues {
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = React.useState(false);
   const [show, setShow] = useState(false);
   const handleClick = () => { setShow(!show) };
   const initialValues: FormValues = {
@@ -42,7 +43,7 @@ const Signin: React.FC = () => {
   });
 
   const onSubmit = async (values: FormValues) => {
-    console.log("Form values:", values);
+    setLoading(true); 
 
     try {
       const response = await axios.post(
@@ -50,7 +51,6 @@ const Signin: React.FC = () => {
         values
       );
 
-      console.log(response);
       if (response) {
         const payload = {
           id: response.data.id,
@@ -71,7 +71,8 @@ const Signin: React.FC = () => {
         localStorage.setItem('id', response.data.user_id)
         localStorage.setItem('firstname', response.data.firstname)
         localStorage.setItem('lastname', response.data.lastname)
-
+        
+        navigate('/dashboard')
         toast.success("Login successful");
       }else {
         toast.error("Invalid response data");
@@ -80,7 +81,7 @@ const Signin: React.FC = () => {
       console.log(error);
       console.log(error)
     }
-
+    setLoading(false);
    
   };
   return (
@@ -274,6 +275,7 @@ const Signin: React.FC = () => {
                     height="2.375rem"
                     width="100%"
                     type="submit"
+                    isLoading={loading}
                   >
                     Sign in
                   </Button>

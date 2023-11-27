@@ -54,7 +54,6 @@ const WelcomePage = () => {
             width="100%"
             maxWidth={{ base: "90%", md: "93.8rem" }}
             py={{ base: "1rem", md: "8rem" }}
-            // height={{ base: "36rem", md: "48rem" }}
             direction={{ base: "column", lg: "row" }}
             alignItems={"center"}
             justifyContent={"center"}

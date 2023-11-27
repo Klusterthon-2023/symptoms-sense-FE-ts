@@ -10,13 +10,17 @@ const Navbar: React.FC = () => {
   const [mobileState, setMobileState] = useState(false)
 
   return (
-    <>
+    <Box position="fixed"
+      width="100%"
+      bgColor={theme.colors.white}
+      borderBottom="1px solid #E1E3EA"
+      zIndex="1000"
+      top={0}
+      left={0}
+      right={0}
+    >
       <Box
-        position="fixed"
-        width="100%"
-        bgColor={theme.colors.white}
-        borderBottom="1px solid #E1E3EA"
-        zIndex="1000"
+        position={"relative"}
       >
         <Box
           width="90%"
@@ -76,7 +80,7 @@ const Navbar: React.FC = () => {
       <Box width="90%" mx="auto" height={{ base: "5rem", sm: "5.5rem" }}></Box>
       {
         mobileState ?
-          <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap">
+          <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap"  >
             <Button
               onClick={() => {
                 navigate("/login");
@@ -101,7 +105,7 @@ const Navbar: React.FC = () => {
           </Box>
           : ""
       }
-    </>
+    </Box>
   );
 };
 
