@@ -50,12 +50,11 @@ const Signin: React.FC = () => {
         `https://adewole.pythonanywhere.com/api/UsersAuths/Login/`,
         values
       );
-
       if (response) {
         const payload = {
           id: response.data.id,
           firstname: response.data.first_name,
-            lastname: response.data.last_name,
+          lastname: response.data.last_name,
 
         };
 
@@ -69,8 +68,8 @@ const Signin: React.FC = () => {
           })
         );
         localStorage.setItem('id', response.data.user_id)
-        localStorage.setItem('firstname', response.data.firstname)
-        localStorage.setItem('lastname', response.data.lastname)
+        localStorage.setItem('firstname', response.data.first_name)
+        localStorage.setItem('lastname', response.data.last_name)
         
         navigate('/dashboard')
         toast.success("Login successful");

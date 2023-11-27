@@ -42,6 +42,9 @@ const Dashboard = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const userName = useSelector((state: RootState) => state.user);
+  // const userID = useSelector((state: RootState) => state.id);
+  // const firstName = useSelector((state: RootState) => state.firstname);
+  // const lastName = useSelector((state: RootState) => state.lastname);
   const [childId, setChildId] = useState("");
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
