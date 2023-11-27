@@ -14,25 +14,29 @@ interface Message {
   text: string;
 }
 interface ChildComponentProps {
-  
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  childId: string;
+  setChildId: React.Dispatch<React.SetStateAction<string>>;
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  newChatState: boolean
+  setNewChatState: React.Dispatch<React.SetStateAction<boolean>>;
+  handleHistory: Function
 }
 
 const Chat: React.FC<ChildComponentProps> = ({
- 
+ messages, setMessages, childId, setChildId, loading, setLoading, newChatState, setNewChatState, handleHistory
 }) => {
-
-  const [newChatState, setNewChatState] = useState(true);
   const accessToken = useSelector(selectAccessToken);
   const [ident, setIdent] = useState("");
   const id = useSelector(selectId);
-  const [messages, setMessages] = useState<Message[]>([]);
   const data: string[] = [
     "Experiencing persistent or severe headaches",
     "I have been running a fever",
     "Feeling unusually tired or fatigued",
     "I have a persistent cough",
   ];  
-  const [loading, setLoading] = useState(false)
 
 
   const [inputMessage, setInputMessage] = useState<string>("");
@@ -48,25 +52,53 @@ const Chat: React.FC<ChildComponentProps> = ({
     );
   }
 
+  const handleGetChatHistory = async () => {
+    setLoading(true)
+    const response = await axios.get(
+      `https://adewole.pythonanywhere.com/api/${id}/History/${childId}/ListChatIdentifierHistory/`,
+      {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+    setMessages([]);
+    response.data.chat_history.map((oldmap: any) => {
+      setMessages((old) => [...old, { from: "me", text: oldmap.request }]);
+
+      setInputMessage("");
+
+      setMessages((old) => [
+        ...old,
+        { from: "computer", text: oldmap.response },
+      ]);
+    });
+    setChildId("");
+    setLoading(false);
+  };
+
   useEffect(() => {
-    if (newChatState === true) {
-      var uniqueId = generateUUID();
-      setIdent(uniqueId);
-    } else {
-      setIdent(ident);
+    setIdent(childId);
+
+    if (childId!=="") {      
+      handleGetChatHistory();
     }
-  }, [ident]);
+  }, [childId, ident, messages]);
 
   const handleSendMessage = async () => {
+    let uniqueId;
+    if (newChatState) {
+      uniqueId = generateUUID();
+      setIdent(uniqueId);
+    }
     if (!inputMessage.trim().length) {
       return;
     }
     setLoading(true)
     const data: string = inputMessage;
-
     const payload = {
       request: data,
-      identifier: ident,
+      identifier: newChatState ? uniqueId : ident ,
     };
 
     const response = await axios.post(
@@ -79,24 +111,23 @@ const Chat: React.FC<ChildComponentProps> = ({
       }
     );
 
-    console.log(response);
-
     setMessages((old) => [...old, { from: "me", text: data }]);
 
     setInputMessage("");
+    setMessages((old) => [
+      ...old,
+      { from: "computer", text: response.data.detail },
+    ]);
 
-    setTimeout(() => {
-      setMessages((old) => [
-        ...old,
-        { from: "computer", text: response.data.detail },
-      ]);
-    }, 1000);
-    
-    setLoading(false)
+    setLoading(false);
+    setNewChatState(false);
+    handleHistory();
   };
 
   const sampleFxn = async (text: string) => {
-    setIdent("");
+    var uniqueId = generateUUID();
+    setIdent(uniqueId);
+    setLoading(true);
 
     setInputMessage(text);
 
@@ -104,7 +135,7 @@ const Chat: React.FC<ChildComponentProps> = ({
 
     const payload = {
       request: newdata,
-      identifier: ident,
+      identifier: uniqueId,
     };
 
     const response = await axios.post(
@@ -117,34 +148,30 @@ const Chat: React.FC<ChildComponentProps> = ({
       }
     );
 
-    console.log(response);
-
     setMessages((old) => [...old, { from: "me", text: newdata }]);
 
     setInputMessage("");
-
-    setTimeout(() => {
-      setMessages((old) => [
-        ...old,
-        { from: "computer", text: response.data.detail },
-      ]);
-    }, 1000);
+    setMessages((old) => [
+      ...old,
+      { from: "computer", text: response.data.detail },
+    ]);
+  
+    setLoading(false);    
+    setNewChatState(false);
   };
 
   return (
-    <Flex ml="2.5rem" w="100%" h="100vh" justify="center" align="center">
+    <Flex ml={{base:0, lg:"2.5rem"}} w="100%" h="100vh" justify="center" align="center">
       <Flex w={["100%", "100%", "90%"]} h="90%" flexDir="column">
-        {/* <Divider /> */}
-
         {messages.length === 0 ? (
-          <Box position="relative" width="100%" h="80%">
-            <Box></Box>
-            <Box position="absolute" bottom="0">
+          <Box position="relative" width="100%" h="100%" overflow={"hidden"}>
+            <Box position="absolute" bottom="0" width={"100%"} maxH={"100%"} overflowY={"auto"} pt={{base:"2rem", sm:0}}>
               <Heading
                 textColor="#101828"
                 fontSize="1.5rem"
                 fontWeight="700"
                 lineHeight="2rem"
+                fontFamily={`'GT-Eesti', sans-serif`}
               >
                 How can I help you today?
               </Heading>
@@ -156,18 +183,19 @@ const Chat: React.FC<ChildComponentProps> = ({
                 textColor="#101828"
                 mt="1.88rem"
                 fontSize="1rem"
-                fontWeight="400"
+                fontWeight="500"
+                fontFamily={`'GT-Eesti', sans-serif`}
               >
                 Try an example
               </Text>
 
-              <Flex mt="1.5rem" direction={{ base: "column", md: "row" }}>
+              <Flex mt="1.5rem" direction={{ base: "column", md: "row" }} gap={{base:"1rem", md:"1.5rem"}}>
                 <Box
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
-                  height="2.75rem"
+                  py="0.5rem"
                   bg="#F5F6FA"
                   borderRadius="0.5rem"
                   display="flex"
@@ -175,17 +203,18 @@ const Chat: React.FC<ChildComponentProps> = ({
                   onClick={() => {
                     sampleFxn(data[0]);
                   }}
+                  cursor={"pointer"}
+                  fontFamily={`'GT-Eesti-Light', sans-serif`}
                 >
                   <Text>Experiencing persistent or severe headaches</Text>
                 </Box>
 
                 <Box
-                  ml="1.5rem"
                   px="1rem"
+                  py="0.5rem"
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
-                  height="2.75rem"
                   bg="#F5F6FA"
                   borderRadius="0.5rem"
                   display="flex"
@@ -193,36 +222,47 @@ const Chat: React.FC<ChildComponentProps> = ({
                   onClick={() => {
                     sampleFxn(data[1]);
                   }}
+                  cursor={"pointer"}
+                  fontFamily={`'GT-Eesti-Light', sans-serif`}
                 >
                   <Text>I have been running a fever</Text>
                 </Box>
               </Flex>
-              <Flex my="2rem" direction={{ base: "column", md: "row" }}>
+              <Flex my="2rem" direction={{ base: "column", md: "row" }}  gap={{base:"1rem", md:"1.5rem"}}>
                 <Box
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
-                  height="2.75rem"
+                  py="0.5rem"
                   bg="#F5F6FA"
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
+                  onClick={() => {
+                    sampleFxn(data[2]);
+                  }}
+                  cursor={"pointer"}
+                  fontFamily={`'GT-Eesti-Light', sans-serif`}
                 >
                   <Text>Feeling unusually tired or fatigued</Text>
                 </Box>
 
                 <Box
-                  ml="1.5rem"
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
-                  height="2.75rem"
+                  py="0.5rem"
                   bg="#F5F6FA"
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
+                  onClick={() => {
+                    sampleFxn(data[3]);
+                  }}
+                  cursor={"pointer"}
+                  fontFamily={`'GT-Eesti-Light', sans-serif`}
                 >
                   <Text>I have a persistent cough</Text>
                 </Box>

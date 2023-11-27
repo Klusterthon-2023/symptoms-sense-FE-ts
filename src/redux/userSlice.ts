@@ -10,9 +10,9 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  id: null,
-  firstname: null,
-  lastname: null,
+  id: localStorage.getItem('id') ? localStorage.getItem('id') : null,
+  firstname: localStorage.getItem('firstname') ? localStorage.getItem('firstname') : null,
+  lastname: localStorage.getItem('lastname') ? localStorage.getItem('lastname') : null,
 };
 
 const userSlice = createSlice({

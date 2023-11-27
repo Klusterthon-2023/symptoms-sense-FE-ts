@@ -32,7 +32,7 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
 
   return (
     <Flex
-      mt="2rem"
+      mt={{base:0, md:"2rem"}}
       width="100%"
       height="100%"
       overflow="hidden"
@@ -44,9 +44,9 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
         height="100%"
         marginRight="-50px"
         paddingRight="50px"
-        overflowY="scroll"
+        overflowY="auto"
       >
-        {messages.map((item, index) => {
+        {messages.length > 0 && messages.map((item, index) => {
           if (item.from === "me") {
             return (
               <Flex key={index} w="100%" justify="flex-end">
@@ -54,7 +54,7 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                   borderRadius="0.75rem"
                   bg="#F5F6FA"
                   color="white"
-                  maxW="50%"
+                  maxW={{base:"90%", lg:"50%"}}
                   my="1"
                   p="1rem 2rem"
                 >
@@ -95,7 +95,7 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                   borderRadius="0.75rem"
                   bg="gray.100"
                   color="black"
-                  maxW="70%"
+                  maxW={{base:"100%", lg:"70%"}}
                   mt="1rem"
                   mb={"2rem"}
                   p="3"
@@ -105,22 +105,19 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                     src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}
                     mr="0.5rem"
                     bg="white"
-                    size={"sm"}                    
+                    size={"sm"}
                     p={"0.35rem"}
                   ></Avatar>
                   <Flex direction="column">
                     <Box display="flex" alignItems="center" gap="6px">
                       <Text fontWeight={600} fontSize="1.25rem">
-                        Symptom
-                      </Text>
-                      <Text fontFamily={`'GT-Eesti-Light', sans-serif`} fontWeight={300} fontSize="1.25rem">
-                        Sense
+                        AI
                       </Text>
                     </Box>
                     <Text fontFamily={`'GT-Eesti-Light', sans-serif`}>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: `<TypeAnimation sequence={[${marked.parse(item.text)}]} speed={75} />`
+                          __html: marked.parse(item.text)
                         }}
                       />
                     </Text>
@@ -147,10 +144,6 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                           onClick={onOpen}>
                           <Image ml="0.62rem" src={downState ? downFill : dislike} />
                         </Box>
-
-
-
-
                         <Spacer />
                         <Box
                           onClick={() => {

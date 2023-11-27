@@ -33,7 +33,6 @@ const NewChat: React.FC<ChildComponentProps> = ({
     "I have been running a fever",
     "Feeling unusually tired or fatigued",
     "I have a persistent cough",
-    // Add more items as needed
   ];
   const [loading, setLoading] = React.useState(false);
   useEffect(() => {

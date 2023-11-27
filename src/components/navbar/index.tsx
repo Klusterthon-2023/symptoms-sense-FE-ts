@@ -3,9 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Text, useTheme, Spacer } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import mode from "../../../src/assets/icons/night-day.svg";
-import communication from "../../../src/assets/icons/message-text-2.svg";
-import logo from "../../assets/icons/logo.svg";
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
@@ -32,7 +29,7 @@ const Navbar: React.FC = () => {
           justifyContent="space-between"
 
         >
-          <Box display="flex" alignItems="center" gap="6px">
+          <Box display="flex" alignItems="center" gap="6px" cursor={"pointer"} onClick={()=>navigate('/')}>
             <Box width="2rem" aspectRatio="1/1">
               <Image
                 src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}

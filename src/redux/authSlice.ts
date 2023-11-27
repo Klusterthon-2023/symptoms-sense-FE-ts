@@ -12,8 +12,8 @@ interface AuthState {
 
 // Define the initial state
 const initialState: AuthState = {
-  accessToken: null,
-  isAuthenticated: false,
+  accessToken: localStorage.getItem('token'),
+  isAuthenticated: localStorage.getItem('token') ? true : false,
   isVerifying: false,
 };
 
@@ -28,11 +28,16 @@ const authSlice = createSlice({
     login: (state, action) => {
       state.accessToken = action.payload;
       state.isAuthenticated = true;
+      localStorage.setItem('token', action.payload)
     },
     // Reducer function to handle logout
     logout: (state) => {
       state.accessToken = null;
       state.isAuthenticated = false;
+      localStorage.removeItem("token")
+      localStorage.removeItem("id")
+      localStorage.removeItem("firstname")
+      localStorage.removeItem("lastname")
     },
   },
 

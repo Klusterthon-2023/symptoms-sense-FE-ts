@@ -12,13 +12,10 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import Navbar from "../../components/navbar/dashboardNavbar";
-import pen from "../../assets/icons/pen.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
 import ChatBox from "./components/chat";
-import ChatHistory from "./components/chat/demo";
 import { RootState } from "../../redux/store";
 import RoleBox from "./components/role";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectId } from "../../redux/userSlice";
 import {
@@ -26,7 +23,6 @@ import {
   selectIsAuthenticated,
 } from "../../redux/authSlice";
 import { logout } from "../../redux/authSlice";
-import NewChat from "./components/chat/newChat";
 
 interface MapHistoryItem {
   id: string;
@@ -36,15 +32,25 @@ interface MapHistoryItem {
   identifier: string;
 }
 
+interface Message {
+  from: string;
+  text: string;
+}
+
 const Dashboard = () => {
   const [mapHistory, setMapHistory] = useState<MapHistoryItem[]>([]);
-  const [seletectChatTYpe, setSelectectChatType] = useState("chat");
-  const [parentState, setParentState] = useState(true);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
+  const userName = useSelector((state: RootState) => state.user);
+  const [childId, setChildId] = useState("");
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
   const id = useSelector(selectId);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [newChatState, setNewChatState] = useState(true);
 
-  
+
 
   const handleHistory = async () => {
     const response = await axios.get(
@@ -58,32 +64,17 @@ const Dashboard = () => {
     setMapHistory(response.data);
   };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      handleHistory();
-    }, 10000);
-    return () => clearInterval(intervalId);
-  }, []);
 
   useEffect(() => {
+    handleHistory()
     if (mapHistory.length === 0) {
       onOpen();
     }
-    
-  }, []);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(true);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const userName = useSelector((state: RootState) => state.user);
-  const [changeBg, setChangeBg] = useState("");
+  }, []);
 
   const handleClick = async (role: string) => {
-    setChangeBg(role);
-    const history = "chatHistory";
-
-    setSelectectChatType(history);
+    setChildId(role);
   };
 
   useEffect(() => {
@@ -91,7 +82,7 @@ const Dashboard = () => {
       window.location.href = "/login";
     }
 
-    return () => {};
+    return () => { };
   }, [isAuthenticated]);
 
   if (!accessToken || !isAuthenticated) {
@@ -116,11 +107,12 @@ const Dashboard = () => {
 
   return (
     <Box width="100%" height="100vh" overflow="hidden">
-      <Navbar />
+      <Navbar onSideToggle={onToggle} isSideOpen={isOpen} />
 
-      <Box width="90%" mt="4rem" mx="auto" display="flex">
-        <Box borderRight="1px solid #f5f5f5">
-          <Box display={{ base: "none", md: "block" }}>
+      <Box width="100%" mt={{base:"1.5rem", md:"4rem"}} mx="auto" display="flex" px={{ base: "1rem", md: "3rem" }}>
+        <Box borderRight="1px solid #f5f5f5" bg={"#fff"} display={{base:"none", md:"block"}} position={{base:"absolute", md:"relative"}} 
+        bottom={0} maxH="94vh" >
+          <Box>
             <Box width="14rem" pr="2rem" mt="2rem">
               <Box
                 width="12.375rem"
@@ -132,7 +124,9 @@ const Dashboard = () => {
                 flexWrap="wrap"
                 cursor="pointer"
                 onClick={() => {
-                  setSelectectChatType("newChat");
+                  messages.length > 0 && setMessages([]);
+                  setLoading(false);
+                  setNewChatState(true)
                 }}
               >
                 <Box
@@ -143,10 +137,9 @@ const Dashboard = () => {
                   ml="0.75rem"
                   width="1.25rem"
                   height="1.25rem"
-                  bgColor="#78B6FF"
                   borderRadius="0.21rem"
                 >
-                  <Image src={pen} />
+                  <Image src={"https://baticali.sirv.com/Klusterthon2023/notepad-edit.svg"} />
                 </Box>
                 <Text
                   my="0.56rem"
@@ -156,7 +149,7 @@ const Dashboard = () => {
                   fontSize={"1rem"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
                 >
-                  <strong>New</strong> Chat
+                  <strong>New Chat</strong>
                 </Text>
               </Box>
               <Heading
@@ -172,23 +165,23 @@ const Dashboard = () => {
                 mt="1.5rem"
                 direction="column"
                 width="12.375rem"
-                height="400px"
+                height={{base:"30rem", sm:"30rem", md:"50rem", lg:"25rem", "2xl":"40rem"}}
                 overflow="hidden"
                 flexDirection="column"
               >
                 <Flex
-                  height="100%"
+                  // height="100%"
+                  maxHeight={"80%"}
                   marginRight="-50px"
                   paddingRight="50px"
                   overflowX="hidden"
-                  overflowY="scroll"
+                  overflowY="auto"
                 >
-                 
                   <Box>
                     {mapHistory.map((map, index) => (
                       <RoleBox
                         hist={map}
-                        changeBg={changeBg}
+                        changeBg={childId}
                         handleClick={handleClick}
                       />
                     ))}
@@ -198,14 +191,15 @@ const Dashboard = () => {
 
               <Box
                 position="absolute"
-                bottom="0"
+                bottom={0}
                 width="12.375rem"
-                height="3.375rem"
+                // height="3.375rem"
                 display="flex"
                 alignItems="center"
+                mb={{base:"2rem", lg:"3rem", "2xl":"8rem"}}
               >
                 <Box>
-                <Avatar
+                  <Avatar
                     name={userName.firstname?.slice(0, 10)}
                     textColor="#fff"
                     mr="0.5rem"
@@ -226,26 +220,21 @@ const Dashboard = () => {
                   onClick={() => {
                     dispatch(logout());
                   }}
+                  cursor={"pointer"}
                 >
                   <Image src={logoutIcon} alt="" />
                 </Box>
               </Box>
             </Box>
           </Box>
+          
         </Box>
         <Spacer />
-        <Box width="100%">
-          {seletectChatTYpe === "chat" && <ChatBox />}
-
-          {seletectChatTYpe === "chatHistory" && (
-            <Box>
-              <ChatHistory childId={changeBg} reload={changeBg} />
-            </Box>
-          )}
-
-          {seletectChatTYpe === "newChat" && (
-            <NewChat parentState={parentState} setChildState={setParentState} />
-          )}
+        <Box width="100%" id="chatArea">
+          <ChatBox messages={messages} setMessages={setMessages} 
+                  newChatState={newChatState} setNewChatState={setNewChatState} 
+                  childId={childId} setChildId={setChildId} loading={loading} 
+                  setLoading={setLoading} handleHistory={handleHistory} />
         </Box>
       </Box>
     </Box>

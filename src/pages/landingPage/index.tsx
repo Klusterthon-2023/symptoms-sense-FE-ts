@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   Heading,
   Text,
   Button,
@@ -96,7 +95,7 @@ const WelcomePage = () => {
               <Button
                 mt={{ base: "1rem", md: "2.19rem" }}
                 onClick={() => {
-                  navigate("/signup");
+                  navigate("/login");
                 }}
               >
                 Check Your Symptom
@@ -235,6 +234,7 @@ const WelcomePage = () => {
                     bg: "brand.active",
                     boxShadow: "none",
                   }}
+                  onClick={()=>navigate('/login')}
                 >
                   Check Your Symptom
                 </Button>
@@ -255,7 +255,7 @@ const WelcomePage = () => {
             maxHeight="22.1rem"
           >
             <Flex direction={{ base: "column", md: "row" }} alignItems={"center"} width="100%">
-              <Box display="flex" alignItems="center" gap="6px">
+              <Box display="flex" alignItems="center" gap="6px"  cursor={"pointer"} onClick={()=>navigate('/')}>
                 <Box width="2rem" aspectRatio="1/1">
                   <Image
                     src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}

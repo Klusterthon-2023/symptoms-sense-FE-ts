@@ -53,7 +53,6 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       mic.start();
       // start();
       mic.onend = () => {
-        console.log("continue..");
         mic.start();
       };
     } else {
@@ -90,8 +89,8 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
     }
   };
   return (
-    <>
-      <Box border="1px solid #E1E3EA" height="3.5rem" mb="0rem">
+    <Box mb={{base:"4rem", md:"6rem", "xl":"8rem"}}>
+      <Box height="3.5rem" fontFamily={`'GT-Eesti-Light', sans-serif`}>
         <InputGroup>
           {voiceState ? (
             <Flex direction="row" height="2.75rem">
@@ -104,15 +103,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                   }}
                 />
               </Box>
-              <Box width="20rem" height="2.75rem">
-                {/* <button onClick={handleSaveNote} disabled={!note}>
-                  Save Note
-                </button>
-                <button
-                  onClick={() => setIsListening((prevState) => !prevState)}
-                >
-                  Start/Stop
-                </button> */}
+              <Box width="20rem" height="3.5rem">
               </Box>
             </Flex>
           ) : (
@@ -152,20 +143,21 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                     setVoiceState(false);
                   }}
                 >
-                  <Image width="100%" src={record} />
+                  <Image width="100%" height="100%" src={"https://baticali.sirv.com/Klusterthon2023/mic.svg"} />
                 </Box>
 
                 <Box width="1rem"></Box>
               </Flex>
             ) : (
               <Image
+              cursor={"pointer"}
                 onClick={() => {
                  
                   setVoiceState(true);
                   setIsListening((prevState) => !prevState);
                   
                 }}
-                src={Mic}
+                src={"https://baticali.sirv.com/Klusterthon2023/microphone-2.svg"}
               />
             )}
           </InputRightElement>
@@ -182,88 +174,8 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       >
         Get Advice
       </Button>
-    </>
-    //     <Box w="100%" mt="5">
-    //       <Flex float="right" bg="red" border="1px solid #E1E3EA" height="3.5rem" borderRadius="0.38rem" direction="row" w="100%" mt="2">
-    //         <InputGroup>
-    //           {voiceState ? (
-    //             <Flex direction="row" width="100%" height="2.75rem">
-    //               <Box float="right">
-    //               <Input
-    //                 value={note ?? ''}
-    // />
-
-    //               </Box>
-    //               <Box width="20rem" height="2.75rem">
-    //                 {isListening ? <span>🎙️</span> : <span>🛑🎙️</span>}
-    //                 <button onClick={handleSaveNote} disabled={!note}>
-    //                   Save Note
-    //                 </button>
-    //                 <button
-    //                   onClick={() => setIsListening((prevState) => !prevState)}
-    //                 >
-    //                   Start/Stop
-    //                 </button>
-    //               </Box>
-
-    //             </Flex>
-    //           ) : (
-    //             <Input
-    //               placeholder="Type your message"
-    //               resize="none"
-    //               border="none"
-    //               height="2.75rem"
-    //               borderRadius="none"
-    //               _focus={{
-    //                 border: "1px solid black",
-    //               }}
-    //               onKeyPress={(e) => {
-    //                 if (e.key === "Enter") {
-    //                   handleSendMessage();
-    //                 }
-    //               }}
-    //               value={inputMessage}
-    //               onChange={(e) => setInputMessage(e.target.value)}
-    //             />
-    //           )}
-
-    //           <InputRightElement>
-
-    //           { voiceState ? (<Flex alignItems="center" border="1px solid #E1E3EA" mr="5rem" width="20rem" height="2.75rem">
-    //             <Image src={record}/>
-
-    //             <Box width="10rem">
-
-    //             </Box>
-
-    //             <Box>
-    //             {formattedTime}
-    //             </Box>
-
-    //           </Flex>) : <Image
-    //               onClick={() => {
-    //                 setVoiceState(true)
-    //                 setIsListening((prevState) => !prevState)
-    //                start()
-
-    //               }}
-    //               src={Mic}
-    //             />}
-    //           </InputRightElement>
-    //         </InputGroup>
-    //       </Flex>
-    //       <Button
-    //         borderRadius="0.5rem"
-    //         float="right"
-    //         mt="10px"
-    //         colorScheme="#3E97FF"
-    //         disabled={inputMessage.trim().length <= 0}
-    //         onClick={handleSendMessage}
-    //       >
-    //         Get Advice
-    //       </Button>
-    //     </Box>
-  );
+    </Box>
+  )
 };
 
 export default SubmitePage;

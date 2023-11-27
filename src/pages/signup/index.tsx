@@ -116,8 +116,7 @@ const Signup: React.FC = () => {
         maxWidth={"65em"}
       >
         <Box mt={{ base: 0, lg: "15rem" }} display={"flex"} flexDirection={"column"} alignItems={{ base: "center", lg: "flex-start" }}>
-
-          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }}>
+          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }} cursor={"pointer"} onClick={()=>navigate('/')}>
             <Box width="2rem" aspectRatio="1/1">
               <Image
                 src={"https://baticali.sirv.com/Klusterthon2023/logo-grey.svg"}

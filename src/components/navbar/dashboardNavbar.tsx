@@ -1,13 +1,18 @@
 import React from "react";
 import { Box, Text, useDisclosure, useColorMode } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import mode from "../../../src/assets/icons/night-day.svg";
-import communication from "../../../src/assets/icons/message-text-2.svg";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import FeedbackModal from "./modal";
 import logo from "../../assets/icons/logo.svg";
 
-const Navbar: React.FC = () => {
+
+interface ChildComponentProps {
+  isSideOpen: boolean;
+  onSideToggle: Function;
+  // openSideNav: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Navbar: React.FC<ChildComponentProps> = ({isSideOpen, onSideToggle}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -17,13 +22,14 @@ const Navbar: React.FC = () => {
         <FeedbackModal isOpen={isOpen} onClose={onClose} />
         <Box
           borderBottom="1px solid #E1E3EA"
-          width="90%"
+          bg={"#fff"}
+          width="100%"
           mx="auto"
           height="4rem"
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          paddingX={{ xs: "1rem", sm: "2rem", lg: "5rem", xl: "10rem" }}
+          paddingX={{ base: "1rem", sm: "2rem", md: "5rem", xl: "10rem" }}
         >
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
@@ -41,19 +47,6 @@ const Navbar: React.FC = () => {
             </Text>
           </Box>
           <Box display="flex" flexWrap="wrap" gap="0.8rem">
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              borderRadius="0.375rem"
-              bgColor="#F1F1F2"
-              width="2.375rem"
-              height="2.375rem"
-              onClick={toggleColorMode}
-            >
-              {/* Toggle {colorMode === 'light' ? 'Dark' : 'Light'} */}
-              <Image src={mode} alt="mode" />
-            </Box>
 
             <Box
               ml="0.62rem"
@@ -61,16 +54,17 @@ const Navbar: React.FC = () => {
               justifyContent="center"
               alignItems="center"
               borderRadius="0.375rem"
-              bgColor="#EEF6FF"
+              bgColor="#F1F1F2"
               width="2.375rem"
               height="2.375rem"
               onClick={onOpen}
+              cursor={"pointer"}
             >
-              <Image src={communication} alt="communication" />
+              <Image src={"https://baticali.sirv.com/Klusterthon2023/message-text.svg"} alt="communication" />
             </Box>
           </Box>
-          <Box display={{ base: "block", md: "none" }}>
-            <HamburgerIcon boxSize={8} />
+          <Box display={{ base: "block", md: "none" }} cursor={"pointer"} onClick={()=>onSideToggle}>
+            {isSideOpen ? <CloseIcon boxSize={6} /> : <HamburgerIcon boxSize={6} />}
           </Box>
         </Box>
       </Box>

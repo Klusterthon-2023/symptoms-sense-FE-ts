@@ -39,7 +39,6 @@ const FeedbackModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
         },
       }
     )
-    console.log(response)
     toast.success("Response successful")
   } catch (error) {
     toast.error("Error")
@@ -73,7 +72,6 @@ const handleClose = () => {
                   <Input borderRadius="0.38rem" height="5rem"
                   type="text"
                     onChange={(event) => {
-                      console.log(event.target.value);
                       setFeedbackState(event.target.value);
                     }}
                     placeholder="Describe your experience or give your comments..."
