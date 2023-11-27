@@ -70,7 +70,6 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                       fontSize="0.875rem"
                       textColor="#3F4254"
                       lineHeight="145%"
-                      fontFamily="GT BEesti"
                       fontWeight="400"
                     >
                       You
@@ -112,7 +111,6 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                     fontSize="0.875rem"
                     textColor="#3F4254"
                     lineHeight="145%"
-                    fontFamily="GT BEesti"
                     fontWeight="400"
                   >
                     AI

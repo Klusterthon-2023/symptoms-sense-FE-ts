@@ -10,6 +10,7 @@ const theme = extendTheme({
     global: (props: any) => ({
       body: {
         bg: props.colorMode === 'dark' ? 'gray.800' : 'white', // Set background color based on color mode
+        fontFamily: `'GT-Eesti', sans-serif`
       },
     }),
   },
@@ -23,6 +24,8 @@ const theme = extendTheme({
     Button: {
       baseStyle: {
         color: "#fff",
+        fontFamily: `'GT-Eesti', sans-serif`,
+        fontWeight: 400,
         bg: "brand.main",
         alignItems: "center",
         px: "2rem",

@@ -5,27 +5,42 @@ const Fonts = () => (
         styles={`                
             @font-face {
                 font-family: 'GT-Eesti-Bold';
-                src: url('./assets/font/GT-Eesti-Display-Bold-Trial.otf');
+                font-style: normal;
+                font-weight: 700;                
+                font-display: swap;
+                src: url(./assets/font/GT-Eesti-Display-Bold-Trial.otf);
             }
 
             @font-face {
                 font-family: 'GT-Eesti';
-                src: url('./assets/font/GT-Eesti-Display-Regular-Trial.otf');
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: url(./assets/font/GT-Eesti-Display-Regular-Trial.otf);
             }
             
             @font-face {
                 font-family: 'GT-Eesti-Light';
-                src: url('./assets/font/GT-Eesti-Display-Light-Trial.otf');
+                font-style: normal;
+                font-weight: 400;                
+                font-display: swap;
+                src: url(./assets/font/GT-Eesti-Display-Light-Trial.otf);
             }
             
             @font-face {
                 font-family: 'GT-Eesti-Medium';
-                src: url('./assets/font/GT-Eesti-Display-Medium-Trial.otf');
+                font-style: normal;
+                font-weight: 500;                
+                font-display: swap;
+                src: url(./assets/font/GT-Eesti-Display-Medium-Trial.otf);
             }
             
             @font-face {
                 font-family: 'GT-Eesti-thin';
-                src: url('./assets/font/GT-Eesti-Display-Thin-Trial.otf');
+                font-style: normal;
+                font-weight: 300;                
+                font-display: swap;
+                src: url(./assets/font/GT-Eesti-Display-Thin-Trial.otf);
             }
       `}
     />

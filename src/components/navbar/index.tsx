@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
               <Image
-                src={logo}
+                src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}
                 alt="Systems sense logo"
                 width="100%"
                 height="auto"
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
           </Box>
         </Box>
       </Box>
-      <Box width="90%" mx="auto" height="5.5rem"></Box>
+      <Box width="90%" mx="auto" height={{base:"5rem", sm:"5.5rem"}}></Box>
       {
         mobileState ?
           <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap">

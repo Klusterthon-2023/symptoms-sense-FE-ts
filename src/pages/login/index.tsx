@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import {
   Box,
-  Heading,
   Text,
   Button,
-  Flex,
   Image,
-  Spacer,
   Input,
   InputRightElement,
   InputGroup,
+  Link,
+  SimpleGrid,
 } from "@chakra-ui/react";
-import logo from "../../assets/icons/abstract-44.svg";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +28,7 @@ const Signin: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const handleClick = () => {};
+  const handleClick = () => { setShow(!show) };
   const initialValues: FormValues = {
     email: "",
     password: "",
@@ -78,7 +76,8 @@ const Signin: React.FC = () => {
   };
   return (
     <Box
-      height="100vh"
+      height="100%"
+      minHeight={"100vh"}
       w="100%"
       backgroundImage="url(https://baticali.sirv.com/Klusterthon2023/bg2.png)"
       backgroundRepeat="no-repeat"
@@ -87,212 +86,214 @@ const Signin: React.FC = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      py={{ base: "0.25rem" }}
     >
-      <Flex
+      <SimpleGrid
         mx="auto"
         width={{ base: "100%", md: "70%" }}
-        maxWidth={{ base: "100%", md: "63.8rem" }}
-        py={{ base: "1rem", md: "5rem" }}
-        height="48rem"
-        direction={{ base: "column", md: "row" }}
+        py={{ base: "1rem", lg: 0 }}
+        columns={{ base: 1, lg: 2 }}
+        justifyItems={{base:"center"}}
+        maxWidth={"65em"}
       >
-        <Box mt={{ base: "1rem", md: "15rem" }}>
-          <Box
-            width={{ base: "60%", md: "100%" }}
-            mx={{ base: "auto", md: "" }}
-            height="2.5rem"
-            display="flex"
-            flexWrap="wrap"
-          >
-            <Image src={logo} />
-            <Heading
-              mt="0.25rem"
-              textColor="#ffffff"
-              fontSize="1.5rem"
-              fontFamily="Inter"
-              fontWeight="500"
-              lineHeight="1.4rem"
-            >
-              Symptom Sense
-            </Heading>
+        <Box mt={{ base: 0, lg: "15rem" }} display={"flex"} flexDirection={"column"} alignItems={{ base: "center", lg: "flex-start" }}>
+
+          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }}>
+            <Box width="2rem" aspectRatio="1/1">
+              <Image
+                src={"https://baticali.sirv.com/Klusterthon2023/logo-grey.svg"}
+                alt="Systems sense logo"
+                width="100%"
+                height="auto"
+                loading="lazy"
+              />
+            </Box>
+            <Text fontWeight={600} fontSize={{ base: "1.25rem", "2xl": "1.75rem" }}>
+              Symptom
+            </Text>
+            <Text fontFamily={`'GT-Eesti-Light', sans-serif`} fontWeight={300} fontSize={{ base: "1.25rem", "2xl": "1.75rem" }}>
+              Sense
+            </Text>
           </Box>
           <Box
-            width={{ base: "90%", md: "22rem" }}
-            mx={{ base: "auto", md: "" }}
-            height="4.5rem"
+            width={{ base: "80%", lg: "80%" }}
+            mx={{ base: "auto", lg: 0 }}
           >
             <Text
-              display={{ base: "block", md: "none" }}
-              mt="1.25rem"
+              mt="1"
               textColor="#ffffff"
-              fontSize="1.5rem"
-              fontFamily="Inter"
+              fontSize={{ base: "1.5rem", "2xl": "2rem" }}
               fontWeight="400"
-              textAlign="center"
+              textAlign={{ base: "center", lg: "left" }}
+              fontFamily={`'GT-Eesti-Light', sans-serif`}
             >
-              AI-powered symptom and diagnosis guidance
-            </Text>
-            <Text
-              display={{ base: "none", md: "block" }}
-              mt="1.25rem"
-              textColor="#ffffff"
-              fontSize="1.5rem"
-              fontFamily="Inter"
-              fontWeight="400"
-            >
-              AI-powered symptom and diagnosis guidance
+              Empowering Health Decisions with AI
             </Text>
           </Box>
         </Box>
-        <Spacer maxWidth="10.49rem" />
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
+        <Box
+          display="flex"
+          alignItems="center"
+          bg="#ffffff"
+          mt={{ base: "1rem", lg: 0 }}
+          py={{ base: "2rem", md: "5rem", lg: "3rem", "2xl": "5rem" }}
+          px={{ base: "1rem", sm:"2rem", lg: "3rem" }}
+          borderRadius="1.5rem"
+          width={{base:"90%", sm:"80%", lg:"90%", "2xl":"85%"}}
         >
-          <Form>
-            <Box
-              display="flex"
-              alignItems="center"
-              width={{ base: "90%", md: "33.78rem" }}
-              mx={{ base: "auto", md: "" }}
-              bg="#ffffff"
-              height="100%"
-              py={{ base: "3rem", md: "6.25rem" }}
-              borderRadius="1.5rem"
-            >
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            <Form style={{width:"100%"}}>
               <Box
-                mx="auto"
-                width={{ base: "90%", md: "100%" }}
-                maxWidth={{ base: "90%", md: "24.4rem" }}
               >
-                <Box
-                  mx={{ base: "auto", md: "" }}
-                  height={{ base: "100%", md: "25.4rem" }}
-                  width={{ base: "90%", md: "24.4rem" }}
+                <Text
+                  textColor="#181C32"
+                  fontSize={{ base: "1.5rem", "2xl": "2rem" }}
+                  fontWeight="500"
+                  textAlign="center"
                 >
-                  <Text
-                    textColor="#181C32"
-                    fontSize="1.5rem"
-                    fontWeight="500"
-                    textAlign="center"
-                  >
-                    Sign In
-                  </Text>
-                  <Box
-                    mt="2.19rem"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    height="2.375rem"
-                    border="1px solid #F5F5F5"
-                    width="100%"
-                  >
-                    <Box display="flex" justifyContent="center">
-                      <Box display="flex" flexWrap="wrap">
-                        <Image src="https://baticali.sirv.com/Klusterthon2023/google.svg" />
-                        <Text
-                          ml="0.75rem"
-                          textAlign="center"
-                          textColor="#7E8299"
-                          fontSize=".75rem"
-                          fontWeight="500"
-                        >
-                          Sign in with Google
-                        </Text>
-                      </Box>
+                  Sign In
+                </Text>
+                <Box
+                  mt="1.5rem"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  border="1px solid #E1E3EA"
+                  width="100%"
+                  py={{ base: "0.5rem", "2xl": "0.75rem" }}
+                  borderRadius={{ base: "0.25rem", lg: "0.5rem" }}
+                >
+                  <Box display="flex" justifyContent="center">
+                    <Box display="flex" flexWrap="wrap">
+                      <Image src="https://baticali.sirv.com/Klusterthon2023/google.svg" />
+                      <Text
+                        ml="0.75rem"
+                        textAlign="center"
+                        textColor="#7E8299"
+                        fontSize={{base:".75rem", lg:"1rem"}}
+                        fontWeight="500"
+                      >
+                        Sign in with Google
+                      </Text>
                     </Box>
                   </Box>
-                  <Box
-                    textAlign="center"
-                    textColor="#A1A5B7"
-                    fontSize="0.75rem"
-                    fontWeight="500"
-                    mt="2.19rem"
-                  >
-                    Or with email
-                  </Box>
-                  <Box mt="1.25rem">
-                    <Field
-                      type="email"
-                      name="email"
-                      as={Input}
-                      placeholder="Email"
-                    />
+                </Box>
+                <Box
+                  textAlign="center"
+                  textColor="#A1A5B7"
+                  fontSize={{base:".75rem", lg:"1rem"}}
+                  fontWeight="500"
+                  mt="2rem"
+                  mb="1.5rem"
+                  fontFamily={`'GT-Eesti-Light', sans-serif`}
+                >
+                  Or with email
+                </Box>
+                <Box fontFamily={`'GT-Eesti-Light', sans-serif`}>
+                  <Field
+                    type="email"
+                    name="email"
+                    as={Input}
+                    placeholder="Email"
+                    focusBorderColor={"brand.active"}
+                  />
 
-                    <ErrorMessage name="email">
-                      {(msg) => (
-                        <Box style={{ marginTop: "1rem", color: "red" }}>
-                          {msg}
-                        </Box>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box mt="1.25rem">
-                    <InputGroup width="100%" size="md">
-                      <Field
-                        pr="4.5rem"
-                        type="password"
-                        name="password"
-                        as={Input}
-                        placeholder="Enter password"
-                      />
-                      <InputRightElement width="4.5rem">
+                  <ErrorMessage name="email">
+                    {(msg) => (
+                      <Box style={{ marginTop: "1rem", color: "red" }}>
+                        {msg}
+                      </Box>
+                    )}
+                  </ErrorMessage>
+                </Box>
+                <Box mt="1.25rem" fontFamily={`'GT-Eesti-Light', sans-serif`}>
+                  <InputGroup width="100%" size="md">
+                    <Field
+                      pr="4.5rem"
+                      type={show ? 'text' : 'password'}
+                      name="password"
+                      as={Input}
+                      placeholder="Enter password"
+                      focusBorderColor={"brand.active"}
+                    />
+                    <InputRightElement>
+                      <Button onClick={handleClick} variant={"secondary"} padding={0}>
                         {show ? (
                           <Image src="https://baticali.sirv.com/Klusterthon2023/visibility-off.svg" />
                         ) : (
                           <Image src="https://baticali.sirv.com/Klusterthon2023/visibility.svg" />
                         )}
-                      </InputRightElement>
-                    </InputGroup>
-                    <ErrorMessage name="password">
-                      {(msg) => (
-                        <Box style={{ marginTop: "1rem", color: "red" }}>
-                          {msg}
-                        </Box>
-                      )}
-                    </ErrorMessage>
-
-                    <Text
-                      my="1.25rem"
-                      float="right"
-                      textColor="#A1A5B7"
-                      fontSize="0.75rem"
-                      fontWeight="500"
-                    >
-                      Forgot Password
-                    </Text>
-                  </Box>
-                  <Box mt="1.25rem">
-                    <Button
-                      textColor="#fff"
-                      bg="#3E97FF"
-                      height="2.375rem"
-                      width="100%"
-                      type="submit"
-                    >
-                      Sign in
-                    </Button>
-                  </Box>
-
-                  <Text mt="1.25rem" textAlign="center">
-                    Dont't have an Account?{" "}
-                    <strong
-                      color="#3E97FF"
-                      onClick={() => {
-                        navigate("/signup");
-                      }}
-                    >
-                      Sign Up
-                    </strong>
-                  </Text>
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  <ErrorMessage name="password">
+                    {(msg) => (
+                      <Box style={{ marginTop: "1rem", color: "red" }}>
+                        {msg}
+                      </Box>
+                    )}
+                  </ErrorMessage>
+                  <Link
+                    my="1.25rem"
+                    textAlign={"right"}
+                    color="brand.main"
+                    display={"flex"}
+                    width={"100%"}
+                    justifyContent={"flex-end"}
+                    fontFamily={`'GT-Eesti-Light', sans-serif`}
+                    _visited={{
+                      textDecoration: "none"
+                    }}
+                    _hover={{
+                      textDecoration: "none",
+                      color: "brand.active"
+                    }}
+                  >
+                    <strong>
+                      Forgot Password?</strong>
+                  </Link>
                 </Box>
+                <Box mt="1.25rem">
+                  <Button
+                    textColor="#fff"
+                    bg="#3E97FF"
+                    height="2.375rem"
+                    width="100%"
+                    type="submit"
+                  >
+                    Sign in
+                  </Button>
+                </Box>
+
+                <Text mt="1.25rem" textAlign="center" fontFamily={`'GT-Eesti-Light', sans-serif`} color={"#A1A5B7"}>
+                  Dont't have an Account?{" "}
+                  <Link
+                    color="brand.main"
+                    _visited={{
+                      textDecoration: "none"
+                    }}
+                    _hover={{
+                      textDecoration: "none",
+                      color: "brand.active"
+                    }}
+                    onClick={() => {
+                      navigate("/signup");
+                    }}
+                  >
+                    <strong>
+                      Sign Up</strong>
+                  </Link>
+                </Text>
               </Box>
-            </Box>
-          </Form>
-        </Formik>
-      </Flex>
+            </Form>
+          </Formik>
+        </Box>
+      </SimpleGrid>
     </Box>
   );
 };
