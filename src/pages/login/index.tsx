@@ -140,7 +140,7 @@ const Signin: React.FC = () => {
           py={{ base: "2rem", md: "5rem", lg: "3rem", "2xl": "5rem" }}
           px={{ base: "1rem", sm:"2rem", lg: "3rem" }}
           borderRadius="1.5rem"
-          width={{base:"90%", sm:"80%", lg:"90%", "2xl":"85%"}}
+          width={{base:"90%", sm:"80%", lg:"90%"}}
         >
           <Formik
             initialValues={initialValues}
