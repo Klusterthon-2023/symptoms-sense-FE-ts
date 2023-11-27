@@ -109,7 +109,7 @@ const Dashboard = () => {
                 flexWrap="wrap"
                 cursor="pointer"
                 onClick={() => {
-                setSelectectChatType('newChat')
+                  setSelectectChatType("newChat");
                 }}
               >
                 <Box
@@ -195,7 +195,7 @@ const Dashboard = () => {
                     alignItems="center"
                   >
                     <Text fontSize="0.75rem" textColor="#fff">
-                      {userName.firstname?.slice(0, 1)}
+                      {userName.firstname?.slice(0, 1)?.toUpperCase()}
                     </Text>
                   </Box>
                 </Box>
@@ -220,9 +220,7 @@ const Dashboard = () => {
         </Box>
         <Spacer />
         <Box width="100%">
-          {seletectChatTYpe === "chat" && (
-            <ChatBox  />
-          )}
+          {seletectChatTYpe === "chat" && <ChatBox />}
 
           {seletectChatTYpe === "chatHistory" && (
             <Box>

@@ -39,7 +39,7 @@ const RoleBox: React.FC<RoleBoxProps> = ({ hist, changeBg, handleClick }) => {
         <Text fontSize="0.875rem"
         fontWeight="500"
         textColor="#3F4254">
-        {hist.title.slice(0,20)}...
+        {hist.title.slice(0,15)}...
         </Text>
       </Box>
      

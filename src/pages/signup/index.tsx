@@ -85,7 +85,7 @@ const Signup: React.FC = () => {
       console.log(response.request);
 
       toast.success("Signup successful");
-      navigate('login')
+      navigate('/login')
     
     } catch (error) {
       console.log(error);
