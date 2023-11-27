@@ -44,6 +44,8 @@ const Dashboard = () => {
   const accessToken = useSelector(selectAccessToken);
   const id = useSelector(selectId);
 
+  
+
   const handleHistory = async () => {
     const response = await axios.get(
       `https://adewole.pythonanywhere.com/api/${id}/History/ListChatIdentifiers/`,
@@ -64,7 +66,10 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    onOpen();
+    if (mapHistory.length === 0) {
+      onOpen();
+    }
+    
   }, []);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
@@ -87,19 +92,27 @@ const Dashboard = () => {
       window.location.href = "/login";
     }
 
-    return () => { };
+    return () => {};
   }, [isAuthenticated]);
 
   if (!accessToken || !isAuthenticated) {
-    return <Box width={"100vw"} height={"100vh"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
-      <Spinner
-        thickness='8px'
-        speed='0.5s'
-        emptyColor='gray.200'
-        color='brand.main'
-        size='xl'
-      />
-    </Box>;
+    return (
+      <Box
+        width={"100vw"}
+        height={"100vh"}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Spinner
+          thickness="8px"
+          speed="0.5s"
+          emptyColor="gray.200"
+          color="brand.main"
+          size="xl"
+        />
+      </Box>
+    );
   }
 
   return (
@@ -171,7 +184,7 @@ const Dashboard = () => {
                   overflowX="hidden"
                   overflowY="scroll"
                 >
-                  <Box></Box>
+                 
                   <Box>
                     {mapHistory.map((map, index) => (
                       <RoleBox
@@ -187,7 +200,7 @@ const Dashboard = () => {
               <Box
                 position="absolute"
                 bottom="0"
-                width="14rem"
+                width="12.375rem"
                 height="3.375rem"
                 display="flex"
                 alignItems="center"
@@ -203,9 +216,9 @@ const Dashboard = () => {
                   ></Avatar>
                 </Box>
                 <Box ml="0.63rem">
-                  <Text fontSize="0.875rem" fontWeight="500">
-                    {userName.firstname?.slice(0, 10)}{" "}
-                    {userName.lastname?.slice(0, 10)}
+                  <Text fontSize="0.75rem" fontWeight="500">
+                    {userName.firstname}{" "}
+                    {userName.lastname}
                   </Text>
                 </Box>
                 <Spacer />

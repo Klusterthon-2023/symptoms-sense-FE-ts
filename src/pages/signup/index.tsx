@@ -18,7 +18,6 @@ import * as Yup from "yup";
 import TermModal from "./modal";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 
 interface FormValues {
   email: string;
@@ -56,7 +55,7 @@ const Signup: React.FC = () => {
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required Required"),
-    password: Yup.string().required("Please add your password"),
+    password: Yup.string().required("Please add your password").min(8, 'Password must be at least 7 characters'),
     re_password: Yup.string()
       .required()
       .oneOf([Yup.ref("password")], "Passwords must match"),
@@ -80,6 +79,9 @@ const Signup: React.FC = () => {
         `https://adewole.pythonanywhere.com/api/UsersAuths/`,
         values
       );
+
+      console.log(response)
+      
 
       toast.success("Signup successful");
       navigate('/login')
