@@ -18,7 +18,6 @@ import * as Yup from "yup";
 import TermModal from "./modal";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-// import { setUser } from "../../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 interface FormValues {
@@ -30,11 +29,11 @@ interface FormValues {
 }
 
 const Signup: React.FC = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isChecked, setIsChecked] = useState(false);
-  const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [isButtonDisabled, setButtonDisabled] = useState(false);  
+  const [loading, setLoading] = React.useState(false);
 
   const handleCheckboxChange = (event: any) => {
     setIsChecked(event.target.checked);
@@ -74,23 +73,22 @@ const Signup: React.FC = () => {
   };
 
   const onSubmit = async (values: FormValues) => {
-    console.log("Form values:", values);
+    setLoading(true);
 
     try {
       const response = await axios.post(
         `https://adewole.pythonanywhere.com/api/UsersAuths/`,
         values
       );
-      console.log(response);
-      console.log(response.request);
 
       toast.success("Signup successful");
       navigate('/login')
     
     } catch (error) {
-      console.log(error);
       toast.error("error please try again");
     }
+    
+    setLoading(false);
   };
   return (
     <Box
@@ -379,6 +377,7 @@ const Signup: React.FC = () => {
                       height="2.375rem"
                       width="100%"
                       type="submit"
+                      isLoading={loading}
                     >
                       Sign Up
                     </Button>
