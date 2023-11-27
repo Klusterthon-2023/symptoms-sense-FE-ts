@@ -1,11 +1,11 @@
 // src/routes/index.tsx
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
 import LandingPage from "../pages/landingPage";
 import Signup from "../pages/signup";
-import Login from "../pages/login"
-// import DashboardInstance from "../pages/Dashboard/components/home"
+import Login from "../pages/login";
+import { Box } from "@chakra-ui/react";
+const Dashboard = React.lazy(() => import("../pages/Dashboard"));
 
 const Router: React.FC = () => {
   return (
@@ -14,8 +14,15 @@ const Router: React.FC = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/dashboard/home" element={<DashboardInstance />} /> */}
+
+        <Route
+          path="/dashboard"
+          element={
+            <Suspense fallback={<Box display="flex" justifyContent="center" alignItems="center">Loading...</Box>}>
+              <Dashboard />
+            </Suspense>
+          }
+        />
       </Routes>
     </>
   );

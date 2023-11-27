@@ -21,13 +21,13 @@ interface ModalComponentProps {
 const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="x1">
+<Modal isOpen={isOpen} onClose={onClose} isCentered size="x1">
         <ModalOverlay />
-        <ModalContent p="2rem"  width="35rem" borderRadius={4}>
-          <ModalCloseButton />
+        <ModalContent p="2rem" width="35rem" borderRadius={4}>
+          <ModalCloseButton mt="3rem" mr="1rem" />
 
           <ModalBody p={0}>
-            <Box width="43.8rem" maxWidth="100%" height="22.125rem">
+            <Box width="33.8rem" maxWidth="100%" height="18.125rem">
               <Heading fontSize="0.875rem" my="1.88rem">
                 Hello! SymptomSense is here to assist you
               </Heading>
@@ -61,7 +61,7 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
               bg="#3E97FF"
               borderRadius="0.38rem"
             >
-              Contunue
+              Continue
             </Button>
           </ModalBody>
         </ModalContent>

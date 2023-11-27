@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import {  useState } from "react";
 import {
   Modal,
   ModalBody,
@@ -6,21 +6,19 @@ import {
   ModalContent,
   ModalOverlay,
   Box,
-  Text,
-  Image,
   Heading,
   Button,
   Input,
   Textarea,
 } from "@chakra-ui/react";
 import axios from "axios";
-import privacy from "../../../../assets/icons/security.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
     selectAccessToken,
-    selectIsAuthenticated,
   } from "../../../redux/authSlice";
   import { selectId } from "../../../redux/userSlice";
+import toast from "react-hot-toast";
+import CustomModal from "../../../pages/Dashboard/components/customModal";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -28,38 +26,41 @@ interface ModalComponentProps {
 }
 
 const FeedbackModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
-    let [value, setValue] = useState('')
   const [feedbackState, setFeedbackState] = useState("");
   const accessToken = useSelector(selectAccessToken);
-  const [ident, setIdent] = useState("");
-  const id = useSelector(selectId);
 
   const HandleFeedBack = async () => { 
 
     const payload = {
         request: feedbackState,
       };
+  try {
+    const response = await axios.post(
+      `https://adewole.pythonanywhere.com/api/feedback/`,
+      payload,
+      {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    )
+    console.log(response)
+    toast.success("Response successful")
+  } catch (error) {
+    toast.error("Error")
+  }
   
-  const response = await axios.post(
-    `https://adewole.pythonanywhere.com/api/feedback/`,
-    payload,
-    {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    }
-  )
 }
+
+const handleClose = () => {
+  onClose()
+};
+
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="x1">
-        <ModalOverlay />
-        <ModalContent p="2rem" width="35rem" borderRadius={4}>
-          <ModalCloseButton mt="3rem" mr="1rem" />
-
-          <ModalBody p={0}>
-            <Box width="33.8rem" maxWidth="100%" height="18.125rem">
+      <CustomModal isOpen={isOpen} onClose={handleClose} size="xl">
+        <Box>
               <Heading fontSize="0.875rem" my="1.88rem">
                 Your Feedback Matters
               </Heading>
@@ -114,9 +115,7 @@ const FeedbackModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
                 Close
               </Button>
             </Box>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+            </CustomModal>
     </>
   );
 };
