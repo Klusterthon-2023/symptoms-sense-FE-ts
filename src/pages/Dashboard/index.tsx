@@ -8,6 +8,7 @@ import {
   useDisclosure,
   Flex,
   Heading,
+  Spinner,
 } from "@chakra-ui/react";
 import Navbar from "../../components/navbar/dashboardNavbar";
 import pen from "../../assets/icons/pen.svg";
@@ -85,11 +86,19 @@ const Dashboard = () => {
       window.location.href = "/login";
     }
 
-    return () => {};
+    return () => { };
   }, [isAuthenticated]);
 
   if (!accessToken || !isAuthenticated) {
-    return <div>Loading...</div>;
+    return <Box width={"100vw"} height={"100vh"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+      <Spinner
+        thickness='8px'
+        speed='0.5s'
+        emptyColor='gray.200'
+        color='brand.main'
+        size='xl'
+      />
+    </Box>;
   }
 
   return (

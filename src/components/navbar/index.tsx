@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
             <Text fontWeight={600} fontSize="1.25rem">
               Symptom
             </Text>
-            <Text fontWeight={300} fontSize="1.25rem">
+            <Text fontFamily={`'GT-Eesti-Light', sans-serif`} fontWeight={300} fontSize="1.25rem">
               Sense
             </Text>
           </Box>
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
           </Box>
         </Box>
       </Box>
-      <Box width="90%" mx="auto" height={{base:"5rem", sm:"5.5rem"}}></Box>
+      <Box width="90%" mx="auto" height={{ base: "5rem", sm: "5.5rem" }}></Box>
       {
         mobileState ?
           <Box mt="1rem" mr="1rem" float="right" width="12.3rem" height="3rem" display="flex" flexWrap="wrap">

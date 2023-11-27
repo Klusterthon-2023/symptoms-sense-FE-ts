@@ -1,12 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Box, Text, useTheme, useDisclosure, useColorMode } from "@chakra-ui/react";
+import { Box, Text, useDisclosure, useColorMode } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import mode from "../../../src/assets/icons/night-day.svg";
 import communication from "../../../src/assets/icons/message-text-2.svg";
 import FeedbackModal from "./modal";
-import Logo from "../../assets/icons/logo.svg"
 
 
 const Navbar: React.FC = () => {
@@ -20,9 +18,9 @@ const Navbar: React.FC = () => {
         zIndex="1000"
         width="100%"
       >
-         <FeedbackModal isOpen={isOpen} onClose={onClose} />
+        <FeedbackModal isOpen={isOpen} onClose={onClose} />
         <Box
-        borderBottom="1px solid #E1E3EA"
+          borderBottom="1px solid #E1E3EA"
           width="90%"
           mx="auto"
           height="4rem"
@@ -34,8 +32,8 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
               <Image
-                src={Logo}
-               
+                src={"https://baticali.sirv.com/Klusterthon2023/logo.png"}
+
                 width="100%"
                 height="auto"
                 loading="lazy"
@@ -44,7 +42,7 @@ const Navbar: React.FC = () => {
             <Text fontWeight={600} fontSize="1.25rem">
               Symptom
             </Text>
-            <Text fontWeight={300} fontSize="1.25rem">
+            <Text fontFamily={`'GT-Eesti-Light', sans-serif`} fontWeight={300} fontSize="1.25rem">
               Sense
             </Text>
           </Box>
@@ -59,8 +57,7 @@ const Navbar: React.FC = () => {
               height="2.375rem"
               onClick={toggleColorMode}
             >
-               {/* Toggle {colorMode === 'light' ? 'Dark' : 'Light'} */}
-               
+              {/* Toggle {colorMode === 'light' ? 'Dark' : 'Light'} */}
               <Image src={mode} alt="mode" />
             </Box>
 

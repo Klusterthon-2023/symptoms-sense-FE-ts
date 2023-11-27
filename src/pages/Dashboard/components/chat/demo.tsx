@@ -31,6 +31,7 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
     "Another piece of information",
     // Add more items as needed
   ];
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
     setIdent(childId);
@@ -69,6 +70,7 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
     if (!inputMessage.trim().length) {
       return;
     }
+    setLoading(true)
     const data: string = inputMessage;
 
     const payload = {
@@ -100,6 +102,7 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
         { from: "computer", text: response.data.detail },
       ]);
     }, 1000);
+    setLoading(false)
   };
 
 
@@ -113,6 +116,7 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
             inputMessage={inputMessage}
             setInputMessage={setInputMessage}
             handleSendMessage={handleSendMessage}
+            loading={loading}
           />
         </Box>
       </Flex>

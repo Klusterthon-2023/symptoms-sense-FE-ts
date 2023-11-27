@@ -35,6 +35,7 @@ const NewChat: React.FC<ChildComponentProps> = ({
     "Another piece of information",
     // Add more items as needed
   ];
+  const [loading, setLoading] = React.useState(false);
   useEffect(() => {
       // Update child state when parent state changes
     setLocalChildState(parentState);
@@ -75,6 +76,7 @@ const NewChat: React.FC<ChildComponentProps> = ({
     if (!inputMessage.trim().length) {
       return;
     }
+    setLoading(true)
     const data: string = inputMessage;
 
     const payload = {
@@ -104,6 +106,7 @@ const NewChat: React.FC<ChildComponentProps> = ({
         { from: "computer", text: response.data.detail },
       ]);
     }, 1000);
+    setLoading(false)
   };
 
   const sampleFxn = async (text: string) => {
@@ -248,6 +251,7 @@ const NewChat: React.FC<ChildComponentProps> = ({
             inputMessage={inputMessage}
             setInputMessage={setInputMessage}
             handleSendMessage={handleSendMessage}
+            loading={loading}
           />
         </Box>
       </Flex>

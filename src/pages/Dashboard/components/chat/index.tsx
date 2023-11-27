@@ -31,7 +31,8 @@ const Chat: React.FC<ChildComponentProps> = ({
     "Have you been running a fever",
     "Another piece of information",
     "Another piece of information",
-  ];
+  ];  
+  const [loading, setLoading] = useState(false)
 
 
   const [inputMessage, setInputMessage] = useState<string>("");
@@ -60,6 +61,7 @@ const Chat: React.FC<ChildComponentProps> = ({
     if (!inputMessage.trim().length) {
       return;
     }
+    setLoading(true)
     const data: string = inputMessage;
 
     const payload = {
@@ -89,6 +91,8 @@ const Chat: React.FC<ChildComponentProps> = ({
         { from: "computer", text: response.data.detail },
       ]);
     }, 1000);
+    
+    setLoading(false)
   };
 
   const sampleFxn = async (text: string) => {
@@ -233,6 +237,7 @@ const Chat: React.FC<ChildComponentProps> = ({
             inputMessage={inputMessage}
             setInputMessage={setInputMessage}
             handleSendMessage={handleSendMessage}
+            loading={loading}
           />
         </Box>
       </Flex>

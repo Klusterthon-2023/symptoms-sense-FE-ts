@@ -24,12 +24,14 @@ interface SubmitePageProps {
   inputMessage: string;
   setInputMessage: React.Dispatch<React.SetStateAction<string>>;
   handleSendMessage: () => void;
+  loading: boolean;
 }
 
 const SubmitePage: React.FC<SubmitePageProps> = ({
   inputMessage,
   setInputMessage,
   handleSendMessage,
+  loading
 }) => {
   const [voiceState, setVoiceState] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -170,6 +172,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
         bg="#3E97FF"
         disabled={inputMessage.trim().length <= 0}
         onClick={handleSendMessage}
+        isLoading={loading}
       >
         Get Advice
       </Button>
