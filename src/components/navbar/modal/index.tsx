@@ -1,10 +1,5 @@
 import {  useState } from "react";
 import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
   Box,
   Heading,
   Button,

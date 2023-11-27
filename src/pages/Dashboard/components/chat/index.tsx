@@ -27,10 +27,10 @@ const Chat: React.FC<ChildComponentProps> = ({
   const id = useSelector(selectId);
   const [messages, setMessages] = useState<Message[]>([]);
   const data: string[] = [
-    "I have a headache that refuses to go",
-    "Have you been running a fever",
-    "Another piece of information",
-    "Another piece of information",
+    "Experiencing persistent or severe headaches",
+    "I have been running a fever",
+    "Feeling unusually tired or fatigued",
+    "I have a persistent cough",
   ];  
   const [loading, setLoading] = useState(false)
 
@@ -148,7 +148,7 @@ const Chat: React.FC<ChildComponentProps> = ({
               >
                 How can I help you today?
               </Heading>
-              <Text textColor="#667085" fontSize="1rem" fontWeight="400">
+              <Text textColor="#667085" mt="0.25rem" fontSize="1rem" fontWeight="400">
                 Describe your symptoms and receive preliminary medical advice
                 from our AI-powered chatbot
               </Text>
@@ -176,7 +176,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                     sampleFxn(data[0]);
                   }}
                 >
-                  <Text>I have a headache that refuses to go</Text>
+                  <Text>Experiencing persistent or severe headaches</Text>
                 </Box>
 
                 <Box
@@ -194,7 +194,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                     sampleFxn(data[1]);
                   }}
                 >
-                  <Text>My head hurt so much</Text>
+                  <Text>I have been running a fever</Text>
                 </Box>
               </Flex>
               <Flex my="2rem" direction={{ base: "column", md: "row" }}>
@@ -209,7 +209,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   display="flex"
                   alignItems="center"
                 >
-                  <Text>I have a headache that refuses to go</Text>
+                  <Text>Feeling unusually tired or fatigued</Text>
                 </Box>
 
                 <Box
@@ -224,7 +224,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   display="flex"
                   alignItems="center"
                 >
-                  <Text>I dont what to take this fever</Text>
+                  <Text>I have a persistent cough</Text>
                 </Box>
               </Flex>
             </Box>

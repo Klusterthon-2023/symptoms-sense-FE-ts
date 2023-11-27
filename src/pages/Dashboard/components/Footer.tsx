@@ -90,8 +90,8 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
     }
   };
   return (
-    <>
-      <Box border="1px solid #E1E3EA"  height="3.5rem" mb="0rem">
+    <Box height="10rem">
+      <Box border="1px solid #E1E3EA"  height="3.5rem" >
         <InputGroup>
           {voiceState ? (
             <Flex direction="row" height="2.75rem">
@@ -189,7 +189,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       >
         Get Advice
       </Button>
-    </>
+    </Box>
     //     <Box w="100%" mt="5">
     //       <Flex float="right" bg="red" border="1px solid #E1E3EA" height="3.5rem" borderRadius="0.38rem" direction="row" w="100%" mt="2">
     //         <InputGroup>
