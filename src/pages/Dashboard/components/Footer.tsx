@@ -37,15 +37,21 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
   const [isListening, setIsListening] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [savedNotes, setSavedNotes] = useState<string[]>([]);
-  const { time, isRunning, start, stop, reset, formattedTime } = useStopwatch();
+  // const { time, isRunning, start, stop, reset, formattedTime } = useStopwatch();
 
   useEffect(() => {
     handleListen();
+
+    // Cleanup function to reset the stopwatch when the component unmounts
+    return () => {
+      // reset();
+    };
   }, [isListening]);
 
   const handleListen = () => {
     if (isListening) {
       mic.start();
+      // start();
       mic.onend = () => {
         console.log("continue..");
         mic.start();
@@ -78,17 +84,22 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       setSavedNotes([...savedNotes, note]);
       setInputMessage(note);
       setNote("");
+      // stop(); // Stop the stopwatch
+      setIsListening(false); // Stop listening
+      // reset(); // Reset the stopwatch
     }
   };
   return (
     <>
-      <Box border="1px solid #E1E3EA" height="3.5rem" mb="0rem">
+      <Box border="1px solid #E1E3EA"  height="3.5rem" mb="0rem">
         <InputGroup>
           {voiceState ? (
             <Flex direction="row" height="2.75rem">
               <Box float="right">
                 <Input
+                 size='sm'
                   width="40rem"
+                  height="100%"
                   value={note ?? ""}
                   onChange={(e) => {
                     setNote(e.target.value);
@@ -108,6 +119,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
             </Flex>
           ) : (
             <Input
+            size='sm'
               placeholder="Type your message"
               resize="none"
               border="none"
@@ -133,31 +145,32 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                 mt="1rem"
                 p="1rem"
                 border="1px solid #E1E3EA"
-                mr="12rem"
+                mr="12em"
                 width="20rem"
                 height="2.75rem"
               >
-                <Box
+
+                  <Box
+                width="2rem"
+                height="2.5rem"
                   onClick={() => {
                     handleSaveNote();
                     setVoiceState(false);
-                    stop();
-                    reset();
                   }}
                 >
-                  <Image src={record} />
+                  <Image width="100%" height="100%" src={record} />
                 </Box>
+              
 
-                <Box width="10rem"></Box>
-
-                <Box>{formattedTime}</Box>
+              
               </Flex>
             ) : (
               <Image
                 onClick={() => {
+                 
                   setVoiceState(true);
                   setIsListening((prevState) => !prevState);
-                  start();
+                  
                 }}
                 src={Mic}
               />
