@@ -93,18 +93,18 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       <Box height="3.5rem" fontFamily={`'GT-Eesti-Light', sans-serif`}>
         <InputGroup>
           {voiceState ? (
-            <Flex direction="row" height="2.75rem">
+            <Flex direction="row" height="3.5rem">
               <Box float="right">
                 <Input
-                  width="90rem"
+                  width={{base: "21rem", md:"23rem", lg:"42rem", "2xl":"90rem"}}
                   value={note ?? ""}
                   onChange={(e) => {
                     setNote(e.target.value);
                   }}
                 />
               </Box>
-              <Box width="20rem" height="3.5rem">
-              </Box>
+              {/* <Box width="20rem" height="3.5rem">
+              </Box> */}
             </Flex>
           ) : (
             <Input
@@ -125,12 +125,6 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
             {voiceState ? (
               <Flex
                 alignItems="center"
-                mt="1rem"
-                // p="1rem"
-                // border="1px solid #E1E3EA"
-                // mr="12rem"
-                // width="20rem"
-                // height="3.5rem"
               >
                 <Box
                   onClick={() => {
