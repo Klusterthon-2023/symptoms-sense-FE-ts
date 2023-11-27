@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
               <Image
-                src={"https://baticali.sirv.com/Klusterthon2023/logo.png"}
+                src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}
 
                 width="100%"
                 height="auto"

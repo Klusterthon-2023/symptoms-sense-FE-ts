@@ -81,11 +81,11 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
     }
   };
   return (
-    <>
-      <Box border="1px solid #E1E3EA" height="3.5rem" mb="0rem">
+    <Box mb={"5rem"}>
+      <Box height="3.5rem" fontFamily={`'GT-Eesti-Light', sans-serif`}>
         <InputGroup>
           {voiceState ? (
-            <Flex direction="row" height="2.75rem">
+            <Flex direction="row" height="3.5rem">
               <Box float="right">
                 <Input
                   width="40rem"
@@ -95,7 +95,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                   }}
                 />
               </Box>
-              <Box width="20rem" height="2.75rem">
+              <Box width="20rem" height="3.5rem">
                 {/* <button onClick={handleSaveNote} disabled={!note}>
                   Save Note
                 </button>
@@ -110,12 +110,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
             <Input
               placeholder="Type your message"
               resize="none"
-              border="none"
-              height="2.75rem"
-              borderRadius="none"
-              _focus={{
-                border: "1px solid black",
-              }}
+              height="3.5rem"
               onKeyPress={(e: any) => {
                 if (e.key === "Enter") {
                   handleSendMessage();
@@ -132,10 +127,11 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                 alignItems="center"
                 mt="1rem"
                 p="1rem"
-                border="1px solid #E1E3EA"
+                // border="1px solid #E1E3EA"
+                borderColor={"brand.main"}
                 mr="12rem"
                 width="20rem"
-                height="2.75rem"
+                height="3.5rem"
               >
                 <Box
                   onClick={() => {
@@ -176,7 +172,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       >
         Get Advice
       </Button>
-    </>
+    </Box>
     //     <Box w="100%" mt="5">
     //       <Flex float="right" bg="red" border="1px solid #E1E3EA" height="3.5rem" borderRadius="0.38rem" direction="row" w="100%" mt="2">
     //         <InputGroup>

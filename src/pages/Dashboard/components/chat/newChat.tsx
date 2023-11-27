@@ -29,10 +29,10 @@ const NewChat: React.FC<ChildComponentProps> = ({
   const id = useSelector(selectId);
   const [messages, setMessages] = useState<Message[]>([]);
   const data: string[] = [
-    "I have a headache that refuses to go",
-    "Have you been running a fever",
-    "Another piece of information",
-    "Another piece of information",
+    "Experiencing persistent or severe headaches",
+    "I have been running a fever",
+    "Feeling unusually tired or fatigued",
+    "I have a persistent cough",
     // Add more items as needed
   ];
   const [loading, setLoading] = React.useState(false);
@@ -189,8 +189,9 @@ const NewChat: React.FC<ChildComponentProps> = ({
                   onClick={() => {
                     sampleFxn(data[0]);
                   }}
+                  cursor={"pointer"}
                 >
-                  <Text>I have a headache that refuses to go</Text>
+                  <Text>Experiencing persistent or severe headaches</Text>
                 </Box>
 
                 <Box
@@ -207,8 +208,9 @@ const NewChat: React.FC<ChildComponentProps> = ({
                   onClick={() => {
                     sampleFxn(data[1]);
                   }}
+                  cursor={"pointer"}
                 >
-                  <Text>My head hurt so much</Text>
+                  <Text>I have been running a fever</Text>
                 </Box>
               </Flex>
               <Flex my="2rem" direction={{ base: "column", md: "row" }}>
@@ -222,8 +224,12 @@ const NewChat: React.FC<ChildComponentProps> = ({
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
+                  onClick={() => {
+                    sampleFxn(data[2]);
+                  }}
+                  cursor={"pointer"}
                 >
-                  <Text>I have a headache that refuses to go</Text>
+                  <Text>Feeling unusually tired or fatigued</Text>
                 </Box>
 
                 <Box
@@ -237,8 +243,12 @@ const NewChat: React.FC<ChildComponentProps> = ({
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
+                  onClick={() => {
+                    sampleFxn(data[3]);
+                  }}
+                  cursor={"pointer"}
                 >
-                  <Text>I dont what to take this fever</Text>
+                  <Text>I have a persistent cough</Text>
                 </Box>
               </Flex>
             </Box>
