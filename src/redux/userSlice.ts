@@ -1,15 +1,18 @@
 // userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store'; // Assuming you have a store setup
+import { stat } from 'fs';
 
 interface UserState {
   id: string | null;
-  username: string | null;
+  firstname: string | null;
+  lastname: string | null;
 }
 
 const initialState: UserState = {
   id: null,
-  username: null,
+  firstname: null,
+  lastname: null,
 };
 
 const userSlice = createSlice({
@@ -18,11 +21,13 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
       state.id = action.payload.id;
-      state.username = action.payload.username;
+      state.firstname = action.payload.firstname;
+      state.lastname = action.payload.lastname;
     },
     clearUser: (state) => {
       state.id = null;
-      state.username = null;
+      state.firstname = null;
+      state.lastname = null;
     },
   },
 });

@@ -83,20 +83,25 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       <Box border="1px solid #E1E3EA" height="3.5rem" mb="0rem">
         <InputGroup>
           {voiceState ? (
-            <Flex direction="row" width="100%" height="2.75rem">
+            <Flex direction="row" height="2.75rem">
               <Box float="right">
-                <Input value={note ?? ""} />
+                <Input
+                  width="40rem"
+                  value={note ?? ""}
+                  onChange={(e) => {
+                    setNote(e.target.value);
+                  }}
+                />
               </Box>
               <Box width="20rem" height="2.75rem">
-                {isListening ? <span>🎙️</span> : <span>🛑🎙️</span>}
-                <button onClick={handleSaveNote} disabled={!note}>
+                {/* <button onClick={handleSaveNote} disabled={!note}>
                   Save Note
                 </button>
                 <button
                   onClick={() => setIsListening((prevState) => !prevState)}
                 >
                   Start/Stop
-                </button>
+                </button> */}
               </Box>
             </Flex>
           ) : (
@@ -109,13 +114,13 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
               _focus={{
                 border: "1px solid black",
               }}
-              onKeyPress={(e) => {
+              onKeyPress={(e: any) => {
                 if (e.key === "Enter") {
                   handleSendMessage();
                 }
               }}
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
+              onChange={(e: any) => setInputMessage(e.target.value)}
             />
           )}
 
@@ -134,7 +139,8 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                   onClick={() => {
                     handleSaveNote();
                     setVoiceState(false);
-                    stop()
+                    stop();
+                    reset();
                   }}
                 >
                   <Image src={record} />

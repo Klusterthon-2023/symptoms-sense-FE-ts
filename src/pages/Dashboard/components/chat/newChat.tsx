@@ -9,18 +9,20 @@ import {
 } from "../../../../redux/authSlice";
 import SubmitePage from "../Footer";
 
+
 interface Message {
   from: string;
   text: string;
 }
 interface ChildComponentProps {
-  
+  parentState: boolean;
+  setChildState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Chat: React.FC<ChildComponentProps> = ({
- 
+const NewChat: React.FC<ChildComponentProps> = ({
+  parentState,
 }) => {
-
+  const [childState, setLocalChildState] = useState(false);
   const [newChatState, setNewChatState] = useState(true);
   const accessToken = useSelector(selectAccessToken);
   const [ident, setIdent] = useState("");
@@ -31,8 +33,21 @@ const Chat: React.FC<ChildComponentProps> = ({
     "Have you been running a fever",
     "Another piece of information",
     "Another piece of information",
+    // Add more items as needed
   ];
+  useEffect(() => {
+      // Update child state when parent state changes
+    setLocalChildState(parentState);
+    setNewChatState(false);
+    setIdent("");
+    setMessages([]);
+  }, [parentState]);
 
+  const [messageText, setMessageText] = useState("");
+
+  const generateUniqueId = () => {
+    return Math.random().toString(36).substring(7);
+  };
 
   const [inputMessage, setInputMessage] = useState<string>("");
 
@@ -240,4 +255,4 @@ const Chat: React.FC<ChildComponentProps> = ({
   );
 };
 
-export default Chat;
+export default NewChat;

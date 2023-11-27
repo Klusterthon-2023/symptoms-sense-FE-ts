@@ -7,6 +7,10 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import theme from './theme';
+import Fonts from './fonts'
+
+import "./App.css"
 // import { selectUser } from './redux/authSlice';
 
 const App: React.FC = () => {
@@ -15,7 +19,8 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Fonts />
         <BrowserRouter>
         <Router />
         <Toaster />

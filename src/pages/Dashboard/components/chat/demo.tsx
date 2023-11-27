@@ -1,20 +1,13 @@
-// eslint-disable-next-line react-hooks/exhaustive-deps
-import { Flex, Text, Box, Heading } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import Divider from "../Divider";
-import Footer from "../Footer";
-import Header from "../Header";
 import Messages from "../Messages";
-import SampleText from "../data/info";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { selectId } from "../../../../redux/userSlice";
 import {
   selectAccessToken,
-  selectIsAuthenticated,
 } from "../../../../redux/authSlice";
 import SubmitePage from "../Footer";
-import { addChat, addMessage, selectChats } from "../../../../redux/chatSlice";
 
 interface Message {
   from: string;
@@ -40,10 +33,11 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
   ];
 
   useEffect(() => {
-    if (reload === ident){}
+    setIdent(childId);
     handleGetChatHistory();
   }, [ident, reload]);
 
+  console.log(ident);
   const handleGetChatHistory = async () => {
     const response = await axios.get(
       `https://adewole.pythonanywhere.com/api/${id}/History/${childId}/ListChatIdentifierHistory/`,
@@ -53,10 +47,8 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
         },
       }
     );
-  
-    setMessages([])
+    setMessages([]);
     response.data.chat_history.map((oldmap: any) => {
-     
       setMessages((old) => [...old, { from: "me", text: oldmap.request }]);
 
       setInputMessage("");
@@ -70,11 +62,6 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
     console.log(response.data.chat_history);
   };
 
-  const [messageText, setMessageText] = useState("");
-
-  const generateUniqueId = () => {
-    return Math.random().toString(36).substring(7);
-  };
 
   const [inputMessage, setInputMessage] = useState<string>("");
 
@@ -89,6 +76,8 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
       identifier: ident,
     };
 
+    console.log(payload)
+
     const response = await axios.post(
       `https://adewole.pythonanywhere.com/api/${id}/PostRequest/Create/`,
       payload,
@@ -99,7 +88,7 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
       }
     );
 
-    console.log(response);
+    console.log(response.data.identifier);
 
     setMessages((old) => [...old, { from: "me", text: data }]);
 
@@ -113,41 +102,6 @@ const ChatHistory: React.FC<ChildComponentProps> = ({ childId, reload }) => {
     }, 1000);
   };
 
-  const sampleFxn = async (text: string) => {
-    setIdent("");
-
-    setInputMessage(text);
-
-    const newdata: string = text;
-
-    const payload = {
-      request: newdata,
-      identifier: ident,
-    };
-
-    const response = await axios.post(
-      `https://adewole.pythonanywhere.com/api/${id}/PostRequest/Create/`,
-      payload,
-      {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-      }
-    );
-
-    console.log(response);
-
-    setMessages((old) => [...old, { from: "me", text: newdata }]);
-
-    setInputMessage("");
-
-    setTimeout(() => {
-      setMessages((old) => [
-        ...old,
-        { from: "computer", text: response.data.detail },
-      ]);
-    }, 1000);
-  };
 
   return (
     <Flex ml="2.5rem" w="100%" h="100vh" justify="center" align="center">

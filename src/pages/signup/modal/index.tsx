@@ -7,7 +7,6 @@ import {
   ModalOverlay,
   Box,
   Text,
-  Heading,
 } from "@chakra-ui/react";
 
 interface ModalComponentProps {
@@ -73,7 +72,7 @@ const TermModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
   // Effective Date: November27th, 2023
 
   return (
-    <>
+    <Box maxWidth={"100%"}>
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
         <ModalOverlay />
         <ModalContent p="2rem" borderRadius={4}>
@@ -82,7 +81,7 @@ const TermModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
             Terms of Use
           </ModalHeader>
           <ModalBody p={0}>
-            <Box width="24rem" height="100%">
+            <Box width="24rem" maxWidth={"100%"} height="100%">
               {data.map((dat) => (
                 <Box>
                   <Box display="flex" flexWrap="wrap">
@@ -100,7 +99,7 @@ const TermModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 

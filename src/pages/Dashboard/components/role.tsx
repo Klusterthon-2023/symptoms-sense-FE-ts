@@ -20,13 +20,15 @@ const RoleBox: React.FC<RoleBoxProps> = ({ hist, changeBg, handleClick }) => {
   return (
     <Box 
     borderRadius="0.375rem"
+    cursor="pointer"
     bg={changeBg === hist.id ? "#3E97FF" : "#FFF"}
     >
     <Box ml="0.1876rem"
       onClick={() => handleClick(hist.id)}
       borderRadius="0.25rem"
+      cursor="pointer"
       my="0.19rem"
-      width={{ md:"13rem" }}
+      width={{ md:"12rem" }}
       height="2.25rem"
       bg={changeBg === hist.id ? "#f5f8fa" : "#FFF"}
       py="0.5rem"

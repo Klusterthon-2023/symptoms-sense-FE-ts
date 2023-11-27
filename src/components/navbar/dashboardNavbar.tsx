@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
             <Box width="2rem" aspectRatio="1/1">
               <Image
                 src={"https://baticali.sirv.com/Klusterthon2023/logo.png"}
-                alt="Systems sense logo"
+               
                 width="100%"
                 height="auto"
                 loading="lazy"
