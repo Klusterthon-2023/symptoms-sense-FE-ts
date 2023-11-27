@@ -6,11 +6,10 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import mode from "../../../src/assets/icons/night-day.svg";
 import communication from "../../../src/assets/icons/message-text-2.svg";
 import FeedbackModal from "./modal";
+import Logo from "../../assets/icons/logo.svg"
 
 
 const Navbar: React.FC = () => {
-  const theme = useTheme();
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -20,8 +19,6 @@ const Navbar: React.FC = () => {
         position="fixed"
         zIndex="1000"
         width="100%"
-        // bgColor={theme.colors.white}
-        
       >
          <FeedbackModal isOpen={isOpen} onClose={onClose} />
         <Box
@@ -37,7 +34,7 @@ const Navbar: React.FC = () => {
           <Box display="flex" alignItems="center" gap="6px">
             <Box width="2rem" aspectRatio="1/1">
               <Image
-                src={"https://baticali.sirv.com/Klusterthon2023/logo.png"}
+                src={Logo}
                
                 width="100%"
                 height="auto"
@@ -63,6 +60,7 @@ const Navbar: React.FC = () => {
               onClick={toggleColorMode}
             >
                {/* Toggle {colorMode === 'light' ? 'Dark' : 'Light'} */}
+               
               <Image src={mode} alt="mode" />
             </Box>
 
