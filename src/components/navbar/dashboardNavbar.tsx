@@ -20,11 +20,12 @@ const Navbar: React.FC = () => {
         position="fixed"
         zIndex="1000"
         width="100%"
-        bgColor={theme.colors.white}
-        borderBottom="1px solid #E1E3EA"
+        // bgColor={theme.colors.white}
+        
       >
          <FeedbackModal isOpen={isOpen} onClose={onClose} />
         <Box
+        borderBottom="1px solid #E1E3EA"
           width="90%"
           mx="auto"
           height="4rem"

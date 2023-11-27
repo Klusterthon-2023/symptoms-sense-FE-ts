@@ -67,7 +67,7 @@ const WelcomePage = () => {
                 textColor="#ffff"
                 fontSize={{ base: "2rem", md: "3.125rem" }}
                 maxWidth={{ base: "90%", md: "33.375rem" }}
-                fontFamily="Inter"
+                fontFamily="GT-Eesti-Light"
                 fontWeight="600"
               >
                 Empowering Health Decisions with AI

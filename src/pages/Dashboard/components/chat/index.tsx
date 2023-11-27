@@ -29,10 +29,8 @@ const Chat: React.FC<ChildComponentProps> = ({
   setChildState,
 }) => {
   const dispatch = useDispatch();
-  const [inputMessage, setInputMessage] = useState<string>("");
   const [childState, setLocalChildState] = useState(false);
   const [newChatState, setNewChatState] = useState(true);
-  const [sampleState, setSampleState] = useState("");
   const accessToken = useSelector(selectAccessToken);
   const [ident, setIdent] = useState("");
   const id = useSelector(selectId);
@@ -42,15 +40,24 @@ const Chat: React.FC<ChildComponentProps> = ({
     "Have you been running a fever",
     "Another piece of information",
     "Another piece of information",
+    // Add more items as needed
   ];
-
   useEffect(() => {
+    alert("new");
+    // Update child state when parent state changes
     setLocalChildState(parentState);
     setNewChatState(false);
-    var uniqueId = generateUUID();
-    setIdent(uniqueId);
+    setIdent("");
     setMessages([]);
   }, [parentState]);
+
+  const [messageText, setMessageText] = useState("");
+
+  const generateUniqueId = () => {
+    return Math.random().toString(36).substring(7);
+  };
+
+  const [inputMessage, setInputMessage] = useState<string>("");
 
   function generateUUID() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
@@ -70,7 +77,7 @@ const Chat: React.FC<ChildComponentProps> = ({
     } else {
       setIdent(ident);
     }
-  }, []);
+  }, [ident]);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim().length) {
@@ -107,16 +114,39 @@ const Chat: React.FC<ChildComponentProps> = ({
     }, 1000);
   };
 
-  const sampleFxn = (text: string) => {
+  const sampleFxn = async (text: string) => {
+    setIdent("");
+
     setInputMessage(text);
 
     const newdata: string = text;
 
+    const payload = {
+      request: newdata,
+      identifier: ident,
+    };
+
+    const response = await axios.post(
+      `https://adewole.pythonanywhere.com/api/${id}/PostRequest/Create/`,
+      payload,
+      {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      }
+    );
+
+    console.log(response);
+
     setMessages((old) => [...old, { from: "me", text: newdata }]);
+
     setInputMessage("");
 
     setTimeout(() => {
-      setMessages((old) => [...old, { from: "computer", text: newdata }]);
+      setMessages((old) => [
+        ...old,
+        { from: "computer", text: response.data.detail },
+      ]);
     }, 1000);
   };
 

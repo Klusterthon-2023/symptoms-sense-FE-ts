@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Avatar, Flex, Text, Box, Image } from "@chakra-ui/react";
 import chatIcon from "../../../assets/icons/chatIcon.svg";
 import like from "../../../assets/icons/like.svg";
 import dislike from "../../../assets/icons/dislike.svg";
+
 
 interface Message {
   from: string;
@@ -16,7 +17,7 @@ interface MessagesProps {
 const Messages: React.FC<MessagesProps> = ({ messages }) => {
   const AlwaysScrollToBottom: React.FC = () => {
     const elementRef = useRef<HTMLDivElement>(null);
-
+    const [markdownText, setMarkdownText] = useState<string>();
     useEffect(() => {
       if (elementRef.current) {
         elementRef.current.scrollIntoView({ behavior: "smooth" });

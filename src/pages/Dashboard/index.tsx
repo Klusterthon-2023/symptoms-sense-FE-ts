@@ -14,6 +14,7 @@ import Navbar from "../../components/navbar/dashboardNavbar";
 import pen from "../../assets/icons/pen.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
 import ChatBox from "./components/chat";
+import ChatHistory from "./components/chat/demo";
 import { RootState } from "../../redux/store";
 import RoleBox from "./components/role";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -75,7 +76,10 @@ const datas = [
 
 const Dashboard = () => {
   const [mapHistory, setMapHistory] = useState<MapHistoryItem[]>([]);
-  const [childState, setChildState] = useState(true)
+  // const [childState, setChildState] = useState(true)
+  // const [chatHistoryState, setChatHistoryState] = useState(false);
+
+  const [seletectChatTYpe, setSelectectChatType] = useState('chat')
   const [parentState, setParentState] = useState(true);
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
@@ -103,7 +107,7 @@ const Dashboard = () => {
         },
       }
     );
-    console.log(response.data);
+    // console.log(response.data);
     setMapHistory(response.data);
   };
 
@@ -116,13 +120,8 @@ const Dashboard = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // const filterByDate = (startDate: Date, endDate: Date, mapHistory: MapHistoryItem[]): MapHistoryItem[] => {
-  //   return mapHistory.filter(item => item.date_time_created >= startDate && item.date_time_created <= endDate);
-  // };
-
   useEffect(() => {
     onOpen();
-    // handleHistory();
   }, []);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
@@ -132,12 +131,23 @@ const Dashboard = () => {
   const userName = useSelector((state: RootState) => state.user);
   const [changeBg, setChangeBg] = useState("");
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
 
-  const handleClick = (role: string) => {
+  const handleClick = async (role: string) => {
     setChangeBg(role);
+    const history = "chatHistory"
+
+   setSelectectChatType(history)
+    console.log(role)
+    // const response = await axios.get(
+    //   `https://adewole.pythonanywhere.com/api/${id}/History/${role}/ListChatIdentifierHistory/`,
+    //   {
+    //     headers: {
+    //       Authorization: "Bearer " + accessToken,
+    //     },
+    //   }
+    // );
+    // console.log(response.data);
+
   };
 
   useEffect(() => {
@@ -168,6 +178,7 @@ const Dashboard = () => {
                   borderRadius="0.375rem"
                   display="flex"
                   flexWrap="wrap"
+                  cursor="pointer"
                   onClick={() => {
                     setParentState(!setParentState)
                   }}
@@ -261,7 +272,21 @@ const Dashboard = () => {
         </Box>
         <Spacer />
         <Box width="100%">
-          <ChatBox  parentState={parentState} setChildState={setParentState} />
+          
+          
+          {seletectChatTYpe === "chat" && (
+              <ChatBox  parentState={parentState} setChildState={setParentState} />
+          )}
+          
+          {seletectChatTYpe === "chatHistory" && (
+             <Box>
+              <ChatHistory childId={changeBg} reload={changeBg} />
+             </Box>
+          )}
+
+          {}
+
+          
         </Box>
       </Box>
     </Box>
