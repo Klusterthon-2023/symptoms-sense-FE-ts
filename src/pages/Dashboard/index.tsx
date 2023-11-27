@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
   Spinner,
+  Avatar,
 } from "@chakra-ui/react";
 import Navbar from "../../components/navbar/dashboardNavbar";
 import pen from "../../assets/icons/pen.svg";
@@ -83,7 +84,6 @@ const Dashboard = () => {
     const history = "chatHistory";
 
     setSelectectChatType(history);
-    console.log(role);
   };
 
   useEffect(() => {
@@ -124,10 +124,11 @@ const Dashboard = () => {
             <Box width="14rem" pr="2rem" mt="2rem">
               <Box
                 width="12.375rem"
-                height="2.375rem"
+                py={"0.5rem"}
                 bg="#3E97FF"
                 borderRadius="0.375rem"
                 display="flex"
+                alignItems={"center"}
                 flexWrap="wrap"
                 cursor="pointer"
                 onClick={() => {
@@ -140,9 +141,8 @@ const Dashboard = () => {
                   justifyContent="center"
                   alignItems="center"
                   ml="0.75rem"
-                  my="0.56rem"
-                  width="1.04rem"
-                  height="1.04rem"
+                  width="1.25rem"
+                  height="1.25rem"
                   bgColor="#78B6FF"
                   borderRadius="0.21rem"
                 >
@@ -153,10 +153,8 @@ const Dashboard = () => {
                   ml="0.31rem"
                   color="#fff"
                   lineHeight="0.875rem"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: "0.8125rem",
-                  }}
+                  fontSize={"1rem"}
+                  fontFamily={`'GT-Eesti-Light', sans-serif`}
                 >
                   <strong>New</strong> Chat
                 </Text>
@@ -207,19 +205,14 @@ const Dashboard = () => {
                 alignItems="center"
               >
                 <Box>
-                  <Box
+                <Avatar
+                    name={userName.firstname?.slice(0, 10)}
+                    textColor="#fff"
+                    mr="0.5rem"
                     bg="#50CD89"
-                    width="2.5rem"
-                    height="2.5rem"
-                    borderRadius="6.25rem"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Text fontSize="0.75rem" textColor="#fff">
-                      {userName.firstname?.slice(0, 1)?.toUpperCase()}
-                    </Text>
-                  </Box>
+                    size={"sm"}
+                    p={"0.35rem"}
+                  ></Avatar>
                 </Box>
                 <Box ml="0.63rem">
                   <Text fontSize="0.75rem" fontWeight="500">

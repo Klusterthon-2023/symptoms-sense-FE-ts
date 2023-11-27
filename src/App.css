@@ -23,4 +23,5 @@
 h3 {
   font-weight: 700;
   margin-top: 2rem;
+  text-transform: capitalize;
 }

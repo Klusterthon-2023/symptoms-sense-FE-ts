@@ -90,16 +90,14 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
     }
   };
   return (
-    <Box height="10rem">
-      <Box border="1px solid #E1E3EA"  height="3.5rem" >
+    <>
+      <Box border="1px solid #E1E3EA" height="3.5rem" mb="0rem">
         <InputGroup>
           {voiceState ? (
             <Flex direction="row" height="2.75rem">
               <Box float="right">
                 <Input
-                 size='sm'
                   width="40rem"
-                  height="100%"
                   value={note ?? ""}
                   onChange={(e) => {
                     setNote(e.target.value);
@@ -119,7 +117,6 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
             </Flex>
           ) : (
             <Input
-            size='sm'
               placeholder="Type your message"
               resize="none"
               border="none"
@@ -145,24 +142,20 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                 mt="1rem"
                 p="1rem"
                 border="1px solid #E1E3EA"
-                mr="12em"
+                mr="12rem"
                 width="20rem"
                 height="2.75rem"
               >
-
-                  <Box
-                width="2rem"
-                height="2.5rem"
+                <Box
                   onClick={() => {
                     handleSaveNote();
                     setVoiceState(false);
                   }}
                 >
-                  <Image width="100%" height="100%" src={record} />
+                  <Image width="100%" src={record} />
                 </Box>
-              
 
-              
+                <Box width="1rem"></Box>
               </Flex>
             ) : (
               <Image
@@ -189,7 +182,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
       >
         Get Advice
       </Button>
-    </Box>
+    </>
     //     <Box w="100%" mt="5">
     //       <Flex float="right" bg="red" border="1px solid #E1E3EA" height="3.5rem" borderRadius="0.38rem" direction="row" w="100%" mt="2">
     //         <InputGroup>

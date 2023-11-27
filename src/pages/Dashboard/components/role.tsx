@@ -19,11 +19,14 @@ interface RoleBoxProps {
 const RoleBox: React.FC<RoleBoxProps> = ({ hist, changeBg, handleClick }) => {
   return (
     <Box 
-    borderRadius="0.375rem"
+    borderRadius="0.25rem"
     cursor="pointer"
-    bg={changeBg === hist.id ? "#3E97FF" : "#FFF"}
+    bg={changeBg === hist.id ? "#3E97FF" : "#FFF"}    
+    _hover={{
+        bg: "#3E97FF"
+    }}
     >
-    <Box ml="0.1876rem"
+    <Box ml="0.35rem"
       onClick={() => handleClick(hist.id)}
       borderRadius="0.25rem"
       cursor="pointer"
@@ -34,12 +37,15 @@ const RoleBox: React.FC<RoleBoxProps> = ({ hist, changeBg, handleClick }) => {
       py="0.5rem"
       display="flex"
       flexWrap="wrap"
+      _hover={{
+        bg: "#f5f8fa"
+    }}
     >
       <Box width="9.375rem" height="1.1875rem" pl="0.25rem">
         <Text fontSize="0.875rem"
         fontWeight="500"
         textColor="#3F4254">
-        {hist.title.slice(0,15)}...
+        {hist.title.length>20 ? `${hist.title.slice(0,20)}...` : hist.title}
         </Text>
       </Box>
      

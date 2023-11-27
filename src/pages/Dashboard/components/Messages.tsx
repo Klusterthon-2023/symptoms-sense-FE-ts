@@ -12,6 +12,8 @@ import FeedbackModal from "../../../components/navbar/modal";
 import upFill from "../../../assets/icons/upfill.svg"
 import downFill from "../../../assets/icons/downFill.svg"
 import copyFill from "../../../assets/icons/filledCopy.svg"
+import { TypeAnimation } from 'react-type-animation';
+
 interface Message {
   from: string;
   text: string;
@@ -37,7 +39,7 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
       flexDirection="column"
       p="3"
     >
-         <FeedbackModal isOpen={isOpen} onClose={onClose} />
+      <FeedbackModal isOpen={isOpen} onClose={onClose} />
       <Box
         height="100%"
         marginRight="-50px"
@@ -49,24 +51,24 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
             return (
               <Flex key={index} w="100%" justify="flex-end">
                 <Flex
-                  borderRadius="0.38rem"
+                  borderRadius="0.75rem"
                   bg="#F5F6FA"
                   color="white"
-                  minW="50%"
-                  maxW="35.5rem"
+                  maxW="50%"
                   my="1"
-                  p="1rem"
+                  p="1rem 2rem"
                 >
                   <Avatar
                     name={userName.firstname?.slice(0, 10)}
                     textColor="#fff"
                     mr="0.5rem"
                     bg="#50CD89"
+                    size={"sm"}
+                    p={"0.35rem"}
                   ></Avatar>
-
                   <Box>
                     <Text
-                      fontSize="0.875rem"
+                      fontSize="1.25rem"
                       textColor="#3F4254"
                       lineHeight="145%"
                       fontWeight="400"
@@ -74,10 +76,11 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                       You
                     </Text>
                     <Text
-                      fontSize="0.875rem"
+                      fontSize="1rem"
                       textColor="#3F4254"
                       lineHeight="145%"
                       fontWeight="400"
+                      fontFamily={`'GT-Eesti-Light', sans-serif`}
                     >
                       {item.text}
                     </Text>
@@ -89,34 +92,35 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
             return (
               <Flex key={index} w="100%">
                 <Flex
-                  borderRadius="0.38rem"
+                  borderRadius="0.75rem"
                   bg="gray.100"
                   color="black"
-                  minW="70%"
-                  maxW="35.5rem"
-                  my="1"
+                  maxW="70%"
+                  mt="1rem"
+                  mb={"2rem"}
                   p="3"
                 >
                   <Avatar
                     name="Computer"
-                    src={chatIcon}
+                    src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}
                     mr="0.5rem"
                     bg="white"
+                    size={"sm"}                    
+                    p={"0.35rem"}
                   ></Avatar>
                   <Flex direction="column">
-                    <Text
-                      fontSize="0.875rem"
-                      textColor="#3F4254"
-                      lineHeight="145%"
-                      fontWeight="400"
-                    >
-                      AI
-                    </Text>
-                    <Text>
+                    <Box display="flex" alignItems="center" gap="6px">
+                      <Text fontWeight={600} fontSize="1.25rem">
+                        Symptom
+                      </Text>
+                      <Text fontFamily={`'GT-Eesti-Light', sans-serif`} fontWeight={300} fontSize="1.25rem">
+                        Sense
+                      </Text>
+                    </Box>
+                    <Text fontFamily={`'GT-Eesti-Light', sans-serif`}>
                       <div
-                        style={{ textTransform: "capitalize" }}
                         dangerouslySetInnerHTML={{
-                          __html: marked.parse(item.text),
+                          __html: `<TypeAnimation sequence={[${marked.parse(item.text)}]} speed={75} />`
                         }}
                       />
                     </Text>
@@ -130,23 +134,23 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                           Helpful?
                         </Text>
                         <Box
-                        cursor="pointer"
-                         onMouseEnter={() => setUpState(true)}
-                         onMouseLeave={() => setUpState(false)}
+                          cursor="pointer"
+                          onMouseEnter={() => setUpState(true)}
+                          onMouseLeave={() => setUpState(false)}
                           onClick={onOpen}>
-                          <Image ml="0.5rem" src={ upState ? upFill : like} />
+                          <Image ml="0.5rem" src={upState ? upFill : like} />
                         </Box>
                         <Box
-                        cursor="pointer"
-                         onMouseEnter={() => setDownState(true)}
-                         onMouseLeave={() => setDownState(false)}
+                          cursor="pointer"
+                          onMouseEnter={() => setDownState(true)}
+                          onMouseLeave={() => setDownState(false)}
                           onClick={onOpen}>
                           <Image ml="0.62rem" src={downState ? downFill : dislike} />
                         </Box>
 
 
 
-                        
+
                         <Spacer />
                         <Box
                           onClick={() => {
@@ -166,8 +170,8 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                         >
 
                           <Image
-                          
-                          src={copyState ? copyFill : copy} />
+
+                            src={copyState ? copyFill : copy} />
                         </Box>
                       </Flex>
                     </Box>

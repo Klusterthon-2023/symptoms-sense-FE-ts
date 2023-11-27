@@ -33,7 +33,6 @@ const Signin: React.FC = () => {
     email: "",
     password: "",
   };
-  const [loading, setLoading] = React.useState(false);
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -43,7 +42,8 @@ const Signin: React.FC = () => {
   });
 
   const onSubmit = async (values: FormValues) => {
-    setLoading(true);
+    console.log("Form values:", values);
+
     try {
       const response = await axios.post(
         `https://adewole.pythonanywhere.com/api/UsersAuths/Login/`,
@@ -68,15 +68,17 @@ const Signin: React.FC = () => {
             lastname: response.data.last_name,
           })
         );
-
+        navigate("/dashboard");
         toast.success("Login successful");
+      }else {
+        toast.error("Invalid response data");
       }
     } catch (error) {
       console.log(error);
+      console.log(error)
     }
 
-    navigate("/dashboard");
-    setLoading(false);
+   
   };
   return (
     <Box
@@ -269,7 +271,6 @@ const Signin: React.FC = () => {
                     height="2.375rem"
                     width="100%"
                     type="submit"
-                    isLoading={loading}
                   >
                     Sign in
                   </Button>
