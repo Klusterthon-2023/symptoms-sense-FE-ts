@@ -9,6 +9,7 @@ import {
   Box,
   Tooltip,
 } from "@chakra-ui/react";
+import toast from "react-hot-toast";
 
 const SpeechRecognition =
   (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
