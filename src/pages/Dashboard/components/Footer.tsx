@@ -52,11 +52,9 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
     } else {
       mic.stop();
       mic.onend = () => {
-        console.log("Stopped Mic on Click");
       };
     }
     mic.onstart = () => {
-      console.log("Mics on");
     };
 
     mic.onresult = (event: any) => {
@@ -64,10 +62,9 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
         .map((result: any) => result[0])
         .map((result: any) => result.transcript)
         .join("");
-      console.log(transcript);
       setNote(transcript);
       mic.onerror = (event: any) => {
-        console.log(event.error);
+        toast.error(event.error);
       };
     };
   };

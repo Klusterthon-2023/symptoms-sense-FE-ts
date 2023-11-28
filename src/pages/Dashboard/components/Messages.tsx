@@ -155,7 +155,6 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                             document.execCommand("copy");
                             document.body.removeChild(tempTextArea);
                             toast.success("copied to clipboard");
-                            console.log(item.text);
                           }}
                           cursor="pointer"
                           onMouseEnter={() => setCopyState(true)}

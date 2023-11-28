@@ -160,7 +160,6 @@ const Chat: React.FC<ChildComponentProps> = ({
       ...old,
       { from: "computer", text: response.data.detail },
     ]);
-    console.log(ident)
   
     setLoading(false);    
     setNewChatState(false);

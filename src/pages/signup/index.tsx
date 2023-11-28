@@ -162,7 +162,6 @@ const Signup: React.FC = () => {
       .then((result: any) => {
         const user = result.user;
         if (user.accessToken) {
-          console.log(user)
           localAuth(user)
         } else {
           toast.error("Could not authenticate user with Google. Try again.")
