@@ -7,6 +7,7 @@ import {
   InputRightElement,
   Image,
   Box,
+  Tooltip,
 } from "@chakra-ui/react";
 import Mic from "../../../assets/icons/microphone-2.svg";
 import useStopwatch from "../components/stopwatch";
@@ -134,7 +135,9 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                   width="100%"
                   height={"100%"}
                 >
-                  <Image width="100%" height="100%" src={"https://baticali.sirv.com/Klusterthon2023/mic.svg"} />
+                  <Tooltip hasArrow color={"#fff"} bg={"brand.active"} label="Stop Recording" isOpen placement="auto">
+                    <Image width="100%" height="100%" src={"https://baticali.sirv.com/Klusterthon2023/mic.svg"} />
+                  </Tooltip>
                 </Box>
 
                 <Box width="1rem"></Box>
