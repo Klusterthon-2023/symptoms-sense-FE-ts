@@ -10,6 +10,12 @@ import {
   Heading,
   Spinner,
   Avatar,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  DrawerFooter,
 } from "@chakra-ui/react";
 import Navbar from "../../components/navbar/dashboardNavbar";
 import logoutIcon from "../../assets/icons/logout.svg";
@@ -41,10 +47,8 @@ const Dashboard = () => {
   const [mapHistory, setMapHistory] = useState<MapHistoryItem[]>([]);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
+  // const { isDrawerOpen, onDrawerOpen, onDrawerClose } = useDisclosure();
   const userName = useSelector((state: RootState) => state.user);
-  // const userID = useSelector((state: RootState) => state.id);
-  // const firstName = useSelector((state: RootState) => state.firstname);
-  // const lastName = useSelector((state: RootState) => state.lastname);
   const [childId, setChildId] = useState("");
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
@@ -52,8 +56,7 @@ const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [newChatState, setNewChatState] = useState(true);
-
-
+  const [mobileState, setMobileState] = useState(false)
 
   const handleHistory = async () => {
     const response = await axios.get(
@@ -70,14 +73,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     handleHistory()
-    if (mapHistory.length === 0) {
-      onOpen();
-    }
+    // if (mapHistory.length === 0) {
+    //   onOpen();
+    // }
 
   }, []);
 
   const handleClick = async (role: string) => {
     setChildId(role);
+    onClose();
   };
 
   useEffect(() => {
@@ -110,11 +114,11 @@ const Dashboard = () => {
 
   return (
     <Box width="100%" height="100vh" overflow="hidden">
-      <Navbar onSideToggle={onToggle} isSideOpen={isOpen} />
+      <Navbar mobileState={mobileState} setMobileState={setMobileState} isDrawerOpen={isOpen} onDrawerOpen={onOpen} />
 
-      <Box width="100%" mt={{base:"1.5rem", md:"4rem"}} mx="auto" display="flex" px={{ base: "1rem", md: "2rem", "xl":"3rem" }}>
-        <Box borderRight="1px solid #E1E3EA" bg={"#fff"} display={{base:"none", md:"block"}} position={{base:"absolute", md:"relative"}} 
-        bottom={0} maxH="94vh" >
+      <Box width="100%" mt={{ base: "1.5rem", md: "4rem" }} mx="auto" display="flex" px={{ base: "1rem", md: "2rem", "xl": "3rem" }}>
+        <Box borderRight="1px solid #E1E3EA" bg={"#fff"} display={{ base: "none", md: "block" }} position={{ base: "absolute", md: "relative" }}
+          bottom={0} maxH="94vh" >
           <Box>
             <Box width="14rem" pr="2rem" mt="2rem">
               <Box
@@ -168,7 +172,7 @@ const Dashboard = () => {
                 mt="1.5rem"
                 direction="column"
                 width="12.375rem"
-                height={{base:"30rem", sm:"30rem", md:"50rem", lg:"25rem", "2xl":"40rem"}}
+                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "40rem" }}
                 overflow="hidden"
                 flexDirection="column"
               >
@@ -196,10 +200,9 @@ const Dashboard = () => {
                 position="absolute"
                 bottom={0}
                 width="12.375rem"
-                // height="3.375rem"
                 display="flex"
                 alignItems="center"
-                mb={{base:"2rem", lg:"3rem", "2xl":"8rem"}}
+                mb={{ base: "2rem", lg: "3rem", "2xl": "8rem" }}
               >
                 <Box>
                   <Avatar
@@ -230,14 +233,136 @@ const Dashboard = () => {
               </Box>
             </Box>
           </Box>
-          
+
         </Box>
         <Spacer />
+        {isOpen &&
+          <Drawer placement={"left"} onClose={onClose} isOpen={isOpen} size={"xs"}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerHeader borderBottomWidth='1px'>
+                <Box
+                  width="12.375rem"
+                  py={"0.5rem"}
+                  bg="#3E97FF"
+                  borderRadius="0.375rem"
+                  display="flex"
+                  alignItems={"center"}
+                  flexWrap="wrap"
+                  cursor="pointer"
+                  onClick={() => {
+                    messages.length > 0 && setMessages([]);
+                    setLoading(false);
+                    setNewChatState(true)
+                  }}
+                >
+                  <Box
+                    cursor="pointer"
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    ml="0.75rem"
+                    width="1.25rem"
+                    height="1.25rem"
+                    borderRadius="0.21rem"
+                  >
+                    <Image src={"https://baticali.sirv.com/Klusterthon2023/notepad-edit.svg"} />
+                  </Box>
+                  <Text
+                    my="0.56rem"
+                    ml="0.31rem"
+                    color="#fff"
+                    lineHeight="0.875rem"
+                    fontSize={"1rem"}
+                    fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  >
+                    <strong>New Chat</strong>
+                  </Text>
+                </Box>
+              </DrawerHeader>
+              <DrawerBody>
+                <Heading
+                  mt="1.03rem"
+                  ml="0.rem"
+                  textColor="#A1A5B7"
+                  fontSize="0.75rem"
+                  fontWeight="500"
+                >
+                  TODAY
+                </Heading>
+                <Flex
+                  mt="1.5rem"
+                  direction="column"
+                  width="12.375rem"
+                  // height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "40rem" }}
+                  overflow="hidden"
+                  flexDirection="column"
+                >
+                  <Flex
+                    // height="100%"
+                    // maxHeight={"80%"}
+                    marginRight="-50px"
+                    paddingRight="50px"
+                    overflowX="hidden"
+                    overflowY="auto"
+                  >
+                    <Box>
+                      {mapHistory.map((map, index) => (
+                        <RoleBox
+                          hist={map}
+                          changeBg={childId}
+                          handleClick={handleClick}
+                        />
+                      ))}
+                    </Box>
+                  </Flex>
+                </Flex>
+
+              </DrawerBody>
+
+              <DrawerFooter borderTopWidth='0.25px'>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  width={"100%"}
+                >
+                  <Box display={"flex"} justifyContent={"space-between"}>
+                    <Avatar
+                      name={userName.firstname?.slice(0, 10)}
+                      textColor="#fff"
+                      mr="0.5rem"
+                      bg="#50CD89"
+                      size={"sm"}
+                      p={"0.35rem"}
+                      float={"left"}
+                    ></Avatar>
+                  <Box ml="0.63rem">
+                    <Text fontSize="0.75rem" fontWeight="500">
+                      {userName.firstname}{" "}
+                      {userName.lastname}
+                    </Text>
+                  </Box>
+                  </Box>
+                  <Spacer />
+                  <Box
+                    float="right"
+                    onClick={() => {
+                      dispatch(logout());
+                    }}
+                    cursor={"pointer"}
+                  >
+                    <Image src={logoutIcon} alt="" />
+                  </Box>
+                </Box>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        }
         <Box width="100%" id="chatArea">
-          <ChatBox messages={messages} setMessages={setMessages} 
-                  newChatState={newChatState} setNewChatState={setNewChatState} 
-                  childId={childId} setChildId={setChildId} loading={loading} 
-                  setLoading={setLoading} handleHistory={handleHistory} />
+          <ChatBox messages={messages} setMessages={setMessages}
+            newChatState={newChatState} setNewChatState={setNewChatState}
+            childId={childId} setChildId={setChildId} loading={loading}
+            setLoading={setLoading} handleHistory={handleHistory} />
         </Box>
       </Box>
     </Box>

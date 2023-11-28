@@ -7,14 +7,17 @@ import logo from "../../assets/icons/logo.svg";
 
 
 interface ChildComponentProps {
-  isSideOpen: boolean;
-  onSideToggle: Function;
+  mobileState: boolean;
+  setMobileState: React.Dispatch<React.SetStateAction<boolean>>;
+  isDrawerOpen: boolean
+  onDrawerOpen: React.MouseEventHandler<HTMLDivElement>;
   // openSideNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navbar: React.FC<ChildComponentProps> = ({isSideOpen, onSideToggle}) => {
+const Navbar: React.FC<ChildComponentProps> = ({mobileState, setMobileState, isDrawerOpen, onDrawerOpen}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+
 
   return (
     <>
@@ -63,8 +66,8 @@ const Navbar: React.FC<ChildComponentProps> = ({isSideOpen, onSideToggle}) => {
               <Image src={"https://baticali.sirv.com/Klusterthon2023/message-text.svg"} alt="communication" />
             </Box>
           </Box>
-          <Box display={{ base: "block", md: "none" }} cursor={"pointer"} onClick={()=>onSideToggle}>
-            {isSideOpen ? <CloseIcon boxSize={6} /> : <HamburgerIcon boxSize={6} />}
+          <Box display={{ base: "block", md: "none" }} cursor={"pointer"} onClick={onDrawerOpen}>
+            {isDrawerOpen ? <CloseIcon boxSize={6} /> : <HamburgerIcon boxSize={6} />}
           </Box>
         </Box>
       </Box>

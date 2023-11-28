@@ -26,12 +26,10 @@ const Navbar: React.FC = () => {
           width="90%"
           maxWidth="90rem"
           mx="auto"
-          // height="4rem"
           paddingY={"1.5rem"}
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-
         >
           <Box display="flex" alignItems="center" gap="6px" cursor={"pointer"} onClick={()=>navigate('/')}>
             <Box width="2rem" aspectRatio="1/1">
