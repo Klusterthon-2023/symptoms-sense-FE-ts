@@ -17,6 +17,9 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import TermModal from "./modal";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userSlice";
+import { login } from "../../redux/authSlice";
 import toast from "react-hot-toast";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -31,6 +34,7 @@ interface FormValues {
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonDisabled, setButtonDisabled] = useState(false);  
@@ -265,7 +269,7 @@ const Signup: React.FC = () => {
                 >
                   <Box display="flex" justifyContent="center">
                     <Box display="flex" flexWrap="wrap" as="button" type="button"
-                        onClick={authWithGoogle} disabled={loading} display="flex" flexWrap="wrap">
+                        onClick={authWithGoogle} disabled={loading}>
                       <Image src="https://baticali.sirv.com/Klusterthon2023/google.svg" />
                       <Text
                         ml="0.75rem"
