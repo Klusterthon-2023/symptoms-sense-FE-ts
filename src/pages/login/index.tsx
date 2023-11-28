@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice";
 import { login } from "../../redux/authSlice";
 import toast from "react-hot-toast";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../../firebase";
 
 interface FormValues {
   email: string;
@@ -89,6 +91,74 @@ const Signin: React.FC = () => {
     setLoading(false);
 
   };
+
+  async function localAuth(user:any) {
+    try {
+      const response = await axios.post(
+        `http://adewole.pythonanywhere.com/api/UsersAuths/GoogleAuth/`,
+        {
+          first_name: user.displayName.split(' ')[0],
+          last_name: (user.displayName.split(' ')).pop(),
+          email: user.email
+        }
+      );
+      if (response) {
+        const payload = {
+          id: response.data.id,
+          firstname: response.data.first_name,
+          lastname: response.data.last_name,
+
+        };
+        dispatch(setUser(payload));
+        dispatch(login(response.data.access_token));
+        dispatch(
+          setUser({
+            id: response.data.user_id,
+            firstname: response.data.first_name,
+            lastname: response.data.last_name,
+          })
+        );
+        localStorage.setItem('id', response.data.user_id)
+        localStorage.setItem('firstname', response.data.first_name)
+        localStorage.setItem('lastname', response.data.last_name)
+
+        navigate('/dashboard')
+        toast.success("Login successful");
+      } else {
+        toast.error("Invalid response data");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        error.response?.data && error.response?.data.hasOwnProperty('detail') && toast.error(error.response?.data['detail'])
+        error.response?.data && error.response?.data.hasOwnProperty('email') && toast.error(`Email: ${error.response?.data['email']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('first_name') && toast.error(`First name: ${error.response?.data['first_name']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('last_name') && toast.error(`Last name: ${error.response?.data['last_name']}`)
+        !error.response?.status && toast.error("Network unavailable, please try again.")
+      } else {
+        toast.error("Error, please try again.")
+      }
+    }
+    setLoading(false)
+  }
+
+  const authWithGoogle = () => {
+    setLoading(true)
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result: any) => {
+        const user = result.user;
+        if (user.accessToken) {
+          console.log(user)
+          localAuth(user)
+        } else {
+          toast.error("Could not authenticate user with Google. Try again.")
+        }
+        
+      }).catch((error) => {
+        toast.error(`${error.message}`)
+      });
+      setLoading(false)
+  }
   return (
     <Box
       height="100%"
@@ -184,7 +254,8 @@ const Signin: React.FC = () => {
                   borderRadius={{ base: "0.25rem", lg: "0.5rem" }}
                 >
                   <Box display="flex" justifyContent="center">
-                    <Box display="flex" flexWrap="wrap">
+                    <Box display="flex" flexWrap="wrap" as="button" type="button"
+                        onClick={authWithGoogle} disabled={loading}>
                       <Image src="https://baticali.sirv.com/Klusterthon2023/google.svg" />
                       <Text
                         ml="0.75rem"
