@@ -5,16 +5,25 @@ import {
   ModalContent,
   ModalBody,
   Box,
+  useBreakpointValue
 } from '@chakra-ui/react';
 
 interface CustomModalProps {
   isOpen: boolean;
   onClose: () => void;
-  size: string;
   children: ReactNode;
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, size, children }) => {
+const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, children }) => {
+  const size = useBreakpointValue(
+    {
+      base: "xs",
+      md: "md",
+      lg: "5xl",
+      xl: "4xl",
+      "2xl": "5xl"
+    }
+  )
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={size}>
       <ModalOverlay />

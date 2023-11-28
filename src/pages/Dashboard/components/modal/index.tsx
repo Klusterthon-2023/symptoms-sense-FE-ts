@@ -20,12 +20,13 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
   const handleClose = () => {
     onClose();
   };
+  
   return (
     <>
-      <CustomModal isOpen={isOpen} onClose={handleClose} size="4xl">
+      <CustomModal isOpen={isOpen} onClose={handleClose}>
         <Box maxWidth="100%">
-          <ModalHeader mt={"3rem"} mb="2rem" padding={"1rem 3rem"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-            <Heading fontSize="1.75rem" fontFamily={`'GT-Eesti', sans-serif`}>
+          <ModalHeader my={{base:"1rem", lg:"2rem"}} padding={{base:"0.75rem", lg:"1rem 3rem"}} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+            <Heading fontSize={{base:"1rem", lg:"1.75rem"}} fontFamily={`'GT-Eesti', sans-serif`}>
               Hello! SymptomSense is here to assist you
             </Heading>
             <CloseIcon cursor={"pointer"} onClick={onClose} />
@@ -34,17 +35,18 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
           <Box
             borderRadius="1rem"
             border="2px solid #C2DEFF"
-            padding={"2rem"}
+            padding={{base:"0.75rem", lg:"2rem"}}
             display="flex"
             gap={"2rem"}
             bg={"#EEF6FF"}
-            margin={"3rem"}
+            margin={{base:"1rem", lg:"3rem"}}
+            flexDirection={{base:"column", lg:"row"}}
           >
             <Box width={"2.5rem"}>
               <Image width={"100%"} height={"auto"} src={privacy} />
             </Box>
             <Box width="100%">
-              <Text fontSize="1.5rem" lineHeight={"150%"} fontWeight={500} fontFamily={`'GT-Eesti-Light', sans-serif`}>
+              <Text fontSize={{base:"1rem", lg:"1.75rem"}} lineHeight={"150%"} fontWeight={500} fontFamily={`'GT-Eesti-Light', sans-serif`}>
                 It's important to note that the information provided by our AI
                 is based on common symptoms and general knowledge. SymptomSense
                 is not a substitute for professional medical advice, diagnosis,
@@ -54,11 +56,11 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
             </Box>
           </Box>
         </Box>
-        <Divider my={"2rem"} />
+        <Divider my={{base:"1rem", lg:"1.5rem"}} />
         <Button
           float="right"
           onClick={onClose}
-          m={"3rem"}
+          m={{base:"1rem", lg:"2rem"}}
         >
           Continue
         </Button>

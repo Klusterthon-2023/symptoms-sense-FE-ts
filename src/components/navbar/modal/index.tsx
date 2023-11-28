@@ -53,7 +53,7 @@ const FeedbackModal: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <CustomModal isOpen={isOpen} onClose={onClose} size="4xl">
+      <CustomModal isOpen={isOpen} onClose={onClose}>
         <Box maxWidth={"100%"}>
           <ModalHeader mt={"3rem"} mb="2rem" padding={"1rem 3rem"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
             <Heading fontSize="1.75rem" fontFamily={`'GT-Eesti', sans-serif`}>
