@@ -223,7 +223,7 @@ const WelcomePage = () => {
                 textAlign="center"
                 fontFamily={`'GT-Eesti', sans-serif`}
               >
-                Share your Symptoms your with us, and then we take it from there
+                Share your Symptoms with us, and then we take it from there
               </Heading>
 
               <Box display="flex" justifyContent="center" width="100%">

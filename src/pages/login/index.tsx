@@ -95,7 +95,7 @@ const Signin: React.FC = () => {
   async function localAuth(user:any) {
     try {
       const response = await axios.post(
-        `http://adewole.pythonanywhere.com/api/UsersAuths/GoogleAuth/`,
+        `https://adewole.pythonanywhere.com/api/UsersAuths/GoogleAuth/`,
         {
           first_name: user.displayName.split(' ')[0],
           last_name: (user.displayName.split(' ')).pop(),
