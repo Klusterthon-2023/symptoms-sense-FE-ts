@@ -18,6 +18,7 @@ const WelcomePage = () => {
   const navigate = useNavigate();
   const year = new Date().getFullYear();
   const [isSmallScreen] = useMediaQuery('(max-width: 992px)')
+  const [isLargeScreen] = useMediaQuery('(min-width: 1400px)')
   const worksData = [
     {
       no: 1,
@@ -108,8 +109,10 @@ const WelcomePage = () => {
               mx={{ base: "auto", lg: "" }}
               width={{ base: "95%", lg: "50.199rem" }}
             >
-              {isSmallScreen ? <Image
-                borderRadius="1rem" src="https://baticali.sirv.com/Klusterthon2023/sample-full.png" /> : <Image src="https://baticali.sirv.com/Klusterthon2023/sample.png" />}
+              {isSmallScreen ? (<Image borderRadius="1rem" src="https://baticali.sirv.com/Klusterthon2023/sample-full.png" />) : (
+                isLargeScreen ? (<Image borderRadius="1rem" src="https://baticali.sirv.com/Klusterthon2023/sample-full.png" />) : 
+                (<Image src="https://baticali.sirv.com/Klusterthon2023/sample.png" />)
+              )}
             </Box>
           </Flex>
         </Box>
@@ -234,7 +237,7 @@ const WelcomePage = () => {
                     bg: "brand.active",
                     boxShadow: "none",
                   }}
-                  onClick={()=>navigate('/login')}
+                  onClick={() => navigate('/login')}
                 >
                   Check Your Symptom
                 </Button>
@@ -255,7 +258,7 @@ const WelcomePage = () => {
             maxHeight="22.1rem"
           >
             <Flex direction={{ base: "column", md: "row" }} alignItems={"center"} width="100%">
-              <Box display="flex" alignItems="center" gap="6px"  cursor={"pointer"} onClick={()=>navigate('/')}>
+              <Box display="flex" alignItems="center" gap="6px" cursor={"pointer"} onClick={() => navigate('/')}>
                 <Box width="2rem" aspectRatio="1/1">
                   <Image
                     src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}
@@ -277,7 +280,7 @@ const WelcomePage = () => {
               <Spacer />
               <Box display={"flex"}>
                 <Link to="/">
-                  <Text color={"#7E8299"} mr={{base:"1rem", md:"1.5rem", xl:"2.5rem"}}>How it Works</Text>
+                  <Text color={"#7E8299"} mr={{ base: "1rem", md: "1.5rem", xl: "2.5rem" }}>How it Works</Text>
                 </Link>
 
                 <Link to="/">

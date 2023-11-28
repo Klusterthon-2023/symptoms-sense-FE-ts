@@ -4,6 +4,7 @@ import { Image } from "@chakra-ui/react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import FeedbackModal from "./modal";
 import logo from "../../assets/icons/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 
 interface ChildComponentProps {
@@ -14,6 +15,7 @@ interface ChildComponentProps {
 const Navbar: React.FC<ChildComponentProps> = ({isDrawerOpen, onDrawerOpen}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
 
 
   return (
@@ -31,7 +33,7 @@ const Navbar: React.FC<ChildComponentProps> = ({isDrawerOpen, onDrawerOpen}) => 
           justifyContent="space-between"
           px={{ base: "1rem", md: "2rem", "xl":"3rem" }}
         >
-          <Box display="flex" alignItems="center" gap="6px">
+          <Box display="flex" alignItems="center" gap="6px" cursor={"pointer"} onClick={() => navigate('/')}>
             <Box width="2rem" aspectRatio="1/1">
               <Image src={logo} width="100%" height="auto" loading="lazy" />
             </Box>
