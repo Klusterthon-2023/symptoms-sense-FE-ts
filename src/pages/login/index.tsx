@@ -43,7 +43,7 @@ const Signin: React.FC = () => {
   });
 
   const onSubmit = async (values: FormValues) => {
-    setLoading(true); 
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -70,18 +70,24 @@ const Signin: React.FC = () => {
         localStorage.setItem('id', response.data.user_id)
         localStorage.setItem('firstname', response.data.first_name)
         localStorage.setItem('lastname', response.data.last_name)
-        
+
         navigate('/dashboard')
         toast.success("Login successful");
-      }else {
+      } else {
         toast.error("Invalid response data");
       }
     } catch (error) {
-      console.log(error);
-      console.log(error)
+      if (axios.isAxiosError(error)) {
+        error.response?.data && error.response?.data.hasOwnProperty('detail') && toast.error(error.response?.data['detail'])
+        error.response?.data && error.response?.data.hasOwnProperty('email') && toast.error(`Email: ${error.response?.data['email']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('password') && toast.error(`Password: ${error.response?.data['password']}`)
+        !error.response?.status && toast.error("Network unavailable, please try again.")
+      } else {
+        toast.error("Error, please try again.")
+      }
     }
     setLoading(false);
-   
+
   };
   return (
     <Box
@@ -102,12 +108,12 @@ const Signin: React.FC = () => {
         width={{ base: "100%", md: "70%" }}
         py={{ base: "1rem", lg: 0 }}
         columns={{ base: 1, lg: 2 }}
-        justifyItems={{base:"center"}}
+        justifyItems={{ base: "center" }}
         maxWidth={"65em"}
       >
         <Box mt={{ base: 0, lg: "15rem" }} display={"flex"} flexDirection={"column"} alignItems={{ base: "center", lg: "flex-start" }}>
 
-          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }}  cursor={"pointer"} onClick={()=>navigate('/')}>
+          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }} cursor={"pointer"} onClick={() => navigate('/')}>
             <Box width="2rem" aspectRatio="1/1">
               <Image
                 src={"https://baticali.sirv.com/Klusterthon2023/logo-grey.svg"}
@@ -147,16 +153,16 @@ const Signin: React.FC = () => {
           bg="#ffffff"
           mt={{ base: "1rem", lg: 0 }}
           py={{ base: "2rem", md: "5rem", lg: "3rem", "2xl": "5rem" }}
-          px={{ base: "1rem", sm:"2rem", lg: "3rem" }}
+          px={{ base: "1rem", sm: "2rem", lg: "3rem" }}
           borderRadius="1.5rem"
-          width={{base:"90%", sm:"80%", lg:"90%"}}
+          width={{ base: "90%", sm: "80%", lg: "90%" }}
         >
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
-            <Form style={{width:"100%"}}>
+            <Form style={{ width: "100%" }}>
               <Box
               >
                 <Text
@@ -184,7 +190,7 @@ const Signin: React.FC = () => {
                         ml="0.75rem"
                         textAlign="center"
                         textColor="#7E8299"
-                        fontSize={{base:".75rem", lg:"1rem"}}
+                        fontSize={{ base: ".75rem", lg: "1rem" }}
                         fontWeight="500"
                       >
                         Sign in with Google
@@ -195,7 +201,7 @@ const Signin: React.FC = () => {
                 <Box
                   textAlign="center"
                   textColor="#A1A5B7"
-                  fontSize={{base:".75rem", lg:"1rem"}}
+                  fontSize={{ base: ".75rem", lg: "1rem" }}
                   fontWeight="500"
                   mt="2rem"
                   mb="1.5rem"

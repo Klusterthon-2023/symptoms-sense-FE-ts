@@ -46,8 +46,7 @@ interface Message {
 const Dashboard = () => {
   const [mapHistory, setMapHistory] = useState<MapHistoryItem[]>([]);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
-  // const { isDrawerOpen, onDrawerOpen, onDrawerClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const userName = useSelector((state: RootState) => state.user);
   const [childId, setChildId] = useState("");
   const dispatch = useDispatch();
@@ -56,7 +55,6 @@ const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [newChatState, setNewChatState] = useState(true);
-  const [mobileState, setMobileState] = useState(false)
 
   const handleHistory = async () => {
     const response = await axios.get(
@@ -70,13 +68,8 @@ const Dashboard = () => {
     setMapHistory(response.data);
   };
 
-
   useEffect(() => {
     handleHistory()
-    // if (mapHistory.length === 0) {
-    //   onOpen();
-    // }
-
   }, []);
 
   const handleClick = async (role: string) => {
@@ -114,7 +107,7 @@ const Dashboard = () => {
 
   return (
     <Box width="100%" height="100vh" overflow="hidden">
-      <Navbar mobileState={mobileState} setMobileState={setMobileState} isDrawerOpen={isOpen} onDrawerOpen={onOpen} />
+      <Navbar isDrawerOpen={isOpen} onDrawerOpen={onOpen} />
 
       <Box width="100%" mt={{ base: "1.5rem", md: "4rem" }} mx="auto" display="flex" px={{ base: "1rem", md: "2rem", "xl": "3rem" }}>
         <Box borderRight="1px solid #E1E3EA" bg={"#fff"} display={{ base: "none", md: "block" }} position={{ base: "absolute", md: "relative" }}
@@ -204,18 +197,17 @@ const Dashboard = () => {
                 alignItems="center"
                 mb={{ base: "2rem", lg: "3rem", "2xl": "8rem" }}
               >
-                <Box>
+                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Avatar
-                    name={userName.firstname?.slice(0, 10)}
+                    name={`${userName.firstname} ${userName.lastname}`}
                     textColor="#fff"
                     mr="0.5rem"
                     bg="#50CD89"
                     size={"sm"}
                     p={"0.35rem"}
+                    float={"left"}
                   ></Avatar>
-                </Box>
-                <Box ml="0.63rem">
-                  <Text fontSize="0.75rem" fontWeight="500">
+                  <Text ml="0.63rem" fontSize={{base: "0.75rem", "md":"1rem", xl:"1.25rem"}} fontFamily={`'GT-Eesti', sans-serif`} fontWeight="500">
                     {userName.firstname}{" "}
                     {userName.lastname}
                   </Text>
@@ -294,13 +286,10 @@ const Dashboard = () => {
                   mt="1.5rem"
                   direction="column"
                   width="12.375rem"
-                  // height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "40rem" }}
                   overflow="hidden"
                   flexDirection="column"
                 >
                   <Flex
-                    // height="100%"
-                    // maxHeight={"80%"}
                     marginRight="-50px"
                     paddingRight="50px"
                     overflowX="hidden"
@@ -326,7 +315,7 @@ const Dashboard = () => {
                   alignItems="center"
                   width={"100%"}
                 >
-                  <Box display={"flex"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Avatar
                       name={userName.firstname?.slice(0, 10)}
                       textColor="#fff"
@@ -336,12 +325,10 @@ const Dashboard = () => {
                       p={"0.35rem"}
                       float={"left"}
                     ></Avatar>
-                  <Box ml="0.63rem">
-                    <Text fontSize="0.75rem" fontWeight="500">
+                    <Text ml="0.63rem" fontSize="0.75rem" fontWeight="500">
                       {userName.firstname}{" "}
                       {userName.lastname}
                     </Text>
-                  </Box>
                   </Box>
                   <Spacer />
                   <Box

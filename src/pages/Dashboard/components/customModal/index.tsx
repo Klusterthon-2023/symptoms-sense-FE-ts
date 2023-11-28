@@ -3,10 +3,8 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalCloseButton,
   ModalBody,
   Box,
-  Heading,
 } from '@chakra-ui/react';
 
 interface CustomModalProps {
@@ -20,10 +18,9 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onClose, size, childr
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={size}>
       <ModalOverlay />
-      <ModalContent p="2rem" width="35rem" borderRadius={4}>
-        <ModalCloseButton mt="3rem" mr="1rem" />
+      <ModalContent borderRadius={4}>
         <ModalBody p={0}>
-          <Box width="33.8rem" maxWidth="100%" height="18.125rem">
+          <Box maxWidth="100%">
             {children}
           </Box>
         </ModalBody>

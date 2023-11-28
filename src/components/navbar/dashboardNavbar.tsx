@@ -7,14 +7,11 @@ import logo from "../../assets/icons/logo.svg";
 
 
 interface ChildComponentProps {
-  mobileState: boolean;
-  setMobileState: React.Dispatch<React.SetStateAction<boolean>>;
   isDrawerOpen: boolean
   onDrawerOpen: React.MouseEventHandler<HTMLDivElement>;
-  // openSideNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navbar: React.FC<ChildComponentProps> = ({mobileState, setMobileState, isDrawerOpen, onDrawerOpen}) => {
+const Navbar: React.FC<ChildComponentProps> = ({isDrawerOpen, onDrawerOpen}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 

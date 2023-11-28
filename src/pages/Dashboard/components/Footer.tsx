@@ -9,9 +9,6 @@ import {
   Box,
   Tooltip,
 } from "@chakra-ui/react";
-import Mic from "../../../assets/icons/microphone-2.svg";
-import useStopwatch from "../components/stopwatch";
-import record from "../../../assets/icons/Misc icon.svg";
 
 const SpeechRecognition =
   (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -38,14 +35,10 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
   const [isListening, setIsListening] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [savedNotes, setSavedNotes] = useState<string[]>([]);
-  // const { time, isRunning, start, stop, reset, formattedTime } = useStopwatch();
 
   useEffect(() => {
     handleListen();
-
-    // Cleanup function to reset the stopwatch when the component unmounts
     return () => {
-      // reset();
     };
   }, [isListening]);
 

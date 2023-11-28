@@ -4,9 +4,12 @@ import {
   Image,
   Heading,
   Button,
+  ModalHeader,
+  Divider,
 } from "@chakra-ui/react";
 import privacy from "../../../../assets/icons/security.svg";
 import CustomModal from "../customModal";
+import { CloseIcon } from "@chakra-ui/icons";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -19,24 +22,29 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
   };
   return (
     <>
-      <CustomModal isOpen={isOpen} onClose={handleClose} size="xl">
-        <Box width="33.8rem" maxWidth="100%" height="18.125rem">
-          <Heading fontSize="0.875rem" my="1.88rem">
-            Hello! SymptomSense is here to assist you
-          </Heading>
+      <CustomModal isOpen={isOpen} onClose={handleClose} size="4xl">
+        <Box maxWidth="100%">
+          <ModalHeader mt={"3rem"} mb="2rem" padding={"1rem 3rem"} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+            <Heading fontSize="1.75rem" fontFamily={`'GT-Eesti', sans-serif`}>
+              Hello! SymptomSense is here to assist you
+            </Heading>
+            <CloseIcon cursor={"pointer"} onClick={onClose} />
+          </ModalHeader>
+          <Divider />
           <Box
-            border-radius="0.4375rem"
-            border="1px solid #C2DEFF"
-            width="30rem"
-            height="8.25rem"
+            borderRadius="1rem"
+            border="2px solid #C2DEFF"
+            padding={"2rem"}
             display="flex"
-            flexWrap="wrap"
+            gap={"2rem"}
+            bg={"#EEF6FF"}
+            margin={"3rem"}
           >
-            <Box>
-              <Image src={privacy} />
+            <Box width={"2.5rem"}>
+              <Image width={"100%"} height={"auto"} src={privacy} />
             </Box>
             <Box width="100%">
-              <Text fontSize="0.875rem">
+              <Text fontSize="1.5rem" lineHeight={"150%"} fontWeight={500} fontFamily={`'GT-Eesti-Light', sans-serif`}>
                 It's important to note that the information provided by our AI
                 is based on common symptoms and general knowledge. SymptomSense
                 is not a substitute for professional medical advice, diagnosis,
@@ -46,13 +54,11 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
             </Box>
           </Box>
         </Box>
+        <Divider my={"2rem"} />
         <Button
-          mx="auto"
-          width="7.06rem"
-          px="1.5rem"
           float="right"
-          bg="#3E97FF"
-          borderRadius="0.38rem"
+          onClick={onClose}
+          m={"3rem"}
         >
           Continue
         </Button>

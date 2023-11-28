@@ -80,14 +80,21 @@ const Signup: React.FC = () => {
         values
       );
 
-      console.log(response)
-      
-
-      toast.success("Signup successful");
+      toast.success("Signup successful. You can login now");
       navigate('/login')
     
     } catch (error) {
-      toast.error("error please try again");
+      if (axios.isAxiosError(error)) {
+        error.response?.data && error.response?.data.hasOwnProperty('detail') && toast.error(error.response?.data['detail'])
+        error.response?.data && error.response?.data.hasOwnProperty('first_name') && toast.error(`First name: ${error.response?.data['first_name']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('last_name') && toast.error(`Last name: ${error.response?.data['last_name']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('email') && toast.error(`Email: ${error.response?.data['email']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('password') && toast.error(`Password: ${error.response?.data['password']}`)
+        error.response?.data && error.response?.data.hasOwnProperty('re_password') && toast.error(`Password again: ${error.response?.data['re_password']}`)
+        !error.response?.status && toast.error("Network unavailable, please try again.")
+      } else {
+        toast.error("Error, please try again.")
+      }
     }
     
     setLoading(false);
@@ -297,7 +304,7 @@ const Signup: React.FC = () => {
                       type={showConfirm ? "text" : "password"}
                       name="re_password"
                       as={Input}
-                      placeholder="Enter password"
+                      placeholder="Enter password again"
                     />
                     <InputRightElement>
                       <Button onClick={handleConfirmPassword} variant={"secondary"} padding={0}>

@@ -14,19 +14,33 @@ import "./App.css"
 // import { selectUser } from './redux/authSlice';
 
 const App: React.FC = () => {
- 
+
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <ChakraProvider theme={theme}>
-        <Fonts />
-        <BrowserRouter>
-        <Router />
-        <Toaster />
-        </BrowserRouter>
-      </ChakraProvider>
-    </Provider>
+      <Provider store={store}>
+        <ChakraProvider theme={theme}>
+          <Fonts />
+          <BrowserRouter>
+            <Router />
+            <Toaster position='top-right' toastOptions={{
+              duration: 5000,
+              success: {
+                style: {
+                  background: 'green',
+                  color: "#fff"
+                },
+              },
+              error: {
+                style: {
+                  background: 'red',
+                  color: "#fff"
+                },
+              },
+            }} />
+          </BrowserRouter>
+        </ChakraProvider>
+      </Provider>
     </QueryClientProvider>
   );
 };

@@ -1,13 +1,14 @@
-import { Flex, Text, Box, Heading } from "@chakra-ui/react";
+import { Flex, Text, Box, Heading, useDisclosure } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Messages from "../Messages";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { selectId } from "../../../../redux/userSlice";
 import {
   selectAccessToken,
 } from "../../../../redux/authSlice";
 import SubmitePage from "../Footer";
+import PopMessage from "../modal";
 
 interface Message {
   from: string;
@@ -28,7 +29,8 @@ interface ChildComponentProps {
 const Chat: React.FC<ChildComponentProps> = ({
  messages, setMessages, childId, setChildId, loading, setLoading, newChatState, setNewChatState, handleHistory
 }) => {
-  const accessToken = useSelector(selectAccessToken);
+  const accessToken = useSelector(selectAccessToken);  
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [ident, setIdent] = useState("");
   const id = useSelector(selectId);
   const data: string[] = [
@@ -83,6 +85,10 @@ const Chat: React.FC<ChildComponentProps> = ({
       handleGetChatHistory();
     }
   }, [childId, ident, messages]);
+
+  React.useEffect(() => {
+    onOpen();
+  }, [])
 
   const handleSendMessage = async () => {
     let uniqueId;
@@ -161,7 +167,8 @@ const Chat: React.FC<ChildComponentProps> = ({
   };
 
   return (
-    <Flex ml={{base:0, lg:"2.5rem"}} w="100%" h="100vh" justify="center" align="center">
+    <Flex ml={{base:0, lg:"2.5rem"}} w="100%" h="100vh" justify="center" align="center">      
+      <PopMessage isOpen={isOpen} onClose={onClose} />
       <Flex w={["100%", "100%", "90%"]} h="90%" flexDir="column">
         {messages.length === 0 ? (
           <Box position="relative" width="100%" h="100%" overflow={"hidden"}>
