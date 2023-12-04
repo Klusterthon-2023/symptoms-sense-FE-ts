@@ -165,7 +165,7 @@ const Dashboard = () => {
                 mt="1.5rem"
                 direction="column"
                 width="12.375rem"
-                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "40rem" }}
+                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "60rem" }}
                 overflow="hidden"
                 flexDirection="column"
               >
@@ -195,7 +195,7 @@ const Dashboard = () => {
                 width="12.375rem"
                 display="flex"
                 alignItems="center"
-                mb={{ base: "2rem", lg: "3rem", "2xl": "8rem" }}
+                mb={{ base: "2rem", lg: "3rem", "2xl":"1rem" }}
               >
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Avatar

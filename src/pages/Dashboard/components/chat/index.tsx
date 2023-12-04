@@ -168,7 +168,7 @@ const Chat: React.FC<ChildComponentProps> = ({
   return (
     <Flex ml={{base:0, lg:"2.5rem"}} w="100%" h="100vh" justify="center" align="center">      
       <PopMessage isOpen={isOpen} onClose={onClose} />
-      <Flex w={["100%", "100%", "90%"]} h="90%" flexDir="column">
+      <Flex w={["100%", "100%", "90%"]} h="100%" flexDir="column">
         {messages.length === 0 ? (
           <Box position="relative" width="100%" h="100%" overflow={"hidden"}>
             <Box position="absolute" bottom="0" width={"100%"} maxH={"100%"} overflowY={"auto"} pt={{base:"2rem", sm:0}}>

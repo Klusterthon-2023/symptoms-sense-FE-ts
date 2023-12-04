@@ -81,7 +81,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
     }
   };
   return (
-    <Box mb={{base:"4rem", md:"6rem", "xl":"8rem"}}>
+    <Box mb={{base:"6rem", md:"8rem", "xl":"10rem", "2xl":"12rem"}}>
       <Box height="3.5rem" fontFamily={`'GT-Eesti-Light', sans-serif`}>
         <InputGroup>
           {voiceState ? (
