@@ -165,7 +165,7 @@ const Dashboard = () => {
                 mt="1.5rem"
                 direction="column"
                 width="12.375rem"
-                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "60rem" }}
+                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "80rem" }}
                 overflow="hidden"
                 flexDirection="column"
               >
