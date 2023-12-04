@@ -211,6 +211,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>Experiencing persistent or severe headaches</Text>
                 </Box>
@@ -230,6 +233,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>I have been running a fever</Text>
                 </Box>
@@ -250,6 +256,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>Feeling unusually tired or fatigued</Text>
                 </Box>
@@ -269,6 +278,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>I have a persistent cough</Text>
                 </Box>

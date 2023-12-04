@@ -261,14 +261,22 @@ const Signup: React.FC = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  border="1px solid #E1E3EA"
+                  border={loading ? "1px solid #7E8299" : "1px solid #E1E3EA"}
                   width="100%"
                   py={{ base: "0.5rem", "2xl": "0.75rem" }}
-                  borderRadius={{ base: "0.25rem", lg: "0.5rem" }}
+                  borderRadius={{ base: "0.25rem", lg: "0.5rem" }} 
+                  as="button" type="button"
+                  onClick={authWithGoogle}
+                  disabled={loading}
+                  pointerEvents={loading ? "none" : "all"}
+                  bg={loading ? "#7E8299" : "transparent"}
+                  _hover={{
+                    bg: "#7e829908",
+                    border: "1px solid #7E8299"
+                  }}
                 >
                   <Box display="flex" justifyContent="center">
-                    <Box display="flex" flexWrap="wrap" as="button" type="button"
-                        onClick={authWithGoogle} disabled={loading}>
+                    <Box display="flex" flexWrap="wrap">
                       <Image src="https://baticali.sirv.com/Klusterthon2023/google.svg" />
                       <Text
                         ml="0.75rem"
