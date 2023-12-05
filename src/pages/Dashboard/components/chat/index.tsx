@@ -1,4 +1,4 @@
-import { Flex, Text, Box, Heading, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text, Box, Heading, useDisclosure, useColorMode, Spinner } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import Messages from "../Messages";
 import { useSelector } from "react-redux";
@@ -29,7 +29,8 @@ interface ChildComponentProps {
 const Chat: React.FC<ChildComponentProps> = ({
  messages, setMessages, childId, setChildId, loading, setLoading, newChatState, setNewChatState, handleHistory
 }) => {
-  const accessToken = useSelector(selectAccessToken);  
+  const accessToken = useSelector(selectAccessToken);
+  const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [ident, setIdent] = useState("");
   const id = useSelector(selectId);
@@ -100,6 +101,10 @@ const Chat: React.FC<ChildComponentProps> = ({
       return;
     }
     setLoading(true)
+    console.log(messages)
+    setMessages((old) => [...old, { from: "me", text: data }]);
+    // setMessages((old) => [...old, { from: "computer", text: `AI is typing  ${<Spinner color="brand.main" />}` }]);
+    console.log(messages)
     const data: string = inputMessage;
     const payload = {
       request: data,
@@ -116,13 +121,14 @@ const Chat: React.FC<ChildComponentProps> = ({
       }
     );
 
-    setMessages((old) => [...old, { from: "me", text: data }]);
-
     setInputMessage("");
+    console.log(messages)
+    // messages[messages.length-1].text = response.data.detail
     setMessages((old) => [
       ...old,
       { from: "computer", text: response.data.detail },
     ]);
+    console.log(messages)
 
     setLoading(false);
     setNewChatState(false);
@@ -133,6 +139,8 @@ const Chat: React.FC<ChildComponentProps> = ({
     var uniqueId = generateUUID();
     setIdent(uniqueId);
     setLoading(true);
+
+    setMessages((old) => [...old, { from: "me", text: newdata }]);
 
     setInputMessage(text);
 
@@ -153,27 +161,30 @@ const Chat: React.FC<ChildComponentProps> = ({
       }
     );
 
-    setMessages((old) => [...old, { from: "me", text: newdata }]);
-
     setInputMessage("");
-    setMessages((old) => [
-      ...old,
-      { from: "computer", text: response.data.detail },
-    ]);
+    messages[messages.length-1].text = response.data.detail
+    // setMessages((old) => [
+    //   ...old,
+    //   { from: "computer", text: response.data.detail },
+    // ]);
   
     setLoading(false);    
     setNewChatState(false);
   };
 
+  React.useEffect(()=> {
+
+  }, [messages, setMessages])
+
   return (
     <Flex ml={{base:0, lg:"2.5rem"}} w="100%" h="100vh" justify="center" align="center">      
       <PopMessage isOpen={isOpen} onClose={onClose} />
-      <Flex w={["100%", "100%", "90%"]} h="90%" flexDir="column">
+      <Flex w={["100%", "100%", "90%"]} h="100%" flexDir="column">
         {messages.length === 0 ? (
           <Box position="relative" width="100%" h="100%" overflow={"hidden"}>
             <Box position="absolute" bottom="0" width={"100%"} maxH={"100%"} overflowY={"auto"} pt={{base:"2rem", sm:0}}>
               <Heading
-                textColor="#101828"
+                textColor={colorMode==="light" ? "#101828" : "#fff"}
                 fontSize="1.5rem"
                 fontWeight="700"
                 lineHeight="2rem"
@@ -186,7 +197,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                 from our AI-powered chatbot
               </Text>
               <Text
-                textColor="#101828"
+                textColor={colorMode==="light" ? "#101828" : "#667085"}
                 mt="1.88rem"
                 fontSize="1rem"
                 fontWeight="500"
@@ -202,7 +213,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   fontWeight="500"
                   width="fit-content"
                   py="0.5rem"
-                  bg="#F5F6FA"
+                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -211,6 +222,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>Experiencing persistent or severe headaches</Text>
                 </Box>
@@ -221,7 +235,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
-                  bg="#F5F6FA"
+                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -230,6 +244,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>I have been running a fever</Text>
                 </Box>
@@ -241,7 +258,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   fontWeight="500"
                   width="fit-content"
                   py="0.5rem"
-                  bg="#F5F6FA"
+                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -250,6 +267,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>Feeling unusually tired or fatigued</Text>
                 </Box>
@@ -260,7 +280,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   fontWeight="500"
                   width="fit-content"
                   py="0.5rem"
-                  bg="#F5F6FA"
+                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -269,6 +289,9 @@ const Chat: React.FC<ChildComponentProps> = ({
                   }}
                   cursor={"pointer"}
                   fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  _hover={{
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px"
+                  }}
                 >
                   <Text>I have a persistent cough</Text>
                 </Box>

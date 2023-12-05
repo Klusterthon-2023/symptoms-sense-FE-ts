@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Flex, Text, Box, Image, useDisclosure, Spacer } from "@chakra-ui/react";
+import { Avatar, Flex, Text, Box, Image, useDisclosure, Spacer, useColorMode } from "@chakra-ui/react";
 import chatIcon from "../../../assets/icons/chatIcon.svg";
 import like from "../../../assets/icons/like.svg";
 import dislike from "../../../assets/icons/dislike.svg";
@@ -25,6 +25,7 @@ interface MessagesProps {
 
 const Messages: React.FC<MessagesProps> = ({ messages }) => {
   const userName = useSelector((state: RootState) => state.user);
+  const { colorMode } = useColorMode();
   const [upState, setUpState] = useState(false)
   const [downState, setDownState] = useState(false)
   const [copyState, setCopyState] = useState(false)
@@ -52,8 +53,8 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
               <Flex key={index} w="100%" justify="flex-end">
                 <Flex
                   borderRadius="0.75rem"
-                  bg="#F5F6FA"
-                  color="white"
+                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
+                  color={colorMode==="light" ? "#3F4254" : "#eee"}
                   maxW={{base:"90%", lg:"50%"}}
                   my="1"
                   p="1rem 2rem"
@@ -69,7 +70,6 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                   <Box>
                     <Text
                       fontSize="1.25rem"
-                      textColor="#3F4254"
                       lineHeight="145%"
                       fontWeight="400"
                     >
@@ -77,7 +77,6 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                     </Text>
                     <Text
                       fontSize="1rem"
-                      textColor="#3F4254"
                       lineHeight="145%"
                       fontWeight="400"
                       fontFamily={`'GT-Eesti-Light', sans-serif`}
@@ -93,9 +92,10 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
               <Flex key={index} w="100%">
                 <Flex
                   borderRadius="0.75rem"
-                  bg="gray.100"
-                  color="black"
+                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
+                  color={colorMode==="light" ? "black" : "#eee"}
                   maxW={{base:"100%", lg:"70%"}}
+                  minW={"15%"}
                   mt="1rem"
                   mb={"2rem"}
                   p="3"
@@ -104,11 +104,11 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                     name="Computer"
                     src={"https://baticali.sirv.com/Klusterthon2023/logo.svg"}
                     mr="0.5rem"
-                    bg="white"
+                    bg={colorMode==="light" ? "white" : "#1A202C"}
                     size={"sm"}
                     p={"0.35rem"}
                   ></Avatar>
-                  <Flex direction="column">
+                  <Flex direction="column" width={"100%"}>
                     <Box display="flex" alignItems="center" gap="6px">
                       <Text fontWeight={600} fontSize="1.25rem">
                         AI
@@ -121,10 +121,10 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                         }}
                       />
                     </Text>
-                    <Box display="flex" flexWrap="wrap">
+                    <Box display="flex" flexWrap="wrap" width={"100%"}>
                       <Flex my="0.75rem" direction="row" width="100%">
                         <Text
-                          textColor="#101928"
+                          textColor={colorMode==="light" ? "#101928" : "#A1A5B7"}
                           fontSize="0.875rem"
                           fontWeight="400"
                         >
@@ -154,16 +154,13 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                             tempTextArea.select();
                             document.execCommand("copy");
                             document.body.removeChild(tempTextArea);
-                            toast.success("copied to clipboard");
+                            toast.success("Copied to clipboard");
                           }}
                           cursor="pointer"
                           onMouseEnter={() => setCopyState(true)}
                           onMouseLeave={() => setCopyState(false)}
                         >
-
-                          <Image
-
-                            src={copyState ? copyFill : copy} />
+                          <Image src={copyState ? copyFill : copy} />
                         </Box>
                       </Flex>
                     </Box>

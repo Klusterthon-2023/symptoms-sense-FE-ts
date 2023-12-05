@@ -1,10 +1,11 @@
 // src/theme.js
 import { extendTheme } from '@chakra-ui/react';
+import type { StyleFunctionProps } from '@chakra-ui/styled-system'
 
 const theme = extendTheme({
   config: {
     initialColorMode: 'light', // Set the initial color mode to 'light'
-    useSystemColorMode: false, // Disable system color mode preference
+    useSystemColorMode: true, // Disable system color mode preference
   },
   styles: {
     global: (props: any) => ({
@@ -53,25 +54,25 @@ const theme = extendTheme({
       variants: {
         // Make a variant, we'll call it `base` here and leave it empty
         base: {},
-        secondary: {
-          color: "#181C32",
+        secondary: (props: StyleFunctionProps) => ({
+          color: props.colorMode==="light" ? "#181C32" : "#EEF6FF",
           bg: "transparent",
           _active: {
             bg: "transparent",
-            color: "#000",
+            color: props.colorMode==="light" ? "#000" : "#fff",
             boxShadow: "none",
           },
           _hover: {
             bg: "transparent",
-            color: "#000",
+            color: props.colorMode==="light" ? "#000" : "#fff",
             boxShadow: "none",
           },
           _focus: {
             bg: "transparent",
-            color: "#000",
+            color: props.colorMode==="light" ? "#000" : "#fff",
             boxShadow: "none",
           },
-        }
+        })
       },
       defaultProps: {
         // Then here we set the base variant as the default

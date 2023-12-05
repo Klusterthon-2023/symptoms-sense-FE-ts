@@ -6,6 +6,7 @@ import {
   Button,
   ModalHeader,
   Divider,
+  useColorMode
 } from "@chakra-ui/react";
 import privacy from "../../../../assets/icons/security.svg";
 import CustomModal from "../customModal";
@@ -17,6 +18,7 @@ interface ModalComponentProps {
 }
 
 const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
+  const { colorMode } = useColorMode();
   const handleClose = () => {
     onClose();
   };
@@ -38,7 +40,7 @@ const PopMessage: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
             padding={{base:"0.75rem", lg:"2rem"}}
             display="flex"
             gap={"2rem"}
-            bg={"#EEF6FF"}
+            bg={colorMode==="light" ? "#EEF6FF" : "#1A202C"}
             margin={{base:"1rem", lg:"3rem"}}
             flexDirection={{base:"column", lg:"row"}}
           >

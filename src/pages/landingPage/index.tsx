@@ -6,16 +6,19 @@ import {
   Flex,
   Image,
   Spacer,
+  useColorMode
 } from "@chakra-ui/react";
 import Header from "../../components/navbar";
 import { Link, useNavigate } from "react-router-dom";
 import part1 from "../../assets/icons/part1.svg";
 import part2 from "../../assets/icons/part2.svg";
 import part3 from "../../assets/icons/part3.svg";
-import { useMediaQuery } from '@chakra-ui/react'
+import { useMediaQuery } from '@chakra-ui/react';
+import mode from "../../../src/assets/icons/night-day.svg";
 
 const WelcomePage = () => {
   const navigate = useNavigate();
+  const { colorMode, toggleColorMode } = useColorMode();
   const year = new Date().getFullYear();
   const [isSmallScreen] = useMediaQuery('(max-width: 992px)')
   const [isLargeScreen] = useMediaQuery('(min-width: 1400px)')
@@ -50,6 +53,15 @@ const WelcomePage = () => {
         backgroundPosition="center"
         mt={"5rem"}
       >
+        <Box bgColor={colorMode === "light" ? "#F1F1F2" : "#0E1117"}
+          onClick={toggleColorMode} cursor={"pointer"} width={{ base: "2rem", md: "3rem", "2xl": "4rem" }} aspectRatio={"1/1"}
+          position={"fixed"} zIndex={1000} right={{ base: "1rem", md: "4rem", "2xl": "10rem" }} bottom={{ base: "8%", md: "5rem", lg: "3rem", "2xl": "15rem" }} borderRadius={"50%"}
+          display={"flex"} alignItems={"center"} justifyContent={"center"}
+          boxShadow={"rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"}
+        >
+          <Image width={"50%"} filter={colorMode === "light" ? "none" : "brightness(2.5)"} src={mode} alt="mode" />
+
+        </Box>
         <Box>
           <Flex
             mx="auto"
@@ -110,8 +122,8 @@ const WelcomePage = () => {
               width={{ base: "95%", lg: "50.199rem" }}
             >
               {isSmallScreen ? (<Image borderRadius="1rem" src="https://baticali.sirv.com/Klusterthon2023/sample-full.png" />) : (
-                isLargeScreen ? (<Image borderRadius="1rem" src="https://baticali.sirv.com/Klusterthon2023/sample-full.png" />) : 
-                (<Image src="https://baticali.sirv.com/Klusterthon2023/sample.png" />)
+                isLargeScreen ? (<Image borderRadius="1rem" src="https://baticali.sirv.com/Klusterthon2023/sample-full.png" />) :
+                  (<Image src="https://baticali.sirv.com/Klusterthon2023/sample.png" />)
               )}
             </Box>
           </Flex>
@@ -209,8 +221,8 @@ const WelcomePage = () => {
             maxHeight="22.1rem"
             py="6.25rem"
             borderRadius="1.5rem"
-            border="1px solid rgba(64, 184, 118, 0.30)"
-            bg="#006CEA"
+            border={colorMode === "light" ? "1px solid rgba(64, 184, 118, 0.30)" : "#1A202C"}
+            bg={colorMode === "light" ? "#006CEA" : "#2D3748"}
             display="flex"
             justifyContent="center"
             position={"relative"}

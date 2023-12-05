@@ -10,6 +10,9 @@ import {
   InputGroup,
   Link,
   SimpleGrid,
+  useColorMode,
+  AbsoluteCenter,
+  Divider
 } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -20,6 +23,7 @@ import { login } from "../../redux/authSlice";
 import toast from "react-hot-toast";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../firebase";
+import mode from "../../../src/assets/icons/night-day.svg";
 
 interface FormValues {
   email: string;
@@ -27,9 +31,10 @@ interface FormValues {
 }
 
 const Signin: React.FC = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const handleClick = () => { setShow(!show) };
   const initialValues: FormValues = {
@@ -92,7 +97,8 @@ const Signin: React.FC = () => {
 
   };
 
-  async function localAuth(user:any) {
+  async function localAuth(user: any) {
+    setLoading(true)
     try {
       const response = await axios.post(
         `https://adewole.pythonanywhere.com/api/UsersAuths/GoogleAuth/`,
@@ -142,8 +148,9 @@ const Signin: React.FC = () => {
   }
 
   const authWithGoogle = () => {
-    setLoading(true)
     const provider = new GoogleAuthProvider();
+    setLoading(true)
+    console.log(loading)
     signInWithPopup(auth, provider)
       .then((result: any) => {
         const user = result.user;
@@ -152,11 +159,11 @@ const Signin: React.FC = () => {
         } else {
           toast.error("Could not authenticate user with Google. Try again.")
         }
-        
+
       }).catch((error) => {
-        toast.error(`${error.message}`)
+        toast.error("Could not authenticate user with Google. Check Network or Try again.")
       });
-      setLoading(false)
+    setLoading(false)
   }
   return (
     <Box
@@ -172,6 +179,15 @@ const Signin: React.FC = () => {
       alignItems="center"
       py={{ base: "0.25rem" }}
     >
+      <Box bgColor={colorMode === "light" ? "#F1F1F2" : "#0E1117"}
+        onClick={toggleColorMode} cursor={"pointer"} width={{base:"2rem", md:"3rem", "2xl":"4rem"}} aspectRatio={"1/1"} 
+        position={"fixed"} zIndex={1000} right={{base:"1rem", md:"4rem", "2xl":"10rem"}} bottom={{base:"8%", md:"5rem", lg:"3rem", "2xl":"15rem"}} borderRadius={"50%"}
+        display={"flex"} alignItems={"center"} justifyContent={"center"}
+        boxShadow={"rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"}
+        >
+          <Image width={"50%"} filter={colorMode==="light" ? "none" : "brightness(2.5)"} src={mode} alt="mode" />
+
+      </Box>
       <SimpleGrid
         mx="auto"
         width={{ base: "100%", md: "70%" }}
@@ -219,7 +235,7 @@ const Signin: React.FC = () => {
         <Box
           display="flex"
           alignItems="center"
-          bg="#ffffff"
+          bg={colorMode === "light" ? "#ffffff" : "#1A202C"}
           mt={{ base: "1rem", lg: 0 }}
           py={{ base: "2rem", md: "5rem", lg: "3rem", "2xl": "5rem" }}
           px={{ base: "1rem", sm: "2rem", lg: "3rem" }}
@@ -235,7 +251,7 @@ const Signin: React.FC = () => {
               <Box
               >
                 <Text
-                  textColor="#181C32"
+                  textColor={colorMode === "light" ? "#181C32" : "#eee"}
                   fontSize={{ base: "1.5rem", "2xl": "2rem" }}
                   fontWeight="500"
                   textAlign="center"
@@ -247,19 +263,34 @@ const Signin: React.FC = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  border="1px solid #E1E3EA"
+                  border={colorMode === "light" ? loading ? "1px solid #7E8299" : "1px solid #E1E3EA" : loading ? "1px solid #E1E3EA" : "1px solid #7E8299"}
                   width="100%"
                   py={{ base: "0.5rem", "2xl": "0.75rem" }}
                   borderRadius={{ base: "0.25rem", lg: "0.5rem" }}
+                  as={Button} type="button"
+                  onClick={() => { setLoading(true); authWithGoogle() }}
+                  disabled={loading}
+                  pointerEvents={loading ? "none" : "all"}
+                  bg={loading ? "#7E8299" : "transparent"}
+                  isLoading={loading}
+                  _hover={{
+                    bg: "#7e829908",
+                    border: colorMode === "light" ? "1px solid #7E8299" : "1px solid #E1E3EA",
+                    boxShadow: "none"
+                  }}
+                  _focus={{
+                    bg: "#7e829908",
+                    border: colorMode === "light" ? "1px solid #7E8299" : "1px solid #E1E3EA",
+                    boxShadow: "none"
+                  }}
                 >
                   <Box display="flex" justifyContent="center">
-                    <Box display="flex" flexWrap="wrap" as="button" type="button"
-                        onClick={authWithGoogle} disabled={loading}>
+                    <Box display="flex" flexWrap="wrap">
                       <Image src="https://baticali.sirv.com/Klusterthon2023/google.svg" />
                       <Text
                         ml="0.75rem"
                         textAlign="center"
-                        textColor="#7E8299"
+                        textColor={colorMode === "light" ? loading ? "#fff" : "#7E8299" : loading ? "#7E8299" : "#fff"}
                         fontSize={{ base: ".75rem", lg: "1rem" }}
                         fontWeight="500"
                       >
@@ -268,16 +299,19 @@ const Signin: React.FC = () => {
                     </Box>
                   </Box>
                 </Box>
-                <Box
-                  textAlign="center"
-                  textColor="#A1A5B7"
-                  fontSize={{ base: ".75rem", lg: "1rem" }}
-                  fontWeight="500"
-                  mt="2rem"
-                  mb="1.5rem"
-                  fontFamily={`'GT-Eesti-Light', sans-serif`}
-                >
-                  Or with email
+                <Box position='relative' paddingY='10' width={"100%"}>
+                  <Divider />
+                  <AbsoluteCenter bg={colorMode === "light" ? "#ffffff" : "#1A202C"} px='4'>
+                    <Box
+                      textAlign="center"
+                      textColor="#A1A5B7"
+                      fontSize={{ base: ".75rem", lg: "1rem" }}
+                      fontWeight="500"
+                      fontFamily={`'GT-Eesti-Light', sans-serif`}
+                    >
+                      Or with email
+                    </Box>
+                  </AbsoluteCenter>
                 </Box>
                 <Box fontFamily={`'GT-Eesti-Light', sans-serif`}>
                   <Field

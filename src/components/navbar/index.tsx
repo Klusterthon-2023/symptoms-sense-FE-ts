@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Text, useTheme, Spacer } from "@chakra-ui/react";
+import { Box, Button, Text, useTheme, Spacer, useColorMode } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 const Navbar: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { colorMode } = useColorMode();
   const [mobileState, setMobileState] = useState(false)
 
   return (
     <Box position="fixed"
       width="100%"
-      bgColor={theme.colors.white}
-      borderBottom="1px solid #E1E3EA"
+      bgColor={colorMode==="light" ? "#fff" : "#1A202C"}
+      borderBottom={colorMode==="light" ? "1px solid #E1E3EA" : "1px solid #e1e3ea29"}
       zIndex="1000"
       top={0}
       left={0}

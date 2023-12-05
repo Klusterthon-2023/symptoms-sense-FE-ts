@@ -16,6 +16,7 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerFooter,
+  useColorMode
 } from "@chakra-ui/react";
 import Navbar from "../../components/navbar/dashboardNavbar";
 import logoutIcon from "../../assets/icons/logout.svg";
@@ -45,6 +46,7 @@ interface Message {
 
 const Dashboard = () => {
   const [mapHistory, setMapHistory] = useState<MapHistoryItem[]>([]);
+  const { colorMode } = useColorMode();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userName = useSelector((state: RootState) => state.user);
@@ -110,7 +112,7 @@ const Dashboard = () => {
       <Navbar isDrawerOpen={isOpen} onDrawerOpen={onOpen} />
 
       <Box width="100%" mt={{ base: "1.5rem", md: "4rem" }} mx="auto" display="flex" px={{ base: "1rem", md: "2rem", "xl": "3rem" }}>
-        <Box borderRight="1px solid #E1E3EA" bg={"#fff"} display={{ base: "none", md: "block" }} position={{ base: "absolute", md: "relative" }}
+        <Box borderRight={colorMode==="light" ? "1px solid #E1E3EA" : "1px solid #e1e3ea29"} bg={colorMode==="light" ? "#fff" : "#1A202C"} display={{ base: "none", md: "block" }} position={{ base: "absolute", md: "relative" }}
           bottom={0} maxH="94vh" >
           <Box>
             <Box width="14rem" pr="2rem" mt="2rem">
@@ -165,7 +167,7 @@ const Dashboard = () => {
                 mt="1.5rem"
                 direction="column"
                 width="12.375rem"
-                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "40rem" }}
+                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "80rem" }}
                 overflow="hidden"
                 flexDirection="column"
               >
@@ -195,7 +197,7 @@ const Dashboard = () => {
                 width="12.375rem"
                 display="flex"
                 alignItems="center"
-                mb={{ base: "2rem", lg: "3rem", "2xl": "8rem" }}
+                mb={{ base: "2rem", lg: "3rem", "2xl":"1rem" }}
               >
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Avatar
@@ -220,7 +222,7 @@ const Dashboard = () => {
                   }}
                   cursor={"pointer"}
                 >
-                  <Image src={logoutIcon} alt="" />
+                  <Image filter={colorMode==="light" ? "none" : "brightness(22.5)"} src={logoutIcon} alt="" />
                 </Box>
               </Box>
             </Box>
