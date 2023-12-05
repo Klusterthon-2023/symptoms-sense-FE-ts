@@ -12,6 +12,9 @@ import {
   useDisclosure,
   SimpleGrid,
   Link,
+  useColorMode,
+  AbsoluteCenter,
+  Divider
 } from "@chakra-ui/react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -23,6 +26,7 @@ import { login } from "../../redux/authSlice";
 import toast from "react-hot-toast";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../firebase";
+import mode from "../../../src/assets/icons/night-day.svg";
 
 interface FormValues {
   email: string;
@@ -33,11 +37,12 @@ interface FormValues {
 }
 
 const Signup: React.FC = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isChecked, setIsChecked] = useState(false);
-  const [isButtonDisabled, setButtonDisabled] = useState(false);  
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = React.useState(false);
 
   const handleCheckboxChange = (event: any) => {
@@ -88,7 +93,7 @@ const Signup: React.FC = () => {
 
       toast.success("Signup successful. You can login now");
       navigate('/login')
-    
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         error.response?.data && error.response?.data.hasOwnProperty('detail') && toast.error(error.response?.data['detail'])
@@ -102,11 +107,11 @@ const Signup: React.FC = () => {
         toast.error("Error, please try again.")
       }
     }
-    
+
     setLoading(false);
   };
-  
-  async function localAuth(user:any) {
+
+  async function localAuth(user: any) {
     try {
       const response = await axios.post(
         `https://adewole.pythonanywhere.com/api/UsersAuths/GoogleAuth/`,
@@ -166,11 +171,11 @@ const Signup: React.FC = () => {
         } else {
           toast.error("Could not authenticate user with Google. Try again.")
         }
-        
+
       }).catch((error) => {
         toast.error(`${error.message}`)
       });
-      setLoading(false)
+    setLoading(false)
   }
   return (
     <Box
@@ -187,6 +192,15 @@ const Signup: React.FC = () => {
       py={{ base: "0.25rem" }}
     >
       <TermModal isOpen={isOpen} onClose={onClose} />
+      <Box bgColor={colorMode === "light" ? "#F1F1F2" : "#0E1117"}
+        onClick={toggleColorMode} cursor={"pointer"} width={{base:"2rem", md:"3rem", "2xl":"4rem"}} aspectRatio={"1/1"} 
+        position={"fixed"} zIndex={1000} right={{base:"1rem", md:"4rem", "2xl":"10rem"}} bottom={{base:"8%", md:"5rem", lg:"3rem", "2xl":"15rem"}} borderRadius={"50%"}
+        display={"flex"} alignItems={"center"} justifyContent={"center"}
+        boxShadow={"rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"}
+        >
+          <Image width={"50%"} filter={colorMode==="light" ? "none" : "brightness(2.5)"} src={mode} alt="mode" />
+
+      </Box>
       <SimpleGrid
         mx="auto"
         width={{ base: "100%", md: "70%" }}
@@ -196,7 +210,7 @@ const Signup: React.FC = () => {
         maxWidth={"65em"}
       >
         <Box mt={{ base: 0, lg: "15rem" }} display={"flex"} flexDirection={"column"} alignItems={{ base: "center", lg: "flex-start" }}>
-          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }} cursor={"pointer"} onClick={()=>navigate('/')}>
+          <Box color={"#fff"} display={"flex"} alignItems={"center"} gap={{ base: 1, md: 2 }} cursor={"pointer"} onClick={() => navigate('/')}>
             <Box width="2rem" aspectRatio="1/1">
               <Image
                 src={"https://baticali.sirv.com/Klusterthon2023/logo-grey.svg"}
@@ -233,12 +247,12 @@ const Signup: React.FC = () => {
         <Box
           display="flex"
           alignItems="center"
-          bg="#ffffff"
+          bg={colorMode === "light" ? "#ffffff" : "#1A202C"}
           mt={{ base: "1rem", lg: 0 }}
           py={{ base: "2rem", md: "5rem", lg: "3rem", "2xl": "5rem" }}
           px={{ base: "1rem", sm: "2rem", lg: "3rem" }}
           borderRadius="1.5rem"
-          width={{base:"90%", sm:"80%", lg:"90%"}}
+          width={{ base: "90%", sm: "80%", lg: "90%" }}
         >
           <Formik
             initialValues={initialValues}
@@ -249,7 +263,7 @@ const Signup: React.FC = () => {
               <Box
               >
                 <Text
-                  textColor="#181C32"
+                  textColor={colorMode === "light" ? "#181C32" : "#eee"}
                   fontSize={{ base: "1.5rem", "2xl": "2rem" }}
                   fontWeight="500"
                   textAlign="center"
@@ -261,10 +275,10 @@ const Signup: React.FC = () => {
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
-                  border={loading ? "1px solid #7E8299" : "1px solid #E1E3EA"}
+                  border={loading ? "1px solid #E1E3EA" : "1px solid #7E8299"}
                   width="100%"
                   py={{ base: "0.5rem", "2xl": "0.75rem" }}
-                  borderRadius={{ base: "0.25rem", lg: "0.5rem" }} 
+                  borderRadius={{ base: "0.25rem", lg: "0.5rem" }}
                   as="button" type="button"
                   onClick={authWithGoogle}
                   disabled={loading}
@@ -272,7 +286,7 @@ const Signup: React.FC = () => {
                   bg={loading ? "#7E8299" : "transparent"}
                   _hover={{
                     bg: "#7e829908",
-                    border: "1px solid #7E8299"
+                    border: "1px solid #E1E3EA",
                   }}
                 >
                   <Box display="flex" justifyContent="center">
@@ -290,18 +304,22 @@ const Signup: React.FC = () => {
                     </Box>
                   </Box>
                 </Box>
-
-                <Box
-                  textAlign="center"
-                  textColor="#A1A5B7"
-                  fontSize={{ base: ".75rem", lg: "1rem" }}
-                  fontWeight="500"
-                  mt="2rem"
-                  mb="1.5rem"
-                  fontFamily={`'GT-Eesti-Light', sans-serif`}
-                >
-                  Or with email
+                <Box position='relative' paddingY='10' width={"100%"}>
+                  <Divider />
+                  <AbsoluteCenter bg={colorMode === "light" ? "#ffffff" : "#1A202C"} px='4'>
+                    <Box
+                      textAlign="center"
+                      textColor="#A1A5B7"
+                      fontSize={{ base: ".75rem", lg: "1rem" }}
+                      fontWeight="500"
+                      fontFamily={`'GT-Eesti-Light', sans-serif`}
+                    >
+                      Or with email
+                    </Box>
+                  </AbsoluteCenter>
                 </Box>
+
+
                 <SimpleGrid columns={2} gap={2} fontFamily={`'GT-Eesti-Light', sans-serif`}>
                   <Box>
                     <Field
@@ -415,7 +433,7 @@ const Signup: React.FC = () => {
                       />
                       <Text
                         ml="0.44rem"
-                        textColor="#5E6278"
+                        textColor={colorMode === "light" ? "#5E6278" : "#babed2"}
                         fontSize="0.85rem"
                       >
                         I Accept the
@@ -485,7 +503,8 @@ const Signup: React.FC = () => {
                   )}
                 </Box>
 
-                <Text mt="1.25rem" textAlign="center" fontFamily={`'GT-Eesti-Light', sans-serif`} color={"#A1A5B7"}>
+                <Text mt="1.25rem" textAlign="center" fontFamily={`'GT-Eesti-Light', sans-serif`}
+                  textColor={colorMode === "light" ? "#5E6278" : "#babed2"}>
                   Already have an Account?{" "}
                   <Link
                     color="brand.main"

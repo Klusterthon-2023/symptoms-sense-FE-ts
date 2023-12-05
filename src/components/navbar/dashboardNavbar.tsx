@@ -4,6 +4,7 @@ import { Image } from "@chakra-ui/react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import FeedbackModal from "./modal";
 import logo from "../../assets/icons/logo.svg";
+import mode from "../../../src/assets/icons/night-day.svg";
 import { useNavigate } from "react-router-dom";
 
 
@@ -23,8 +24,8 @@ const Navbar: React.FC<ChildComponentProps> = ({isDrawerOpen, onDrawerOpen}) => 
       <Box position="fixed" zIndex="1000" width="100%">
         <FeedbackModal isOpen={isOpen} onClose={onClose} />
         <Box
-          borderBottom="1px solid #E1E3EA"
-          bg={"#fff"}
+          borderBottom={colorMode==="light" ? "1px solid #E1E3EA" : "1px solid #e1e3ea29"}
+          bg={colorMode==="light" ? "#fff" : "#1A202C"}
           width="100%"
           mx="auto"
           height="4rem"
@@ -49,6 +50,20 @@ const Navbar: React.FC<ChildComponentProps> = ({isDrawerOpen, onDrawerOpen}) => 
             </Text>
           </Box>
           <Box display="flex" flexWrap="wrap" gap="0.8rem">
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              borderRadius="0.375rem"
+              bgColor={colorMode==="light" ? "#F1F1F2" : "#0E1117"}
+              width="2.375rem"
+              height="2.375rem"
+              onClick={toggleColorMode}
+              cursor={"pointer"}
+            >
+              <Image 
+              filter={colorMode==="light" ? "none" : "brightness(2.5)"} src={mode} alt="mode" />
+            </Box>
 
             <Box
               ml="0.62rem"
@@ -56,13 +71,13 @@ const Navbar: React.FC<ChildComponentProps> = ({isDrawerOpen, onDrawerOpen}) => 
               justifyContent="center"
               alignItems="center"
               borderRadius="0.375rem"
-              bgColor="#F1F1F2"
+              bgColor={colorMode==="light" ? "#F1F1F2" : "#0E1117"}
               width="2.375rem"
               height="2.375rem"
               onClick={onOpen}
               cursor={"pointer"}
             >
-              <Image src={"https://baticali.sirv.com/Klusterthon2023/message-text.svg"} alt="communication" />
+              <Image filter={colorMode==="light" ? "none" : "brightness(22.5)"} src={"https://baticali.sirv.com/Klusterthon2023/message-text.svg"} alt="communication" />
             </Box>
           </Box>
           <Box display={{ base: "block", md: "none" }} cursor={"pointer"} onClick={onDrawerOpen}>

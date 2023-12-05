@@ -8,6 +8,7 @@ import {
   Image,
   Box,
   Tooltip,
+  useColorMode
 } from "@chakra-ui/react";
 import toast from "react-hot-toast";
 
@@ -36,6 +37,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
   const [isListening, setIsListening] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [savedNotes, setSavedNotes] = useState<string[]>([]);
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     handleListen();
@@ -127,7 +129,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
                   height={"100%"}
                 >
                   <Tooltip hasArrow color={"#fff"} bg={"brand.active"} label="Stop Recording" isOpen placement="auto">
-                    <Image width="100%" height="100%" src={"https://baticali.sirv.com/Klusterthon2023/mic.svg"} />
+                    <Image filter={colorMode==="light" ? "none" : "brightness(22.5)"} width="100%" height="100%" src={"https://baticali.sirv.com/Klusterthon2023/mic.svg"} />
                   </Tooltip>
                 </Box>
 
@@ -135,6 +137,7 @@ const SubmitePage: React.FC<SubmitePageProps> = ({
               </Flex>
             ) : (
               <Image
+              filter={colorMode==="light" ? "none" : "brightness(22.5)"}
               cursor={"pointer"}
                 onClick={() => {
                  
