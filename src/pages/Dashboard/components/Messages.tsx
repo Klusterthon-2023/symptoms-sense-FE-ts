@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Avatar, Flex, Text, Box, Image, useDisclosure, Spacer, useColorMode } from "@chakra-ui/react";
-import chatIcon from "../../../assets/icons/chatIcon.svg";
 import like from "../../../assets/icons/like.svg";
 import dislike from "../../../assets/icons/dislike.svg";
 import { marked } from "marked";
@@ -12,11 +11,16 @@ import FeedbackModal from "../../../components/navbar/modal";
 import upFill from "../../../assets/icons/upfill.svg"
 import downFill from "../../../assets/icons/downFill.svg"
 import copyFill from "../../../assets/icons/filledCopy.svg"
-import { TypeAnimation } from 'react-type-animation';
+import axios from "axios";
+import { selectId } from "../../../redux/userSlice";
+import {
+  selectAccessToken,
+} from "../../../redux/authSlice";
 
 interface Message {
   from: string;
   text: string;
+  id: any;
 }
 
 interface MessagesProps {
@@ -25,11 +29,41 @@ interface MessagesProps {
 
 const Messages: React.FC<MessagesProps> = ({ messages }) => {
   const userName = useSelector((state: RootState) => state.user);
+  const accessToken = useSelector(selectAccessToken);
+  const user_id = useSelector(selectId);
   const { colorMode } = useColorMode();
   const [upState, setUpState] = useState(false)
   const [downState, setDownState] = useState(false)
   const [copyState, setCopyState] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  async function setHelpful(id:any, helpful:any) {
+    try {
+      const response = await axios.put(
+        `https://adewole.pythonanywhere.com/api/${user_id}/PostRequest/${id}/SetHelpful/`,
+        {
+          helpful: helpful
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      )
+      if (response) {
+        response.data.helpful===true && toast.success("Response set as helpful")
+        response.data.helpful===false && toast.success("Response set as unhelpful")
+        response.data.helpful===null && toast.success("Response helpful not set")
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        error.response?.data && error.response?.data.hasOwnProperty('detail') && toast.error(error.response?.data['detail'])
+        !error.response?.status && toast.error("Network unavailable, please try again.")
+      } else {
+        toast.error("Error, please try again.")
+      }
+    }  
+  }
 
   return (
     <Flex
@@ -134,14 +168,14 @@ const Messages: React.FC<MessagesProps> = ({ messages }) => {
                           cursor="pointer"
                           onMouseEnter={() => setUpState(true)}
                           onMouseLeave={() => setUpState(false)}
-                          onClick={onOpen}>
+                          onClick={()=>setHelpful(item.id, true)}>
                           <Image ml="0.5rem" src={upState ? upFill : like} />
                         </Box>
                         <Box
                           cursor="pointer"
                           onMouseEnter={() => setDownState(true)}
                           onMouseLeave={() => setDownState(false)}
-                          onClick={onOpen}>
+                          onClick={()=>setHelpful(item.id, false)}>
                           <Image ml="0.62rem" src={downState ? downFill : dislike} />
                         </Box>
                         <Spacer />
