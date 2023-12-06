@@ -150,7 +150,6 @@ const Signin: React.FC = () => {
   const authWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     setLoading(true)
-    console.log(loading)
     signInWithPopup(auth, provider)
       .then((result: any) => {
         const user = result.user;

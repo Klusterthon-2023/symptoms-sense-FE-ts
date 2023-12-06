@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import dayjs from "dayjs";
 import {
   Box,
   Text,
@@ -32,16 +33,14 @@ import {
 import { logout } from "../../redux/authSlice";
 
 interface MapHistoryItem {
-  id: string;
-  date_time_created: Date;
-  date_time_modified: Date;
-  title: string;
-  identifier: string;
+  chat_identifiers: [];
+  date: string;
 }
 
 interface Message {
   from: string;
   text: string;
+  id: any;
 }
 
 const Dashboard = () => {
@@ -57,6 +56,7 @@ const Dashboard = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [newChatState, setNewChatState] = useState(true);
+  const today = dayjs()
 
   const handleHistory = async () => {
     const response = await axios.get(
@@ -74,7 +74,7 @@ const Dashboard = () => {
     handleHistory()
   }, []);
 
-  const handleClick = async (role: string) => {
+  const handleClick = async (role: any) => {
     setChildId(role);
     onClose();
   };
@@ -112,7 +112,7 @@ const Dashboard = () => {
       <Navbar isDrawerOpen={isOpen} onDrawerOpen={onOpen} />
 
       <Box width="100%" mt={{ base: "1.5rem", md: "4rem" }} mx="auto" display="flex" px={{ base: "1rem", md: "2rem", "xl": "3rem" }}>
-        <Box borderRight={colorMode==="light" ? "1px solid #E1E3EA" : "1px solid #e1e3ea29"} bg={colorMode==="light" ? "#fff" : "#1A202C"} display={{ base: "none", md: "block" }} position={{ base: "absolute", md: "relative" }}
+        <Box borderRight={colorMode === "light" ? "1px solid #E1E3EA" : "1px solid #e1e3ea29"} bg={colorMode === "light" ? "#fff" : "#1A202C"} display={{ base: "none", md: "block" }} position={{ base: "absolute", md: "relative" }}
           bottom={0} maxH="94vh" >
           <Box>
             <Box width="14rem" pr="2rem" mt="2rem">
@@ -154,42 +154,53 @@ const Dashboard = () => {
                   <strong>New Chat</strong>
                 </Text>
               </Box>
-              <Heading
-                mt="1.03rem"
-                ml="0.rem"
-                textColor="#A1A5B7"
-                fontSize="0.75rem"
-                fontWeight="500"
-              >
-                TODAY
-              </Heading>
-              <Flex
-                mt="1.5rem"
-                direction="column"
-                width="12.375rem"
-                height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "80rem" }}
-                overflow="hidden"
-                flexDirection="column"
-              >
-                <Flex
-                  // height="100%"
-                  maxHeight={"80%"}
-                  marginRight="-50px"
-                  paddingRight="50px"
-                  overflowX="hidden"
-                  overflowY="auto"
-                >
-                  <Box>
-                    {mapHistory.map((map, index) => (
-                      <RoleBox
-                        hist={map}
-                        changeBg={childId}
-                        handleClick={handleClick}
-                      />
-                    ))}
-                  </Box>
-                </Flex>
-              </Flex>
+              <Box height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "80rem" }}>
+                {mapHistory.map((map, index) => (
+                  <>
+                    <Heading
+                      mt="1.03rem"
+                      ml="0.rem"
+                      textColor="#A1A5B7"
+                      fontSize="1rem"
+                      fontWeight="600"
+                      key={index}
+                    >
+                      {today.diff(dayjs(map.date), 'day') === 0 ? "Today" :
+                        today.diff(dayjs(map.date), 'day') === 1 ? "Yesterday" :
+                          today.diff(dayjs(map.date), 'day') > 1 && today.diff(dayjs(map.date), 'day') <= 7 ? "Last 7 days" :
+                            today.diff(dayjs(map.date), 'day') > 7 && today.diff(dayjs(map.date), 'day') <= 30 ? "Last month" : "Past History"}
+                    </Heading>
+                    <Flex
+                      mt="0.5rem"
+                      direction="column"
+                      width="12.375rem"
+                      overflow="hidden"
+                      flexDirection="column"
+                    >
+                      <Flex
+                        // height="100%"
+                        maxHeight={"80%"}
+                        marginRight="-50px"
+                        paddingRight="50px"
+                        overflowX="hidden"
+                        overflowY="auto"
+                      >
+                        <Box>
+                          {map.chat_identifiers.map((chat, ind) => (
+                            <RoleBox
+                              key={ind}
+                              hist={chat}
+                              changeBg={childId}
+                              handleClick={handleClick}
+                            />
+                          ))}
+                        </Box>
+                      </Flex>
+                    </Flex>
+                  </>
+                ))}
+              </Box>
+
 
               <Box
                 position="absolute"
@@ -197,7 +208,7 @@ const Dashboard = () => {
                 width="12.375rem"
                 display="flex"
                 alignItems="center"
-                mb={{ base: "2rem", lg: "3rem", "2xl":"1rem" }}
+                mb={{ base: "2rem", lg: "3rem", "2xl": "1rem" }}
               >
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Avatar
@@ -209,7 +220,7 @@ const Dashboard = () => {
                     p={"0.35rem"}
                     float={"left"}
                   ></Avatar>
-                  <Text ml="0.63rem" fontSize={{base: "0.75rem", "md":"1rem", xl:"1.25rem"}} fontFamily={`'GT-Eesti', sans-serif`} fontWeight="500">
+                  <Text ml="0.63rem" fontSize={{ base: "0.75rem", "md": "1rem", xl: "1.25rem" }} fontFamily={`'GT-Eesti', sans-serif`} fontWeight="500">
                     {userName.firstname}{" "}
                     {userName.lastname}
                   </Text>
@@ -222,7 +233,7 @@ const Dashboard = () => {
                   }}
                   cursor={"pointer"}
                 >
-                  <Image filter={colorMode==="light" ? "none" : "brightness(22.5)"} src={logoutIcon} alt="" />
+                  <Image filter={colorMode === "light" ? "none" : "brightness(22.5)"} src={logoutIcon} alt="" />
                 </Box>
               </Box>
             </Box>
@@ -275,40 +286,50 @@ const Dashboard = () => {
                 </Box>
               </DrawerHeader>
               <DrawerBody>
-                <Heading
-                  mt="1.03rem"
-                  ml="0.rem"
-                  textColor="#A1A5B7"
-                  fontSize="0.75rem"
-                  fontWeight="500"
-                >
-                  TODAY
-                </Heading>
-                <Flex
-                  mt="1.5rem"
-                  direction="column"
-                  width="12.375rem"
-                  overflow="hidden"
-                  flexDirection="column"
-                >
-                  <Flex
-                    marginRight="-50px"
-                    paddingRight="50px"
-                    overflowX="hidden"
-                    overflowY="auto"
-                  >
-                    <Box>
-                      {mapHistory.map((map, index) => (
-                        <RoleBox
-                          hist={map}
-                          changeBg={childId}
-                          handleClick={handleClick}
-                        />
-                      ))}
-                    </Box>
-                  </Flex>
-                </Flex>
 
+                <Box height={{ base: "30rem", sm: "30rem", md: "50rem", lg: "25rem", "2xl": "80rem" }}>
+                  {mapHistory.map((map, index) => (
+                    <>
+                      <Heading
+                        mt="1.03rem"
+                        ml="0.rem"
+                        textColor="#A1A5B7"
+                        fontSize="1rem"
+                        fontWeight="600"
+                        key={index}
+                      >
+                        {map.date}
+                      </Heading>
+                      <Flex
+                        mt="1.5rem"
+                        direction="column"
+                        width="12.375rem"
+                        overflow="hidden"
+                        flexDirection="column"
+                      >
+                        <Flex
+                          // height="100%"
+                          maxHeight={"80%"}
+                          marginRight="-50px"
+                          paddingRight="50px"
+                          overflowX="hidden"
+                          overflowY="auto"
+                        >
+                          <Box>
+                            {map.chat_identifiers.map((chat, ind) => (
+                              <RoleBox
+                                key={ind}
+                                hist={chat}
+                                changeBg={childId}
+                                handleClick={handleClick}
+                              />
+                            ))}
+                          </Box>
+                        </Flex>
+                      </Flex>
+                    </>
+                  ))}
+                </Box>
               </DrawerBody>
 
               <DrawerFooter borderTopWidth='0.25px'>

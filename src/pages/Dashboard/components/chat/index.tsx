@@ -9,10 +9,12 @@ import {
 } from "../../../../redux/authSlice";
 import SubmitePage from "../Footer";
 import PopMessage from "../modal";
+import toast from "react-hot-toast";
 
 interface Message {
   from: string;
   text: string;
+  id: any;
 }
 interface ChildComponentProps {
   messages: Message[];
@@ -27,7 +29,7 @@ interface ChildComponentProps {
 }
 
 const Chat: React.FC<ChildComponentProps> = ({
- messages, setMessages, childId, setChildId, loading, setLoading, newChatState, setNewChatState, handleHistory
+  messages, setMessages, childId, setChildId, loading, setLoading, newChatState, setNewChatState, handleHistory
 }) => {
   const accessToken = useSelector(selectAccessToken);
   const { colorMode } = useColorMode();
@@ -39,7 +41,7 @@ const Chat: React.FC<ChildComponentProps> = ({
     "I have been running a fever",
     "Feeling unusually tired or fatigued",
     "I have a persistent cough",
-  ]; 
+  ];
 
   const [inputMessage, setInputMessage] = useState<string>("");
 
@@ -66,13 +68,13 @@ const Chat: React.FC<ChildComponentProps> = ({
     );
     setMessages([]);
     response.data.chat_history.map((oldmap: any) => {
-      setMessages((old) => [...old, { from: "me", text: oldmap.request }]);
+      setMessages((old) => [...old, { from: "me", text: oldmap.request, id: "" }]);
 
       setInputMessage("");
 
       setMessages((old) => [
         ...old,
-        { from: "computer", text: oldmap.response },
+        { from: "computer", text: oldmap.response, id: oldmap.id },
       ]);
     });
     setChildId("");
@@ -81,8 +83,8 @@ const Chat: React.FC<ChildComponentProps> = ({
 
   useEffect(() => {
 
-    if (childId!=="") {  
-      setIdent(childId);    
+    if (childId !== "") {
+      setIdent(childId);
       handleGetChatHistory();
     }
   }, [childId, ident, messages]);
@@ -101,14 +103,12 @@ const Chat: React.FC<ChildComponentProps> = ({
       return;
     }
     setLoading(true)
-    console.log(messages)
-    setMessages((old) => [...old, { from: "me", text: data }]);
+    setMessages((old) => [...old, { from: "me", text: data, id: "" }]);
     // setMessages((old) => [...old, { from: "computer", text: `AI is typing  ${<Spinner color="brand.main" />}` }]);
-    console.log(messages)
     const data: string = inputMessage;
     const payload = {
       request: data,
-      identifier: newChatState ? uniqueId : ident ,
+      identifier: newChatState ? uniqueId : ident,
     };
 
     const response = await axios.post(
@@ -122,13 +122,11 @@ const Chat: React.FC<ChildComponentProps> = ({
     );
 
     setInputMessage("");
-    console.log(messages)
     // messages[messages.length-1].text = response.data.detail
     setMessages((old) => [
       ...old,
-      { from: "computer", text: response.data.detail },
+      { from: "computer", text: response.data.response, id: response.data.id },
     ]);
-    console.log(messages)
 
     setLoading(false);
     setNewChatState(false);
@@ -140,7 +138,7 @@ const Chat: React.FC<ChildComponentProps> = ({
     setIdent(uniqueId);
     setLoading(true);
 
-    setMessages((old) => [...old, { from: "me", text: newdata }]);
+    setMessages((old) => [...old, { from: "me", text: newdata, id: "" }]);
 
     setInputMessage(text);
 
@@ -151,40 +149,51 @@ const Chat: React.FC<ChildComponentProps> = ({
       identifier: uniqueId,
     };
 
-    const response = await axios.post(
-      `https://adewole.pythonanywhere.com/api/${id}/PostRequest/Create/`,
-      payload,
-      {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
+    try {
+      const response = await axios.post(
+        `https://adewole.pythonanywhere.com/api/${id}/PostRequest/Create/`,
+        payload,
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      );
+      if (response) {
+        setInputMessage("");
+        // messages[messages.length-1].text = response.data.detail
+        setMessages((old) => [
+          ...old,
+          { from: "computer", text: response.data.response, id: response.data.id },
+        ]);
       }
-    );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        error.response?.data && error.response?.data.hasOwnProperty('detail') && toast.error(error.response?.data['detail'])
+        !error.response?.status && toast.error("Network unavailable, please try again.")
+      } else {
+        toast.error("Error, please try again.")
+      }
+    }
 
-    setInputMessage("");
-    messages[messages.length-1].text = response.data.detail
-    // setMessages((old) => [
-    //   ...old,
-    //   { from: "computer", text: response.data.detail },
-    // ]);
-  
-    setLoading(false);    
+
+    setLoading(false);
     setNewChatState(false);
   };
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
 
   }, [messages, setMessages])
 
   return (
-    <Flex ml={{base:0, lg:"2.5rem"}} w="100%" h="100vh" justify="center" align="center">      
+    <Flex ml={{ base: 0, lg: "2.5rem" }} w="100%" h="100vh" justify="center" align="center">
       <PopMessage isOpen={isOpen} onClose={onClose} />
       <Flex w={["100%", "100%", "90%"]} h="100%" flexDir="column">
         {messages.length === 0 ? (
           <Box position="relative" width="100%" h="100%" overflow={"hidden"}>
-            <Box position="absolute" bottom="0" width={"100%"} maxH={"100%"} overflowY={"auto"} pt={{base:"2rem", sm:0}}>
+            <Box position="absolute" bottom="0" width={"100%"} maxH={"100%"} overflowY={"auto"} pt={{ base: "2rem", sm: 0 }}>
               <Heading
-                textColor={colorMode==="light" ? "#101828" : "#fff"}
+                textColor={colorMode === "light" ? "#101828" : "#fff"}
                 fontSize="1.5rem"
                 fontWeight="700"
                 lineHeight="2rem"
@@ -197,7 +206,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                 from our AI-powered chatbot
               </Text>
               <Text
-                textColor={colorMode==="light" ? "#101828" : "#667085"}
+                textColor={colorMode === "light" ? "#101828" : "#667085"}
                 mt="1.88rem"
                 fontSize="1rem"
                 fontWeight="500"
@@ -206,14 +215,14 @@ const Chat: React.FC<ChildComponentProps> = ({
                 Try an example
               </Text>
 
-              <Flex mt="1.5rem" direction={{ base: "column", md: "row" }} gap={{base:"1rem", md:"1.5rem"}}>
+              <Flex mt="1.5rem" direction={{ base: "column", md: "row" }} gap={{ base: "1rem", md: "1.5rem" }}>
                 <Box
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
                   py="0.5rem"
-                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
+                  bg={colorMode === "light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -235,7 +244,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
-                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
+                  bg={colorMode === "light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -251,14 +260,14 @@ const Chat: React.FC<ChildComponentProps> = ({
                   <Text>I have been running a fever</Text>
                 </Box>
               </Flex>
-              <Flex my="2rem" direction={{ base: "column", md: "row" }}  gap={{base:"1rem", md:"1.5rem"}}>
+              <Flex my="2rem" direction={{ base: "column", md: "row" }} gap={{ base: "1rem", md: "1.5rem" }}>
                 <Box
                   px="1rem"
                   fontSize="1rem"
                   fontWeight="500"
                   width="fit-content"
                   py="0.5rem"
-                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
+                  bg={colorMode === "light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
@@ -280,7 +289,7 @@ const Chat: React.FC<ChildComponentProps> = ({
                   fontWeight="500"
                   width="fit-content"
                   py="0.5rem"
-                  bg={colorMode==="light" ? "#F5F6FA" : "#2D3748"}
+                  bg={colorMode === "light" ? "#F5F6FA" : "#2D3748"}
                   borderRadius="0.5rem"
                   display="flex"
                   alignItems="center"
