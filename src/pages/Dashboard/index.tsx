@@ -72,7 +72,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     handleHistory()
-  }, []);
+  }, [messages]);
 
   const handleClick = async (role: any) => {
     setChildId(role);
